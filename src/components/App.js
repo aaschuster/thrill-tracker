@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
+import {Routes, Route, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 import '../App.css';
 
 import ParkSelect from "./ParkSelect"
+import AtParkView from "./AtParkView";
 
 function App() {
 
   const serverURL = process.env.REACT_APP_SERVERURL;
 
   const [parks, setParks] = useState([]);
+  const [currentParkIdx, setCurrentParkIdx] = useState(null);
 
   useEffect(() => {
     axios.get(`${serverURL}/parks`)
@@ -21,7 +24,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>ThrillTracker.com</h1>
-        <ParkSelect parks={parks}/>
+        <Routes>
+          <Route path="/" exact element={<ParkSelect parks={parks} setCurrentParkIdx={setCurrentParkIdx}/>}/>
+          <Route path="/atparkview" element={<AtParkView park={parks[currentParkIdx]}/>}/>
+        </Routes>
       </header>
     </div>
   );

@@ -1,8 +1,8 @@
 import React from "react";
 
-function Park( { park } ) {
+function Park( { park, onClick } ) {
     return (
-        <div>
+        <div onClick={onClick}>
             {park.name}
         </div>
     );
