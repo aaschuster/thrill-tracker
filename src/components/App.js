@@ -12,12 +12,19 @@ function App() {
   const serverURL = process.env.REACT_APP_SERVERURL;
 
   const [parks, setParks] = useState([]);
+  const [rides, setRides] = useState([]);
   const [currentParkIdx, setCurrentParkIdx] = useState(null);
 
   useEffect(() => {
+
     axios.get(`${serverURL}/parks`)
       .then( ({data}) => setParks(data))
       .catch( err => console.error(err))
+
+    axios.get(`${serverURL}/rides`)
+      .then( ({data}) => setRides(data))
+      .catch( err => console.error(err))
+
   }, []);
 
   return (

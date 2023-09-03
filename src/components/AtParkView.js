@@ -2,7 +2,10 @@ import React from "react";
 
 function AtParkView( {park} ) {
     return (
-        <>{park.name}</>
+        <div>
+            <h2>{park.name}</h2>
+            
+        </div>
     )
 }
 
