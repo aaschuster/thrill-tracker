@@ -13,6 +13,7 @@ function App() {
 
   const [parks, setParks] = useState([]);
   const [rides, setRides] = useState([]);
+  const [currentParkRides, setCurrentParkRides] = useState([]); //holds indexes of rides that match current park
   const [currentParkIdx, setCurrentParkIdx] = useState(null);
 
   useEffect(() => {
@@ -32,8 +33,19 @@ function App() {
       <header className="App-header">
         <h1>ThrillTracker.com</h1>
         <Routes>
-          <Route path="/" exact element={<ParkSelect parks={parks} setCurrentParkIdx={setCurrentParkIdx}/>}/>
-          <Route path="/atparkview" element={<AtParkView park={parks[currentParkIdx]}/>}/>
+          <Route 
+            path="/" exact element={
+              <ParkSelect
+                parks={parks}
+                setCurrentParkIdx={setCurrentParkIdx}
+              />
+            }/>
+          <Route path="/atparkview" element={
+            <AtParkView
+              park={parks[currentParkIdx]}
+              rides={rides}
+            />
+          }/>
         </Routes>
       </header>
     </div>
