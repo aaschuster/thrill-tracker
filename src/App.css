@@ -1,38 +1,42 @@
-.App {
+body {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  background-color: #282828;
+}
+
+h1, h2, p {
   text-align: center;
+  color: whitesmoke;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+button {
+  background-color: #4b5052;
+	border: 2px solid black;
+	color: whitesmoke;
+	padding: 1em 1.5em;
+	text-align: center;
+	display: inline-block;
+  width: 85%;
+  box-shadow: 3px 3px 8px 0 #000;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.history {
+  height: 75vh;
+  overflow: scroll;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.parkselect {
+  width: 90%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin: 0 auto;
 }
 
-.App-link {
-  color: #61dafb;
+.parkselect button {
+  margin: 10px auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.parkselect input {
+  margin: 25px 0;
+  background-color: whitesmoke;
+	border: 2px solid black;
 }

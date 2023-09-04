@@ -13,6 +13,7 @@ function App() {
 
   const [parks, setParks] = useState([]);
   const [rides, setRides] = useState([]);
+  const [history, setHistory] = useState([])
   const [currentParkRides, setCurrentParkRides] = useState([]); //holds indexes of rides that match current park
   const [currentParkIdx, setCurrentParkIdx] = useState(null);
 
@@ -26,7 +27,27 @@ function App() {
       .then( ({data}) => setRides(data))
       .catch( err => console.error(err))
 
+    refreshHistory();
+
   }, []);
+
+  useEffect(() => {
+
+    if(currentParkIdx !== null) {
+      setCurrentParkRides( 
+        rides.filter( 
+          (ride) => ride.parks_id === parks[currentParkIdx].parks_id 
+        )
+      )
+    }
+    
+  }, [rides, currentParkIdx])
+
+  function refreshHistory() {
+    axios.get(`${serverURL}/history`)
+      .then( ({data}) => setHistory(data))
+      .catch( err => console.error(err))
+  }
 
   return (
     <div className="App">
@@ -43,7 +64,9 @@ function App() {
           <Route path="/atparkview" element={
             <AtParkView
               park={parks[currentParkIdx]}
-              rides={rides}
+              history={history}
+              currentParkRides={currentParkRides}
+              setHistory={setHistory}
             />
           }/>
         </Routes>

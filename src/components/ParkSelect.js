@@ -13,7 +13,7 @@ function ParkSelect( {parks, setCurrentParkIdx} ) {
     }
 
     return (
-        <div>
+        <div className="parkselect">
             <input placeholder="Search..."/>
             {parks.map( (park, idx) => {
                 return <Park park={park} key={idx} onClick={() => onClick(idx)}/>;

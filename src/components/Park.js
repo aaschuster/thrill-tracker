@@ -2,9 +2,9 @@ import React from "react";
 
 function Park( { park, onClick } ) {
     return (
-        <div onClick={onClick}>
+        <button onClick={onClick}>
             {park.name}
-        </div>
+        </button>
     );
 }
 
