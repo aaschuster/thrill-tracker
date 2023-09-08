@@ -8,6 +8,8 @@ function AtParkView( {park, history, currentParkRides, setHistory} ) {
     const serverURL = process.env.REACT_APP_SERVERURL;
 
     const [currentHistory, setCurrentHistory] = useState([]);
+    const [currentTotals, setCurrentTotals] = useState({});
+    const [totalsView, setTotalsView] = useState(false);
 
     const historyRef = useRef(null);
 
@@ -21,6 +23,7 @@ function AtParkView( {park, history, currentParkRides, setHistory} ) {
     function getCurrentHistory() {
 
         const newCurrent = [];
+        const newTotals = {};
 
         history.forEach( (record, idx) => {
             let showRecord = false;
@@ -32,12 +35,17 @@ function AtParkView( {park, history, currentParkRides, setHistory} ) {
                 if(rides[i].rides_id === record.rides_id && date === new Date().toLocaleString([], {dateStyle: "short"})) {
                     showRecord = true;
                     newCurrent.push({...rides[i], timeonly: time});
+                    if(newTotals[rides[i].rides_id])
+                        newTotals[rides[i].rides_id].count++;
+                    else 
+                        newTotals[rides[i].rides_id] = {name: rides[i].name, count: 1};
                 }
                 i++;
             }
         })
 
         setCurrentHistory(newCurrent);
+        setCurrentTotals(newTotals);
     }
 
     useEffect(() => {
@@ -45,25 +53,46 @@ function AtParkView( {park, history, currentParkRides, setHistory} ) {
     }, [history, currentParkRides])
 
     useEffect(() => {
-        historyRef.current?.scrollBy(0, 2000); //scroll to bottom whenever new record added
+        historyRef.current?.scrollBy(0, historyRef.current.scrollHeight); //scroll to bottom whenever new record added
     }, [currentHistory])
 
     return (
         <div className={"atparkview"}>
             <h2>{park.name}</h2>
-            <div className={"history"} ref={historyRef}>
-                <div className={"spacer"}></div>
-                {
-                    currentHistory.map( (record, idx) => {
-                        return (
-                            <div key={idx} className={"record"}>
-                                <div className={"ridename"}>{record.name}</div>
-                                <div className={"timestamp"}>{record.timeonly}</div>
-                            </div>
-                        )
-                    })
-                }
-            </div>
+            <p>Today's rides:</p>
+            {
+                !totalsView ? 
+                <div className={"history"} ref={historyRef}>
+                    <div className={"spacer"}></div>
+                    {
+                        currentHistory.map( (record, idx) => {
+                            return (
+                                <div key={idx} className={"record"}>
+                                    <div className={"ridename"}>{record.name}</div>
+                                    <div className={"timestamp"}>{record.timeonly}</div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+                 : 
+                <div className={"totals"}>
+                    {
+                        Object.keys(currentTotals).map(( key ) => {
+                            return (
+                                <div key={key}>
+                                    {currentTotals[key].name} - {currentTotals[key].count}
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            }
+            <button onClick={() => {
+                setTotalsView(!totalsView)
+            }}>
+                {totalsView ? <>View by times</>:<>View by totals</>}
+            </button>
             <div>
             {
                 rides.map( (ride, idx) => {
