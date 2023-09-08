@@ -20,8 +20,24 @@ button {
 }
 
 .history {
-  height: 75vh;
-  overflow: scroll;
+  height: 40vh;
+  overflow-y: auto;
+  background-color: #636a6c;
+  color: whitesmoke;
+  padding: 7px;
+  display: flex;
+  flex-direction:column;
+  border-radius: 7px;
+}
+
+.record {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }
 
 .parkselect {

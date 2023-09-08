@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 function AtParkView( {park, history, currentParkRides, setHistory} ) {
@@ -8,6 +8,8 @@ function AtParkView( {park, history, currentParkRides, setHistory} ) {
     const serverURL = process.env.REACT_APP_SERVERURL;
 
     const [currentHistory, setCurrentHistory] = useState([]);
+
+    const historyRef = useRef(null);
 
     function quickAdd(rides_id) {
         const timestamp = new Date().toLocaleString([], {dateStyle: "short", timeStyle: "short"});
@@ -42,17 +44,25 @@ function AtParkView( {park, history, currentParkRides, setHistory} ) {
         getCurrentHistory();
     }, [history, currentParkRides])
 
+    useEffect(() => {
+        historyRef.current?.scrollBy(0, 2000); //scroll to bottom whenever new record added
+    }, [currentHistory])
+
     return (
-        <div>
+        <div className={"atparkview"}>
             <h2>{park.name}</h2>
-            <div className={"history"}>
-            {
-                currentHistory.map( (record, idx) => {
-                    return (
-                        <div key={idx}>{record.name} - {record.timeonly}</div>
-                    )
-                })
-            }
+            <div className={"history"} ref={historyRef}>
+                <div className={"spacer"}></div>
+                {
+                    currentHistory.map( (record, idx) => {
+                        return (
+                            <div key={idx} className={"record"}>
+                                <div className={"ridename"}>{record.name}</div>
+                                <div className={"timestamp"}>{record.timeonly}</div>
+                            </div>
+                        )
+                    })
+                }
             </div>
             <div>
             {
