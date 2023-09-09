@@ -14,6 +14,7 @@ function ParkSelect( {parks, setCurrentParkIdx} ) {
 
     return (
         <div className="parkselect">
+            <h1>ThrillTracker.com</h1>  
             <input placeholder="Search..."/>
             {parks.map( (park, idx) => {
                 return <Park park={park} key={idx} onClick={() => onClick(idx)}/>;

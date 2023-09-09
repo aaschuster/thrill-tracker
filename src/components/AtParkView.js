@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import {BiArrowBack} from "react-icons/bi";
 
 function AtParkView( {parks, rides, history, setHistory, refreshData} ) {
 
@@ -15,6 +17,8 @@ function AtParkView( {parks, rides, history, setHistory, refreshData} ) {
     const [totalsView, setTotalsView] = useState(false);
 
     const historyRef = useRef(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {  
         if(!park) refreshData();  
@@ -80,7 +84,10 @@ function AtParkView( {parks, rides, history, setHistory, refreshData} ) {
     return (
         park ?
         <div className={"atparkview"}>
-            <h2>{park.name}</h2>
+            <div className={"parkviewheader"}>
+                <BiArrowBack className={"backarrow"} size="30px" onClick={() => navigate("/")}/>
+                <h2>{park.name}</h2>
+            </div>
             <h3>Today's rides:</h3>
                 <div>
                     <h4 className="viewlabel">{totalsView ? "By times" : "Totals"} view</h4>

@@ -37,8 +37,6 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>ThrillTracker.com</h1>
         <Routes>
           <Route 
             path="/" exact element={
@@ -57,7 +55,6 @@ function App() {
             />
           }/>
         </Routes>
-      </header>
     </div>
   );
 }
