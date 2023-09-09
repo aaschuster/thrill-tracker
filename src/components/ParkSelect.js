@@ -9,7 +9,7 @@ function ParkSelect( {parks, setCurrentParkIdx} ) {
 
     function onClick(parkIdx) {
         setCurrentParkIdx(parkIdx);
-        navigate("/atparkview");
+        navigate(`/atparkview/${parkIdx}`);
     }
 
     return (

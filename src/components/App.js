@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Routes, Route, useNavigate} from "react-router-dom";
+import {Routes, Route, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 import '../App.css';
@@ -18,7 +18,10 @@ function App() {
   const [currentParkIdx, setCurrentParkIdx] = useState(null);
 
   useEffect(() => {
+    refreshData();
+  }, []);
 
+  function refreshData() {
     axios.get(`${serverURL}/parks`)
       .then( ({data}) => setParks(data))
       .catch( err => console.error(err))
@@ -27,26 +30,9 @@ function App() {
       .then( ({data}) => setRides(data))
       .catch( err => console.error(err))
 
-    refreshHistory();
-
-  }, []);
-
-  useEffect(() => {
-
-    if(currentParkIdx !== null) {
-      setCurrentParkRides( 
-        rides.filter( 
-          (ride) => ride.parks_id === parks[currentParkIdx].parks_id 
-        )
-      )
-    }
-    
-  }, [rides, currentParkIdx])
-
-  function refreshHistory() {
     axios.get(`${serverURL}/history`)
-      .then( ({data}) => setHistory(data))
-      .catch( err => console.error(err))
+    .then( ({data}) => setHistory(data))
+    .catch( err => console.error(err))
   }
 
   return (
@@ -61,12 +47,13 @@ function App() {
                 setCurrentParkIdx={setCurrentParkIdx}
               />
             }/>
-          <Route path="/atparkview" element={
+          <Route path="/atparkview/:id" element={
             <AtParkView
-              park={parks[currentParkIdx]}
+              parks={parks}
+              rides={rides}
               history={history}
-              currentParkRides={currentParkRides}
               setHistory={setHistory}
+              refreshData={refreshData}
             />
           }/>
         </Routes>
