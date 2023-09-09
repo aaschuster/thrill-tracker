@@ -45,14 +45,16 @@ function AtParkView( {park, history, currentParkRides, setHistory} ) {
             }
         })
 
-        // Object.keys(newTotals).map( (key) => {
-        //     if(totalsArr.length === 0) {
+        Object.keys(totalsObj).map( (key) => {
+            totalsArr.push(totalsObj[key]);
+        })
 
-        //     }
-        // })
+        totalsArr.sort( (a, b) => {
+            return b.count - a.count;
+        });
 
         setCurrentHistory(newCurrent);
-        setCurrentTotals(totalsObj);
+        setCurrentTotals(totalsArr);
     }
 
     useEffect(() => {
@@ -100,12 +102,24 @@ function AtParkView( {park, history, currentParkRides, setHistory} ) {
                     </div>
                 }
             </div>
-            <div className={"togglecontainer"}>
-                <button className={"viewtoggle"} onClick={() => {
+            <div className={"viewbuttons"}>
+                {/* <button className={"viewtoggle"} onClick={() => {
                             setTotalsView(!totalsView)
                         }}>
                             Toggle view
+                </button> */}
+                <button 
+                    disabled={totalsView} 
+                    onClick={() => setTotalsView(true)}
+                >
+                    View by times
                 </button>
+                <button 
+                    disabled={!totalsView} 
+                    onClick={() => setTotalsView(false)}
+                >
+                    View by totals</button>
+                <button>Edit mode</button>
             </div>
 
             <div>
