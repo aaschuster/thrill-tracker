@@ -23,7 +23,8 @@ function AtParkView( {park, history, currentParkRides, setHistory} ) {
     function getCurrentHistory() {
 
         const newCurrent = [];
-        const newTotals = {};
+        const totalsObj = {};
+        const totalsArr = [];
 
         history.forEach( (record, idx) => {
             let showRecord = false;
@@ -35,17 +36,23 @@ function AtParkView( {park, history, currentParkRides, setHistory} ) {
                 if(rides[i].rides_id === record.rides_id && date === new Date().toLocaleString([], {dateStyle: "short"})) {
                     showRecord = true;
                     newCurrent.push({...rides[i], timeonly: time});
-                    if(newTotals[rides[i].rides_id])
-                        newTotals[rides[i].rides_id].count++;
+                    if(totalsObj[rides[i].rides_id])
+                        totalsObj[rides[i].rides_id].count++;
                     else 
-                        newTotals[rides[i].rides_id] = {name: rides[i].name, count: 1};
+                        totalsObj[rides[i].rides_id] = {name: rides[i].name, count: 1};
                 }
                 i++;
             }
         })
 
+        // Object.keys(newTotals).map( (key) => {
+        //     if(totalsArr.length === 0) {
+
+        //     }
+        // })
+
         setCurrentHistory(newCurrent);
-        setCurrentTotals(newTotals);
+        setCurrentTotals(totalsObj);
     }
 
     useEffect(() => {
@@ -59,47 +66,55 @@ function AtParkView( {park, history, currentParkRides, setHistory} ) {
     return (
         <div className={"atparkview"}>
             <h2>{park.name}</h2>
-            <p>Today's rides:</p>
-            {
-                !totalsView ? 
-                <div className={"history"} ref={historyRef}>
-                    <div className={"spacer"}></div>
+            <h3>Today's rides:</h3>
+                <div>
+                    <h4 className="viewlabel">{totalsView ? "By times" : "Totals"} view</h4>
+                    <hr/>
                     {
-                        currentHistory.map( (record, idx) => {
-                            return (
-                                <div key={idx} className={"record"}>
-                                    <div className={"ridename"}>{record.name}</div>
-                                    <div className={"timestamp"}>{record.timeonly}</div>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-                 : 
-                <div className={"totals"}>
-                    {
-                        Object.keys(currentTotals).map(( key ) => {
-                            return (
-                                <div key={key}>
-                                    {currentTotals[key].name} - {currentTotals[key].count}
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-            }
-            <button onClick={() => {
-                setTotalsView(!totalsView)
-            }}>
-                {totalsView ? <>View by times</>:<>View by totals</>}
-            </button>
+                        !totalsView ?
+                        <div className={"history"} ref={historyRef}>
+                            <div className={"spacer"}></div>
+                            {
+                                currentHistory.map( (record, idx) => {
+                                    return (
+                                        <div key={idx} className={"historyitem"}>
+                                            <div className={"recordname"}>{record.name}</div>
+                                            <div className={"timestamp"}>{record.timeonly}</div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    : 
+                    <div className={"history totals"}>
+                        {
+                            Object.keys(currentTotals).map(( key ) => {
+                                return (
+                                    <div key={key} className={"historyitem"}>
+                                        <div>{currentTotals[key].name}</div>
+                                        <div>{currentTotals[key].count}</div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                }
+            </div>
+            <div className={"togglecontainer"}>
+                <button className={"viewtoggle"} onClick={() => {
+                            setTotalsView(!totalsView)
+                        }}>
+                            Toggle view
+                </button>
+            </div>
+
             <div>
             {
                 rides.map( (ride, idx) => {
                         return (
-                            <div key={idx}>
-                                <p>{ride.name}</p>
-                                <button onClick={() => quickAdd(ride.rides_id)}>Add</button>
+                            <div key={idx} className={"ridecontainer"}>
+                                <button className={"ridename"}>{ride.name}</button>
+                                <button className={"quickadd"} onClick={() => quickAdd(ride.rides_id)}>Add</button>
                             </div>
                         );
                 })

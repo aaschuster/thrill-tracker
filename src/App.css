@@ -3,7 +3,7 @@ body {
   background-color: #282828;
 }
 
-h1, h2, p {
+h1, h2, h3, h4, p {
   text-align: center;
   color: whitesmoke;
 }
@@ -12,11 +12,14 @@ button {
   background-color: #4b5052;
 	border: 2px solid black;
 	color: whitesmoke;
-	padding: 1em 1.5em;
 	text-align: center;
 	display: inline-block;
-  width: 85%;
   box-shadow: 3px 3px 8px 0 #000;
+}
+
+hr {
+  margin: 0;
+  padding: 0;
 }
 
 .history {
@@ -27,10 +30,12 @@ button {
   padding: 7px;
   display: flex;
   flex-direction:column;
-  border-radius: 7px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px 0px 7px 7px;
+  border-radius: 0px 0px 7px 7px; 
 }
 
-.record {
+.historyitem {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -40,6 +45,42 @@ button {
   flex: 1 1 auto;
 }
 
+.viewlabel {
+  background-color:  #636a6c;
+  margin: 0;
+  padding: 5px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 7px 7px 0px 0px;
+  border-radius: 7px 7px 0px 0px; 
+}
+
+.viewtoggle {
+  width: 75%;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.togglecontainer {
+  display: flex;
+  justify-content: center;
+}
+
+.ridecontainer {
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  margin: 0 auto;
+}
+
+.ridename {
+  width: 75%;
+}
+
+.ridename, .quickadd {
+  margin: 5px;
+}
+
 .parkselect {
   width: 90%;
   display: flex;
@@ -47,8 +88,13 @@ button {
   margin: 0 auto;
 }
 
+.atparkview button, .parkselect button {
+  padding: 1em 1.5em;
+}
+
 .parkselect button {
   margin: 10px auto;
+  width: 85%;
 }
 
 .parkselect input {
