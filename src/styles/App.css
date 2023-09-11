@@ -1,25 +1,27 @@
+@import "styles.css";
+
 body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  background-color: #282828;
+  background-color: var(--background-color);
 }
 
 h1, h2, h3, h4, p {
   text-align: center;
-  color: whitesmoke;
+  color: var(--white);
 }
 
 button {
   background-color: #4b5052;
-	border: 2px solid black;
-	color: whitesmoke;
+	border: 2px solid var(--black);
+	color: var(--white);
 	text-align: center;
 	display: inline-block;
-  box-shadow: 3px 3px 8px 0 #000;
+  box-shadow: 3px 3px 8px 0 var(--black);
 }
 
 button:disabled {
-  background-color: #2e3335;
-  color: darkgray;
+  background-color: var(--button-disabled-background-color);
+  color: var(--button-disabled-text-color);
 }
 
 hr {
@@ -28,7 +30,7 @@ hr {
 }
 
 .backarrow {
-  color: whitesmoke;
+  color: var(--white);
 }
 
 .parkviewheader {
@@ -45,8 +47,8 @@ hr {
 .history {
   height: 40vh;
   overflow-y: auto;
-  background-color: #636a6c;
-  color: whitesmoke;
+  background-color: var(--secondary-background-color);
+  color: var(--white);
   padding: 7px;
   display: flex;
   flex-direction:column;
@@ -66,7 +68,7 @@ hr {
 }
 
 .viewlabel {
-  background-color:  #636a6c;
+  background-color: var(--secondary-background-color);
   margin: 0;
   padding: 5px;
   -moz-border-radius: 0px;
@@ -119,6 +121,6 @@ hr {
 
 .parkselect input {
   margin: 25px 0;
-  background-color: whitesmoke;
-	border: 2px solid black;
+  background-color: var(--white);
+	border: 2px solid var(--black);
 }

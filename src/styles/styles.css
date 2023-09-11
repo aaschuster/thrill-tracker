@@ -1,0 +1,9 @@
+:root {
+    --background-color: #282828;
+    --secondary-background-color: #636a6c;
+    --white: whitesmoke;
+    --black: black;
+    --button-background-color: #4b5052;
+    --button-disabled-background-color: #2e3335;
+    --button-disabled-text-color: darkgray;   
+}   
