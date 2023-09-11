@@ -1,0 +1,71 @@
+@import "styles.css";
+
+.parkviewheader {
+    display: flex;
+}
+
+.parkviewheader h2 {
+    margin: 0;
+    position: absolute;
+    left: 50vw;
+    transform: translate(-50%);
+}
+
+.history {
+    height: 40vh;
+    overflow-y: auto;
+    background-color: var(--secondary-background-color);
+    color: var(--white);
+    padding: 7px;
+    display: flex;
+    flex-direction:column;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px 0px 7px 7px;
+    border-radius: 0px 0px 7px 7px; 
+}
+
+.historyitem {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.viewlabel {
+    background-color: var(--secondary-background-color);
+    margin: 0;
+    padding: 5px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 7px 7px 0px 0px;
+    border-radius: 7px 7px 0px 0px; 
+}
+
+.ridecontainer {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+    margin: 0 auto;
+}
+  
+.ridename {
+    width: 75%;
+}
+  
+.ridename, .quickadd {
+    margin: 5px;
+}
+
+.viewbuttons {
+    width: 95%;
+    display: flex;
+    margin: 15px auto 10px auto;
+}
+  
+.viewbuttons button {
+    width: 100%;
+    padding: 1em 0 1em 0;
+}

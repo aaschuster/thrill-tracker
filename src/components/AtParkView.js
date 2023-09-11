@@ -4,6 +4,8 @@ import axios from "axios";
 
 import {BiArrowBack} from "react-icons/bi";
 
+import "../styles/AtParkView.css"
+
 function AtParkView( {parks, rides, history, setHistory, refreshData} ) {
 
     const { id: parkIdx } = useParams();

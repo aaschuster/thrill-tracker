@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import Park from "./Park";
 
+import "../styles/ParkSelect.css";
+
 function ParkSelect( {parks, setCurrentParkIdx} ) {
 
     const navigate = useNavigate();
