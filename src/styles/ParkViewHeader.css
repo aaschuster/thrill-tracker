@@ -1,0 +1,10 @@
+@import "styles.css";
+
+.parkviewheadertop {
+    display: flex;
+}
+
+.parkviewheader h2 {
+    margin: 0;
+    width: calc(100% - 60px);
+}

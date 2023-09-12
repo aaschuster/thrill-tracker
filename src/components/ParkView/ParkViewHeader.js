@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import {BiArrowBack} from "react-icons/bi";
 
-//import "../../styles/ParkViewHeader";
+import "../../styles/ParkViewHeader.css";
 
 function ParkViewHeader( {name} ) {
     const navigate = useNavigate();
