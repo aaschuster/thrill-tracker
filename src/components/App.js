@@ -5,7 +5,8 @@ import axios from "axios";
 import '../styles/App.css';
 
 import ParkSelect from "./ParkSelect"
-import AtParkView from "./AtParkView";
+import AtParkView from "./ParkView/AtParkView";
+import ParkViewEdit from "./ParkView/ParkViewEdit"
 
 function App() {
 
@@ -14,8 +15,6 @@ function App() {
   const [parks, setParks] = useState([]);
   const [rides, setRides] = useState([]);
   const [history, setHistory] = useState([])
-  const [currentParkRides, setCurrentParkRides] = useState([]); //holds indexes of rides that match current park
-  const [currentParkIdx, setCurrentParkIdx] = useState(null);
 
   useEffect(() => {
     refreshData();
@@ -42,7 +41,6 @@ function App() {
             path="/" exact element={
               <ParkSelect
                 parks={parks}
-                setCurrentParkIdx={setCurrentParkIdx}
               />
             }/>
           <Route path="/atparkview/:id" element={
@@ -54,6 +52,10 @@ function App() {
               refreshData={refreshData}
             />
           }/>
+          <Route path="/atparkview/:id/edit" element={
+            <ParkViewEdit/>
+          }
+          />
         </Routes>
     </div>
   );

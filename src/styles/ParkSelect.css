@@ -12,8 +12,6 @@
     width: 85%;
   }
 
-  input {
+  .parkselect input {
     margin: 25px 0;
-    background-color: var(--white);
-    border: 2px solid var(--black);
   }

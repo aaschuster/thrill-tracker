@@ -20,6 +20,11 @@ button {
   padding: 1em 1.5em;
 }
 
+input {
+  background-color: var(--white);
+  border: 2px solid var(--black);
+}
+
 button:disabled {
   background-color: var(--button-disabled-background-color);
   color: var(--button-disabled-text-color);

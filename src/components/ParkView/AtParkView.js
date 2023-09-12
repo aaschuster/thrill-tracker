@@ -4,7 +4,9 @@ import axios from "axios";
 
 import {BiArrowBack} from "react-icons/bi";
 
-import "../styles/AtParkView.css"
+import ParkViewHeader from "./ParkViewHeader";
+
+import "../../styles/AtParkView.css";
 
 function AtParkView( {parks, rides, history, setHistory, refreshData} ) {
 
@@ -86,11 +88,7 @@ function AtParkView( {parks, rides, history, setHistory, refreshData} ) {
     return (
         park ?
         <div className={"atparkview"}>
-            <div className={"parkviewheader"}>
-                <BiArrowBack className={"backarrow"} size="30px" onClick={() => navigate("/")}/>
-                <h2>{park.name}</h2>
-            </div>
-            <h3>Today's rides:</h3>
+            <ParkViewHeader name={park.name}/>
                 <div>
                     <h4 className="viewlabel">{totalsView ? "By times" : "Totals"} view</h4>
                     <hr/>

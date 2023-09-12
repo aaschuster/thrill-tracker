@@ -5,12 +5,11 @@ import Park from "./Park";
 
 import "../styles/ParkSelect.css";
 
-function ParkSelect( {parks, setCurrentParkIdx} ) {
+function ParkSelect( {parks} ) {
 
     const navigate = useNavigate();
 
     function onClick(parkIdx) {
-        setCurrentParkIdx(parkIdx);
         navigate(`/atparkview/${parkIdx}`);
     }
 
