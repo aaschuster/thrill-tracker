@@ -33,5 +33,7 @@ const getHistoryErr = err => {
 }
 
 export const addRecord = record => {
+    axios.post(`${serverURL}/history`, record);
+
     return {type: ADD_RECORD, payload: record};
 }

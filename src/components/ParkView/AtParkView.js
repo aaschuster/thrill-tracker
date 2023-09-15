@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import { addRecord } from "../../actions/historyActions";
 
@@ -15,7 +14,6 @@ function AtParkView( {parks, rides, history, addRecord} ) {
 
     const park = parks[parkIdx];
 
-    const serverURL = process.env.REACT_APP_SERVERURL;
     const [currentRides, setCurrentRides] = useState([]);
     const [currentHistory, setCurrentHistory] = useState([]);
     const [currentTotals, setCurrentTotals] = useState({});
@@ -34,7 +32,6 @@ function AtParkView( {parks, rides, history, addRecord} ) {
     function quickAdd(rides_id) {
         const timestamp = new Date().toLocaleString([], {dateStyle: "short", timeStyle: "short"});
         const record = {rides_id, timestamp}
-        axios.post(`${serverURL}/history`, record);
         addRecord(record);
     }
 
@@ -84,7 +81,6 @@ function AtParkView( {parks, rides, history, addRecord} ) {
     }, [currentHistory])
 
     return (
-        park ?
         <div className={"atparkview"}>
             <ParkViewHeader name={park.name}/>
                 <div>
@@ -148,7 +144,7 @@ function AtParkView( {parks, rides, history, addRecord} ) {
             }
             </div>
             
-        </div> : <></>
+        </div>
     )
 }
 
