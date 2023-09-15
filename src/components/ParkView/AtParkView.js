@@ -3,11 +3,13 @@ import { connect } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import { addRecord } from "../../actions/historyActions";
+
 import ParkViewHeader from "./ParkViewHeader";
 
 import "../../styles/AtParkView.css";
 
-function AtParkView( {parks, rides, history, setHistory} ) {
+function AtParkView( {parks, rides, history, addRecord} ) {
 
     const { id: parkIdx } = useParams();
 
@@ -33,7 +35,7 @@ function AtParkView( {parks, rides, history, setHistory} ) {
         const timestamp = new Date().toLocaleString([], {dateStyle: "short", timeStyle: "short"});
         const record = {rides_id, timestamp}
         axios.post(`${serverURL}/history`, record);
-        setHistory([...history, record])
+        addRecord(record);
     }
 
     function getCurrentHistory() {
@@ -152,9 +154,10 @@ function AtParkView( {parks, rides, history, setHistory} ) {
 
 const mapStateToProps = state => {
     return {
+        parks: state.parks.parks,
         rides: state.rides.rides,
-        parks: state.parks.parks
+        history: state.history.history
     }
 }
 
-export default connect(mapStateToProps)(AtParkView);
+export default connect(mapStateToProps, {addRecord})(AtParkView);

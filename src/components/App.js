@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import { getParks } from "../actions/parksActions";
 import { getRides } from "../actions/ridesActions";
+import { getHistory } from "../actions/historyActions";
 
 import '../styles/App.css';
 
@@ -14,7 +15,7 @@ import ParkViewEdit from "./ParkView/ParkViewEdit"
 
 const App = props => {
 
-  const { getParks, getRides } = props;
+  const { getParks, getRides, getHistory } = props;
 
   const serverURL = process.env.REACT_APP_SERVERURL;
 
@@ -28,10 +29,8 @@ const App = props => {
 
     getParks();
     getRides();
-
-    axios.get(`${serverURL}/history`)
-    .then( ({data}) => setHistory(data))
-    .catch( err => console.error(err))
+    getHistory();
+    
   }
 
   return (
@@ -42,11 +41,7 @@ const App = props => {
               <ParkSelect/>
             }/>
           <Route path="/atparkview/:id" element={
-            <AtParkView
-              history={history}
-              setHistory={setHistory}
-              refreshData={refreshData}
-            />
+            <AtParkView/>
           }/>
           <Route path="/atparkview/:id/edit" element={
             <ParkViewEdit/>
@@ -57,4 +52,4 @@ const App = props => {
   );
 }
 
-export default connect(null, {getParks, getRides})(App);
+export default connect(null, {getParks, getRides, getHistory})(App);
