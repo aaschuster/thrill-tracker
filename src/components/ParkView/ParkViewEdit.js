@@ -1,8 +1,8 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
-import {BiArrowBack} from "react-icons/bi";
+import ParkViewHeader from "./ParkViewHeader";
 
 // import "../../styles/ParkViewEdit.css";
 
@@ -11,7 +11,15 @@ function ParkViewEdit() {
     const { id } = useParams();
 
     return (
-        <>ParkViewEdit{id}</>
+        <div className={"parkviewedit"}>
+            <ParkViewHeader name={"Six Flags Great America"}/>
+            <h4 className="viewlabel">Edit view</h4>
+            <hr/>
+            <div className={"edithistory"}>
+                <>This is some stuff</>
+            </div>
+            <>ParkViewEdit{id}</>
+        </div>
     )
 }
 

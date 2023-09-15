@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import {Routes, Route, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+import { connect } from "react-redux";
+
+import { getParks } from "../actions/parksActions";
 
 import '../styles/App.css';
 
@@ -8,11 +11,12 @@ import ParkSelect from "./ParkSelect"
 import AtParkView from "./ParkView/AtParkView";
 import ParkViewEdit from "./ParkView/ParkViewEdit"
 
-function App() {
+const App = props => {
+
+  const { getParks } = props;
 
   const serverURL = process.env.REACT_APP_SERVERURL;
 
-  const [parks, setParks] = useState([]);
   const [rides, setRides] = useState([]);
   const [history, setHistory] = useState([])
 
@@ -21,9 +25,8 @@ function App() {
   }, []);
 
   function refreshData() {
-    axios.get(`${serverURL}/parks`)
-      .then( ({data}) => setParks(data))
-      .catch( err => console.error(err))
+
+    getParks();
 
     axios.get(`${serverURL}/rides`)
       .then( ({data}) => setRides(data))
@@ -39,13 +42,11 @@ function App() {
         <Routes>
           <Route 
             path="/" exact element={
-              <ParkSelect
-                parks={parks}
-              />
+              <ParkSelect/>
             }/>
           <Route path="/atparkview/:id" element={
             <AtParkView
-              parks={parks}
+              // parks={parks}
               rides={rides}
               history={history}
               setHistory={setHistory}
@@ -61,4 +62,4 @@ function App() {
   );
 }
 
-export default App;
+export default connect(null, {getParks})(App);
