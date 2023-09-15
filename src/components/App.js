@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {Routes, Route, useNavigate, useParams} from "react-router-dom";
-import axios from "axios";
 import { connect } from "react-redux";
 
 import { getParks } from "../actions/parksActions";
@@ -11,7 +10,6 @@ import '../styles/App.css';
 
 import ParkSelect from "./ParkSelect"
 import AtParkView from "./ParkView/AtParkView";
-import ParkViewEdit from "./ParkView/ParkViewEdit"
 
 const App = props => {
 
@@ -40,13 +38,9 @@ const App = props => {
             path="/" exact element={
               <ParkSelect/>
             }/>
-          <Route path="/atparkview/:id" element={
+          <Route path="/atparkview/:id/*" element={
             <AtParkView/>
           }/>
-          <Route path="/atparkview/:id/edit" element={
-            <ParkViewEdit/>
-          }
-          />
         </Routes>
     </div>
   );

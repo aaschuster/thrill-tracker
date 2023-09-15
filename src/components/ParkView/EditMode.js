@@ -6,13 +6,12 @@ import ParkViewHeader from "./ParkViewHeader";
 
 // import "../../styles/ParkViewEdit.css";
 
-function ParkViewEdit() {
+function EditMode() {
 
     const { id } = useParams();
 
     return (
         <div className={"parkviewedit"}>
-            <ParkViewHeader name={"Six Flags Great America"}/>
             <h4 className="viewlabel">Edit view</h4>
             <hr/>
             <div className={"edithistory"}>
@@ -23,4 +22,4 @@ function ParkViewEdit() {
     )
 }
 
-export default ParkViewEdit;
+export default EditMode;
