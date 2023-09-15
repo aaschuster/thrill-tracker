@@ -23,7 +23,7 @@ function AddMode( {currentHistory, currentTotals, currentRides, addRecord} ) {
     }, [currentHistory])
 
     return (
-        <div>
+        <div className={"addmode"}>
             <div>
                     <h4 className="viewlabel">{totalsView ? "By times" : "Totals"} view</h4>
                     <hr/>

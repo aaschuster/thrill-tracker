@@ -1,23 +1,33 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
 
-import ParkViewHeader from "./ParkViewHeader";
+import {MdDeleteForever} from "react-icons/md";
+import {AiFillEdit} from "react-icons/ai";
 
-// import "../../styles/ParkViewEdit.css";
+import "../../styles/ParkViewEdit.css";
 
-function EditMode() {
-
-    const { id } = useParams();
-
+function EditMode( {currentHistory} ) {
     return (
         <div className={"parkviewedit"}>
             <h4 className="viewlabel">Edit view</h4>
             <hr/>
-            <div className={"edithistory"}>
-                <>This is some stuff</>
+            <div className={"history"}>
+                {
+                    currentHistory.map( (record, idx) => {
+                        return (
+                            <div key={idx} className={"historyitem"}>
+                                <div className={"textcontainer"}>
+                                    <span className={"recordname"}>{record.name}</span>
+                                    <span className={"timestamp"}>{record.timeonly}</span>
+                                </div>                                
+                                <div className={"editbuttoncontainer"}>
+                                    <AiFillEdit className={"editbutton"}/>
+                                    <MdDeleteForever className={"editbutton"}/>
+                                </div>
+                            </div>
+                        )
+                    })
+                }
             </div>
-            <>ParkViewEdit{id}</>
         </div>
     )
 }

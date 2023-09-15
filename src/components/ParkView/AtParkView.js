@@ -81,7 +81,11 @@ function AtParkView( {parks, rides, history} ) {
                                 currentRides = {currentRides}
                             />
                         }/>
-                        <Route path="/edit" element={<EditMode/>}/>
+                        <Route path="/edit" element={
+                            <EditMode
+                                currentHistory = {currentHistory}
+                            />
+                        }/>
                     </Routes>
                 </>
                 :

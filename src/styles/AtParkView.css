@@ -1,8 +1,6 @@
 @import "styles.css";
 
 .history {
-    height: 40vh;
-    overflow-y: auto;
     background-color: var(--secondary-background-color);
     color: var(--white);
     padding: 7px;
@@ -11,6 +9,11 @@
     -moz-border-radius: 0px;
     -webkit-border-radius: 0px 0px 7px 7px;
     border-radius: 0px 0px 7px 7px; 
+    overflow-y: auto;
+}
+
+.addmode .history {
+    height: 40vh;
 }
 
 .historyitem {

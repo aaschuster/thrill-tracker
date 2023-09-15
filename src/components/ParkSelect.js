@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { getParks } from "../actions/parksActions"
-
 import Park from "./Park";
 
 import "../styles/ParkSelect.css";
