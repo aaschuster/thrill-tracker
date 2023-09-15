@@ -4,6 +4,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 
 import { getParks } from "../actions/parksActions";
+import { getRides } from "../actions/ridesActions";
 
 import '../styles/App.css';
 
@@ -13,11 +14,10 @@ import ParkViewEdit from "./ParkView/ParkViewEdit"
 
 const App = props => {
 
-  const { getParks } = props;
+  const { getParks, getRides } = props;
 
   const serverURL = process.env.REACT_APP_SERVERURL;
 
-  const [rides, setRides] = useState([]);
   const [history, setHistory] = useState([])
 
   useEffect(() => {
@@ -27,10 +27,7 @@ const App = props => {
   function refreshData() {
 
     getParks();
-
-    axios.get(`${serverURL}/rides`)
-      .then( ({data}) => setRides(data))
-      .catch( err => console.error(err))
+    getRides();
 
     axios.get(`${serverURL}/history`)
     .then( ({data}) => setHistory(data))
@@ -46,8 +43,6 @@ const App = props => {
             }/>
           <Route path="/atparkview/:id" element={
             <AtParkView
-              // parks={parks}
-              rides={rides}
               history={history}
               setHistory={setHistory}
               refreshData={refreshData}
@@ -62,4 +57,4 @@ const App = props => {
   );
 }
 
-export default connect(null, {getParks})(App);
+export default connect(null, {getParks, getRides})(App);

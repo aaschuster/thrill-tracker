@@ -10,7 +10,7 @@ import "../styles/ParkSelect.css";
 
 const ParkSelect = props => {
 
-    const { parks, isFetching, error, getParks } = props;
+    const { parks, isFetching, error } = props;
 
     const navigate = useNavigate();
 
@@ -18,20 +18,13 @@ const ParkSelect = props => {
         navigate(`/atparkview/${parkIdx}`);
     }
 
-    useEffect(() => {
-        console.log(props);
-    }, [parks])
-
     return (
         <div className="parkselect">
             <h1>ThrillTracker.com</h1>  
             <input placeholder="Search..."/>
-            { parks ? <>
             {parks.map( (park, idx) => {
                 return <Park park={park} key={idx} onClick={() => onClick(idx)}/>;
             })} 
-            </> : <></>
-            }
         </div>
     )    
    
@@ -39,10 +32,10 @@ const ParkSelect = props => {
 
 const mapStateToProps = state => {
     return {
-        parks: state.parksReducer.parks,
-        isFetching: state.parksReducer.isFetching,
-        error: state.parksReducer.error
+        parks: state.parks.parks,
+        isFetching: state.parks.isFetching,
+        error: state.parks.error
     }
 }
 
-export default connect(mapStateToProps, {getParks})(ParkSelect);
+export default connect(mapStateToProps)(ParkSelect);

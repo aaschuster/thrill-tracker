@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
+import { connect } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-
-import {BiArrowBack} from "react-icons/bi";
 
 import ParkViewHeader from "./ParkViewHeader";
 
 import "../../styles/AtParkView.css";
 
-function AtParkView( {parks, rides, history, setHistory, refreshData} ) {
+function AtParkView( {parks, rides, history, setHistory} ) {
 
     const { id: parkIdx } = useParams();
 
@@ -22,10 +21,7 @@ function AtParkView( {parks, rides, history, setHistory, refreshData} ) {
 
     const historyRef = useRef(null);
 
-    const navigate = useNavigate();
-
     useEffect(() => {  
-        if(!park) refreshData();  
         setCurrentRides( 
             rides.filter( 
             (ride) => ride.parks_id === parks[parkIdx].parks_id 
@@ -154,4 +150,11 @@ function AtParkView( {parks, rides, history, setHistory, refreshData} ) {
     )
 }
 
-export default AtParkView;
+const mapStateToProps = state => {
+    return {
+        rides: state.rides.rides,
+        parks: state.parks.parks
+    }
+}
+
+export default connect(mapStateToProps)(AtParkView);
