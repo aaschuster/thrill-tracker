@@ -21,11 +21,13 @@ function AtParkView( {parks, rides, history} ) {
     const historyRef = useRef(null);
 
     useEffect(() => {  
-        setCurrentRides( 
-            rides.filter( 
-            (ride) => ride.parks_id === parks[parkIdx].parks_id 
-            )
-        )        
+        if(rides && parks[parkIdx]) {
+            setCurrentRides( 
+                rides.filter( 
+                (ride) => ride.parks_id === parks[parkIdx].parks_id 
+                )
+            )        
+        }
     }, [parks, rides])
 
     function getCurrentHistory() {

@@ -1,0 +1,26 @@
+@import "styles.css";
+
+.MuiDialog-paper {
+    width: 95%;
+}
+
+.timeedit {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+}
+
+.timeedit .dialogbuttons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+}
+
+.timeedit .dialogbuttons button {
+    width: 40%;
+}
+
+.timeedit input {
+    margin: 0 auto 15px auto;
+    font-size: 1.5rem;
+}
