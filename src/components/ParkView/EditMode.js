@@ -35,6 +35,7 @@ function EditMode( {currentHistory, delRecord} ) {
 
     return (
         <div className={"parkviewedit"}>
+            <h3>Today's rides:</h3>
             <TimeEdit 
                 onClose={() => setDialogOpen(false)} 
                 open={dialogOpen}

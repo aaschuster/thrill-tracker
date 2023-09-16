@@ -14,7 +14,6 @@ function ParkViewHeader( {name} ) {
                 <BiArrowBack className={"backarrow"} size="30px" onClick={() => navigate(-1)}/>
                 <h2>{name}</h2>
             </div>
-            <h3>Today's rides:</h3>
         </div>
     )
 }

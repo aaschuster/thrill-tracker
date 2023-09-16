@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { addRecord } from "../../actions/historyActions";
 
-function AddMode( {currentHistory, currentTotals, currentRides, addRecord} ) {
+function RideList( {currentHistory, currentTotals, currentRides, addRecord} ) {
 
     const [totalsView, setTotalsView] = useState(false);
 
@@ -24,6 +24,7 @@ function AddMode( {currentHistory, currentTotals, currentRides, addRecord} ) {
 
     return (
         <div className={"addmode"}>
+            <h3>Today's rides:</h3>
             <div>
                     <h4 className="viewlabel">{totalsView ? "By times" : "Totals"} view</h4>
                     <hr/>
@@ -77,8 +78,20 @@ function AddMode( {currentHistory, currentTotals, currentRides, addRecord} ) {
                 currentRides.map( (ride, idx) => {
                         return (
                             <div key={idx} className={"ridecontainer"}>
-                                <button className={"ridename"}>{ride.name}</button>
-                                <button className={"quickadd"} onClick={() => quickAdd(ride.rides_id)}>Add</button>
+
+                                <button 
+                                    className={"ridename"} 
+                                    onClick={() => navigate(`${pathname}/${ride.rides_id}`)}
+                                >
+                                    {ride.name}
+                                </button>
+
+                                <button 
+                                    className={"quickadd"} 
+                                    onClick={() => quickAdd(ride.rides_id)}
+                                >
+                                    Add
+                                </button>
                             </div>
                         );
                 })
@@ -88,4 +101,4 @@ function AddMode( {currentHistory, currentTotals, currentRides, addRecord} ) {
     )
 }
 
-export default connect(null, {addRecord})(AddMode);
+export default connect(null, {addRecord})(RideList);

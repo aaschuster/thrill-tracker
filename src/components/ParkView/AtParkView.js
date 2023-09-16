@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { Routes, Route, useParams } from "react-router-dom";
 
 import ParkViewHeader from "./ParkViewHeader";
-import AddMode from "./AddMode";
+import RideList from "./RideList";
 import EditMode from "./EditMode";
+import RideAdd from "./RideAdd";
 
 import "../../styles/AtParkView.css";
 
@@ -81,7 +82,7 @@ function AtParkView( {parks, rides, history} ) {
                     <ParkViewHeader name={park.name}/>
                     <Routes>
                         <Route path="/" exact element={
-                            <AddMode
+                            <RideList
                                 currentHistory = {currentHistory}
                                 currentTotals = {currentTotals}
                                 currentRides = {currentRides}
@@ -91,6 +92,9 @@ function AtParkView( {parks, rides, history} ) {
                             <EditMode
                                 currentHistory = {currentHistory}
                             />
+                        }/>
+                        <Route path="/:rideId" element={
+                            <RideAdd/>
                         }/>
                     </Routes>
                 </>
