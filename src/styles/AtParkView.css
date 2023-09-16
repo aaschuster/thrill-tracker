@@ -1,5 +1,11 @@
 @import "styles.css";
 
+.atparkview {
+    display: flex;
+    flex-direction: column;
+    height: 98vh;
+}
+
 .history {
     background-color: var(--secondary-background-color);
     color: var(--white);

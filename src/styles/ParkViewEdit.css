@@ -1,7 +1,14 @@
 @import "styles.css";
 
+.parkviewedit {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0;
+}
+
 .parkviewedit .history {
-    height: 77vh;
+    flex-grow: 1;
 }
 
 .parkviewedit .historyitem {
