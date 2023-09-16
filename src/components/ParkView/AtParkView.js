@@ -63,6 +63,10 @@ function AtParkView( {parks, rides, history} ) {
             return b.count - a.count;
         });
 
+        newCurrent.sort( (a, b) => {
+            return b.timeonly > a.timeonly ? -1 : 1;
+        })
+
         setCurrentHistory(newCurrent);
         setCurrentTotals(totalsArr);
     }
