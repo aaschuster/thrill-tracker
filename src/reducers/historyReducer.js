@@ -4,7 +4,8 @@ import {
     GET_HISTORY_ERR,
     SET_FETCHING_TRUE,
     ADD_RECORD,
-    DEL_RECORD
+    DEL_RECORD,
+    UPDATE_RECORD
 } from "../actions/historyActions";
 
 const initState = {
@@ -26,6 +27,8 @@ export const reducer = (state = initState, action) => {
         case ADD_RECORD:
             return state;
         case DEL_RECORD:
+            return state;
+        case UPDATE_RECORD:
             return state;
         default:
             return state;

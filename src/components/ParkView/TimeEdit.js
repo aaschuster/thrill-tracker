@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import Dialog from "@mui/material/Dialog";
+
+import { updateRecord } from "../../actions/historyActions";
 
 import "../../styles/TimeEdit.css";
 
-function TimeEdit( {onClose, open, record} ) {
+function TimeEdit( {onClose, open, record, updateRecord} ) {
 
     const [time, setTime] = useState("");
 
@@ -11,9 +14,19 @@ function TimeEdit( {onClose, open, record} ) {
         setTime(evt.target.value);
     }
 
+    function onConfirm() {
+        const [originalDate, originalTime] = record.timestamp.split(", ");
+
+        const updatedTimestamp = new Date(`${time} ${originalDate}`);
+        const timeStr = updatedTimestamp.toLocaleTimeString([], { timeStyle: "short" });
+
+        updateRecord({rides_id: record.rides_id, timestamp: `${originalDate}, ${timeStr}`}, record.history_id);
+        onClose();
+    }
+
     useEffect(() => {
-        const time = new Date(`2023-09-16 ${record.timeonly}`);
-        setTime(time.toLocaleTimeString([], { hourCycle: "h24" }));
+        const timeFromRecord = new Date(record.timestamp);
+        setTime(timeFromRecord.toLocaleTimeString([], { hourCycle: "h24" }));
     }, [record])
 
     return (
@@ -26,7 +39,7 @@ function TimeEdit( {onClose, open, record} ) {
                     onChange={onChange}
                 />
                 <div className={"dialogbuttons"}>
-                    <button>Confirm</button>
+                    <button onClick={onConfirm}>Confirm</button>
                     <button onClick={onClose}>Cancel</button>
                 </div>
             </div>
@@ -34,4 +47,4 @@ function TimeEdit( {onClose, open, record} ) {
     )
 }
 
-export default TimeEdit;
+export default connect(null, { updateRecord })(TimeEdit);

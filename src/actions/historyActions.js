@@ -8,6 +8,7 @@ export const GET_HISTORY_ERR = "GET_HISTORY_ERR";
 export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
 export const ADD_RECORD = "ADD_RECORD";
 export const DEL_RECORD = "DEL_RECORD";
+export const UPDATE_RECORD = "UPDATE_RECORD";
 
 export const getHistory = () => dispatch => {
     dispatch(setFetchingTrue());
@@ -45,4 +46,12 @@ export const delRecord = id => dispatch => {
         .then( () => dispatch(getHistory()));
 
     return {type: DEL_RECORD};
+}
+
+export const updateRecord = (record, id) => dispatch => {
+    axios.put(`${serverURL}/history/${id}`, record)
+        .then( () => dispatch(getHistory()))
+        .catch(err => console.error(err));
+
+    return {type: UPDATE_RECORD};
 }
