@@ -30,8 +30,8 @@ function TimeEdit( {onClose, open, record, updateRecord} ) {
     }, [record])
 
     return (
-        <Dialog onClose={onClose} open={open} >
-            <div className="timeedit">
+        <Dialog onClose={onClose} open={open}>
+            <div className="timeedit dialog">
                 <h3>{record.name}</h3>
                 <input 
                     type={"time"} 

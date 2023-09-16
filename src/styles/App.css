@@ -10,6 +10,10 @@ h1, h2, h3, h4, p, label {
   color: var(--white);
 }
 
+.dialog {
+  background-color: var(--background-color);
+}
+
 button {
   background-color: #4b5052;
 	border: 2px solid var(--black);
