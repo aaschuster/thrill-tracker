@@ -43,7 +43,7 @@ function AtParkView( {parks, rides, history} ) {
             while(i<currentRides.length && showRecord === false) {
                 if(currentRides[i].rides_id === record.rides_id && date === new Date().toLocaleString([], {dateStyle: "short"})) {
                     showRecord = true;
-                    newCurrent.push({...currentRides[i], timeonly: time});
+                    newCurrent.push({...currentRides[i], timeonly: time, history_id: record.history_id});
                     if(totalsObj[currentRides[i].rides_id])
                         totalsObj[currentRides[i].rides_id].count++;
                     else 

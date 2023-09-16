@@ -3,7 +3,8 @@ import {
     GET_HISTORY_SUCCESS,
     GET_HISTORY_ERR,
     SET_FETCHING_TRUE,
-    ADD_RECORD
+    ADD_RECORD,
+    DEL_RECORD
 } from "../actions/historyActions";
 
 const initState = {
@@ -23,7 +24,9 @@ export const reducer = (state = initState, action) => {
         case GET_HISTORY_ERR:
             return {...state, isFetching: false, error: action.payload};
         case ADD_RECORD:
-            return {...state, history: [...state.history, action.payload]};
+            return state;
+        case DEL_RECORD:
+            return state;
         default:
             return state;
     }

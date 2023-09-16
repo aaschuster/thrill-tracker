@@ -1,11 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
+
+import { delRecord } from "../../actions/historyActions";
 
 import {MdDeleteForever} from "react-icons/md";
 import {AiFillEdit} from "react-icons/ai";
 
 import "../../styles/ParkViewEdit.css";
 
-function EditMode( {currentHistory} ) {
+function EditMode( {currentHistory, delRecord} ) {
     return (
         <div className={"parkviewedit"}>
             <h4 className="viewlabel">Edit view</h4>
@@ -21,7 +24,7 @@ function EditMode( {currentHistory} ) {
                                 </div>                                
                                 <div className={"editbuttoncontainer"}>
                                     <AiFillEdit className={"editbutton"}/>
-                                    <MdDeleteForever className={"editbutton"}/>
+                                    <MdDeleteForever className={"editbutton"} onClick={() => delRecord(record.history_id)}/>
                                 </div>
                             </div>
                         )
@@ -32,4 +35,4 @@ function EditMode( {currentHistory} ) {
     )
 }
 
-export default EditMode;
+export default connect(null, { delRecord })(EditMode);
