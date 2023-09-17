@@ -9,7 +9,7 @@ import { AiFillQuestionCircle } from "react-icons/ai"
 
 import { addRecord, updateRecord } from "../actions/historyActions";
 
-import "../styles/RideAdd.css";
+import "../styles/RideAddUpdate.css";
 
 function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
 
@@ -102,8 +102,10 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
                         <button onClick={() => setDialogOpen(false)}>Close</button>
                     </div>
                 </Dialog>
-                <BackButton/>
-                <h2>{ride.name}</h2>       
+                <div className="rideaddupdateheader">
+                    <BackButton/>
+                    <h2>{ride.name}</h2>       
+                </div>
                 <form onSubmit={onSubmit}>
                     <label>
                         Row number: <input type={"number"} id={"row"} value={form.row} min={1} onChange={onChange}/>

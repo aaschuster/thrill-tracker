@@ -7,7 +7,7 @@ import { delRecord } from "../../actions/historyActions";
 import {MdDeleteForever} from "react-icons/md";
 import {AiFillEdit} from "react-icons/ai";
 
-import "../../styles/ParkViewEdit.css";
+import "../../styles/EditMode.css";
 
 function EditMode( {currentHistory, delRecord} ) {
 

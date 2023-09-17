@@ -6,6 +6,10 @@
     height: 98vh;
 }
 
+.atparkview h3 {
+    margin-top: 0;
+}
+
 .history {
     background-color: var(--secondary-background-color);
     color: var(--white);

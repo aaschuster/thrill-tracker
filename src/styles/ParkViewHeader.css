@@ -1,5 +1,9 @@
 @import "styles.css";
 
+.parkviewheader {
+    margin: 15px 0;
+}
+
 .parkviewheadertop {
     display: flex;
 }
