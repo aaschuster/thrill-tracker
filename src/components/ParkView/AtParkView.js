@@ -5,7 +5,7 @@ import { Routes, Route, useParams } from "react-router-dom";
 import ParkViewHeader from "./ParkViewHeader";
 import RideList from "./RideList";
 import EditMode from "./EditMode";
-import RideAdd from "./RideAdd";
+import RideAdd from "../RideAddUpdate";
 
 import "../../styles/AtParkView.css";
 
@@ -92,9 +92,6 @@ function AtParkView( {parks, rides, history} ) {
                             <EditMode
                                 currentHistory = {currentHistory}
                             />
-                        }/>
-                        <Route path="/:rideId" element={
-                            <RideAdd/>
                         }/>
                     </Routes>
                 </>

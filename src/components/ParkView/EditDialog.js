@@ -4,9 +4,9 @@ import Dialog from "@mui/material/Dialog";
 
 import { updateRecord } from "../../actions/historyActions";
 
-import "../../styles/TimeEdit.css";
+import "../../styles/EditDialog.css";
 
-function TimeEdit( {onClose, open, record, updateRecord} ) {
+function EditDialog( {onClose, open, record, updateRecord} ) {
 
     const [time, setTime] = useState("");
 
@@ -31,7 +31,7 @@ function TimeEdit( {onClose, open, record, updateRecord} ) {
 
     return (
         <Dialog onClose={onClose} open={open}>
-            <div className="timeedit dialog">
+            <div className="editdialog dialog">
                 <h3>{record.name}</h3>
                 <input 
                     type={"time"} 
@@ -47,4 +47,4 @@ function TimeEdit( {onClose, open, record, updateRecord} ) {
     )
 }
 
-export default connect(null, { updateRecord })(TimeEdit);
+export default connect(null, { updateRecord })(EditDialog);

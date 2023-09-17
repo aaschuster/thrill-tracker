@@ -10,6 +10,7 @@ import '../styles/App.css';
 
 import ParkSelect from "./ParkSelect"
 import AtParkView from "./ParkView/AtParkView";
+import RideAddUpdate from "./RideAddUpdate";
 
 const App = props => {
 
@@ -38,9 +39,13 @@ const App = props => {
             path="/" exact element={
               <ParkSelect/>
             }/>
-          <Route path="/atparkview/:id/*" element={
-            <AtParkView/>
-          }/>
+            <Route path="/atparkview/:id/*" element={
+              <AtParkView/>
+            }/>
+          <Route
+            path="/addupdate/:rideId/:historyId" element={
+              <RideAddUpdate/>
+            }/>
         </Routes>
     </div>
   );

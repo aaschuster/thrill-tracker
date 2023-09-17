@@ -34,7 +34,7 @@ const getHistoryErr = err => {
     return {type: GET_HISTORY_ERR, payload: err.message};
 }
 
-export const addRecord = record => dispatch => {    n b
+export const addRecord = record => dispatch => {   
     axios.post(`${serverURL}/history`, record)
         .then( () => dispatch(getHistory()))
         .catch( err => console.error(err));

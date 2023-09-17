@@ -3,15 +3,17 @@ import { useParams, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import Dialog from "@mui/material/Dialog";
 
+import BackButton from "./BackButton";
+
 import { AiFillQuestionCircle } from "react-icons/ai"
 
-import { addRecord } from "../../actions/historyActions";
+import { addRecord, updateRecord } from "../actions/historyActions";
 
-import "../../styles/RideAdd.css";
+import "../styles/RideAdd.css";
 
-function RideAdd( { rides, addRecord } ) {
+function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
 
-    const { rideId } = useParams();
+    const { rideId, historyId } = useParams();
 
     const navigate = useNavigate();
 
@@ -25,6 +27,7 @@ function RideAdd( { rides, addRecord } ) {
     }
 
     const [ride, setRide] = useState({});
+    const [record, setRecord] = useState({});
     const [form, setForm] = useState(initForm);
     const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -49,7 +52,24 @@ function RideAdd( { rides, addRecord } ) {
     useEffect(() => {
         const [currentRide] = rides.filter( ride => ride.rides_id === parseInt(rideId));
         setRide(currentRide);
-    }, [rideId, rides])
+
+        if(historyId !== "add") {
+            const recordTimestamp = new Date(record.timestamp);
+            setForm({
+                row: record.row || "",
+                seat: record.seat || "",
+                time: recordTimestamp.toLocaleTimeString([], { hourCycle: "h24", timeStyle: "short" }),
+                notes: record.notes || ""
+            })
+        }
+
+    }, [rideId, rides, historyId, history])
+
+    // useEffect(() => {
+    //     if(historyId !== null) {
+    //         const [currentRecord] = history.filter( record => history.history_id === parseInt(historyId))
+    //     }
+    // }, [historyId, history])
 
     return (
         <div className="rideaddcontainer"> 
@@ -63,7 +83,8 @@ function RideAdd( { rides, addRecord } ) {
                         <button onClick={() => setDialogOpen(false)}>Close</button>
                     </div>
                 </Dialog>
-                <h3>{ride.name}</h3>       
+                <BackButton/>
+                <h2>{ride.name}</h2>       
                 <form onSubmit={onSubmit}>
                     <label>
                         Row number: <input type={"number"} id={"row"} value={form.row} min={1} onChange={onChange}/>
@@ -91,8 +112,9 @@ function RideAdd( { rides, addRecord } ) {
 
 const mapStateToProps = state => {
     return {
-        rides: state.rides.rides
+        rides: state.rides.rides,
+        history: state.history.history
     }
 }
 
-export default connect(mapStateToProps, { addRecord })(RideAdd);
+export default connect(mapStateToProps, { addRecord, updateRecord })(RideAddUpdate);

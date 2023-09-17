@@ -4,22 +4,22 @@
     width: 95%;
 }
 
-.timeedit {
+.editdialog {
     display: flex;
     flex-direction: column;
 }
 
-.timeedit .dialogbuttons {
+.editdialog .dialogbuttons {
     display: flex;
     justify-content: space-around;
     margin-bottom: 15px;
 }
 
-.timeedit .dialogbuttons button {
+.editdialog .dialogbuttons button {
     width: 40%;
 }
 
-.timeedit input {
+.editdialog input {
     margin: 0 auto 15px auto;
     font-size: 1.5rem;
 }

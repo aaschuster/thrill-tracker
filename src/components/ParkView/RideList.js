@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { addRecord } from "../../actions/historyActions";
@@ -9,7 +9,6 @@ function RideList( {currentHistory, currentTotals, currentRides, addRecord} ) {
     const [totalsView, setTotalsView] = useState(false);
 
     const navigate = useNavigate();
-    const { pathname } = useLocation();
     const historyRef = useRef(null);
 
     function quickAdd(rides_id) {
@@ -70,7 +69,7 @@ function RideList( {currentHistory, currentTotals, currentRides, addRecord} ) {
                     onClick={() => setTotalsView(true)}
                 >
                     View by totals</button>
-                <button onClick={() => navigate(`${pathname}/edit`)}>Edit mode</button>
+                <button onClick={() => navigate("edit")}>Edit mode</button>
             </div>
 
             <div>
@@ -81,7 +80,7 @@ function RideList( {currentHistory, currentTotals, currentRides, addRecord} ) {
 
                                 <button 
                                     className={"ridename"} 
-                                    onClick={() => navigate(`${pathname}/${ride.rides_id}`)}
+                                    onClick={() => navigate(`/addupdate/${ride.rides_id}/add`)}
                                 >
                                     {ride.name}
                                 </button>

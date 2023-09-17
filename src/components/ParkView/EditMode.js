@@ -6,7 +6,7 @@ import { delRecord } from "../../actions/historyActions";
 import {MdDeleteForever} from "react-icons/md";
 import {AiFillEdit} from "react-icons/ai";
 
-import TimeEdit from "./TimeEdit";
+import TimeEdit from "./EditDialog";
 
 import "../../styles/ParkViewEdit.css";
 

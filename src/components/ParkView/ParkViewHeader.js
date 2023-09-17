@@ -1,17 +1,15 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-import {BiArrowBack} from "react-icons/bi";
+import BackButton from "../BackButton";
 
 import "../../styles/ParkViewHeader.css";
 
 function ParkViewHeader( {name} ) {
-    const navigate = useNavigate();
 
     return (
         <div className={"parkviewheader"}>
             <div className={"parkviewheadertop"}>
-                <BiArrowBack className={"backarrow"} size="30px" onClick={() => navigate(-1)}/>
+                <BackButton/>
                 <h2>{name}</h2>
             </div>
         </div>
