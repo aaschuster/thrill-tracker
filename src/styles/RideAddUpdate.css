@@ -34,6 +34,12 @@
     margin-bottom: 15px;
 }
 
+.rowseatcontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .seatcontainer {
     margin-bottom: 15px;
     margin-left: 39px;

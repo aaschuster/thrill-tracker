@@ -30,11 +30,13 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
     }
 
     const [ride, setRide] = useState({});
+    const [seatArr, setSeatArr] = useState([]);
     const [record, setRecord] = useState(null);
     const [form, setForm] = useState(initForm);
     const [dialogOpen, setDialogOpen] = useState(false);
 
     function onChange(evt) {
+        console.log(ride);
         const {target} = evt;
         setForm({...form, [target.id]: target.value});
     }
@@ -79,6 +81,25 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
     }, [rideId, rides, historyId, history])
 
     useEffect(() => {
+        if(ride && ride.rows) {
+            let row = [];
+            let seatMap = [];
+
+            if(ride.rows && ride.seats) {
+                for(let i = 1; i<=ride.seats; i++) {
+                    row.push(i);
+                }
+
+                for(let i = 1; i<=ride.rows; i++) {
+                    seatMap.push(row);
+                }
+            }
+            
+            setSeatArr(seatMap);
+        }
+    }, [ride])
+
+    useEffect(() => {
         if(record) {
             const recordTimestamp = new Date(record.timestamp);
             setForm({
@@ -107,15 +128,36 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
                     <h2>{ride.name}</h2>       
                 </div>
                 <form onSubmit={onSubmit}>
-                    <label>
-                        Row number: <input type={"number"} id={"row"} value={form.row} min={1} onChange={onChange}/>
-                    </label>      
-                    <div className={"seatcontainer"}>
+                    {
+                        seatArr.length ? 
+                            <div className="seatmap"> {
+                                seatArr.map( (row, idx) => {
+                                    return (
+                                        <div className="row" key={idx}> <p>Row {idx+1}</p>{
+                                            row.map( (seat, idx) => {
+                                                return <button key={idx}>{seat}</button>
+                                            })
+                                            }
+                                        </div>
+                                    )
+                                })                            
+                            }
+                            </div>                       
+                    :
+
+                    <div className={"rowseatcontainer"}>
                         <label>
-                            Seat number: <input type={"number"} id={"seat"} value={form.seat} min={1} onChange={onChange}/>
-                        </label>                    
-                        <AiFillQuestionCircle className={"questionbutton"} onClick={() => setDialogOpen(true)}/>
-                    </div>              
+                            Row number: <input type={"number"} id={"row"} value={form.row} min={1} onChange={onChange}/>
+                        </label>      
+                        <div className={"seatcontainer"}>
+                            <label>
+                                Seat number: <input type={"number"} id={"seat"} value={form.seat} min={1} onChange={onChange}/>
+                            </label>                    
+                            <AiFillQuestionCircle className={"questionbutton"} onClick={() => setDialogOpen(true)}/>
+                        </div>  
+                    </div>  
+                    
+                    }
                     <input type={"time"} id={"time"} value={form.time} onChange={onChange}/>
                     <label>
                         Notes: 
