@@ -13,11 +13,14 @@ import "../styles/RideAdd.css";
 
 function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
 
-    const { rideId, historyId } = useParams();
+    let { rideId, historyId } = useParams();
+    rideId = parseInt(rideId);
+    const historyInt = parseInt(historyId);
 
     const navigate = useNavigate();
 
     const date = new Date().toLocaleDateString([], {year: "2-digit", month: "numeric", day: "numeric"});
+    const editMode = historyId !== "add";
 
     const initForm = {
         row: "",
@@ -27,7 +30,7 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
     }
 
     const [ride, setRide] = useState({});
-    const [record, setRecord] = useState({});
+    const [record, setRecord] = useState(null);
     const [form, setForm] = useState(initForm);
     const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -38,25 +41,37 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
 
     function onSubmit(evt) {
         evt.preventDefault();
-        const newTimestamp = new Date (`${date} ${form.time}`)
-        addRecord({
+
+        let newDate = date;
+        
+        if(editMode) {
+            const [recordDate, recordTime] = record.timestamp.split(", ");
+            newDate = recordDate;
+        }
+        
+        const newTimestamp = new Date (`${newDate} ${form.time}`)
+
+        const newRecord = {
             rides_id: ride.rides_id,
-            timestamp: `${date}, ${newTimestamp.toLocaleTimeString([], { hour: "numeric", minute: "numeric" })}`,
+            timestamp: `${newDate}, ${newTimestamp.toLocaleTimeString([], { hour: "numeric", minute: "numeric" })}`,
             notes: form.notes,
             row: form.row,
             seat: form.seat
-        });
+        };
+
+        if(editMode) updateRecord(newRecord, historyInt);
+        else addRecord(newRecord);
         navigate(-1);
     }
 
     useEffect(() => {
-        const [currentRide] = rides.filter( ride => ride.rides_id === parseInt(rideId));
+        const [currentRide] = rides.filter( ride => ride.rides_id === rideId);
         setRide(currentRide);
 
-        if(historyId !== "add") {
+        if(editMode) {
             const [currentRecord] = history.filter( 
                 historyItem => 
-                    historyItem.history_id === parseInt(historyId)
+                    historyItem.history_id === historyInt
             );
             setRecord(currentRecord);
         }
@@ -64,7 +79,7 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
     }, [rideId, rides, historyId, history])
 
     useEffect(() => {
-        if(record.history_id !== undefined) {
+        if(record) {
             const recordTimestamp = new Date(record.timestamp);
             setForm({
                 row: record.row || "",
