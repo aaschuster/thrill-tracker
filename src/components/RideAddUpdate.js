@@ -67,6 +67,17 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
         navigate(-1);
     }
 
+    function checkSeat(row, seat) {
+        if(form.row && form.seat) {
+            return (form.seat === seat && form.row === row);
+        }
+        return false;
+    }
+
+    function seatOnClick(row, seat) {
+        setForm({...form, row: row, seat: seat});
+    }
+
     useEffect(() => {
         const [currentRide] = rides.filter( ride => ride.rides_id === rideId);
         setRide(currentRide);
@@ -140,18 +151,24 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
                     {
                         seatArr.length ? 
                             <div className="seatmap"> {
-                                seatArr.map( (row, idx) => {
+                                seatArr.map( (row, rowIdx) => {
                                     return (
-                                        <div className={`row ${seatButtonsWidth === "auto" ? "singlerow":""}`} key={idx}> 
-                                            <p style={{width: seatButtonsWidth === "auto" ? "auto" : "100%"}}>Row {idx+1}</p>
+                                        <div className={`row ${seatButtonsWidth === "auto" ? "singlerow":""}`} key={rowIdx}> 
+                                            <p style={{width: seatButtonsWidth === "auto" ? "auto" : "100%"}}>Row {rowIdx+1}</p>
                                             <div 
                                                 className={"seatbuttons"} 
                                                 ref={seatButtonsRef} 
                                                 style={{width: seatButtonsWidth}}
-                                            >
+                                            > 
                                                 {
-                                                    row.map( (seat, idx) => {
-                                                        return <button key={idx}>{seat}</button>
+                                                    row.map( (seat, seatIdx) => {
+                                                        return <button 
+                                                                    key={seatIdx}
+                                                                    disabled={checkSeat(rowIdx+1, seat)}
+                                                                    onClick={() => seatOnClick(rowIdx+1, seat)}
+                                                                >
+                                                                    {seat}
+                                                                </button>
                                                     })
                                                 }
                                             </div>
