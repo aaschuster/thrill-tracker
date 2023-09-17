@@ -119,7 +119,7 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
                         Notes: 
                     </label>
                     <textarea id={"notes"} placeholder="Put some notes here..." value={form.notes} onChange={onChange}/>
-                    <button>Add</button>
+                    <button>{editMode ? "Update" : "Add"}</button>
                 </form>     
             </div>
 

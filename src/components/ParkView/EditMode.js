@@ -7,8 +7,6 @@ import { delRecord } from "../../actions/historyActions";
 import {MdDeleteForever} from "react-icons/md";
 import {AiFillEdit} from "react-icons/ai";
 
-import TimeEdit from "./EditDialog";
-
 import "../../styles/ParkViewEdit.css";
 
 function EditMode( {currentHistory, delRecord} ) {
@@ -28,9 +26,6 @@ function EditMode( {currentHistory, delRecord} ) {
 
     const navigate = useNavigate();
 
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [recordToEdit, setRecordToEdit] = useState(blankRecord);
-
     function editOnClick(record) {
         navigate(`/addupdate/${record.rides_id}/${record.history_id}`);
     }
@@ -38,11 +33,6 @@ function EditMode( {currentHistory, delRecord} ) {
     return (
         <div className={"parkviewedit"}>
             <h3>Today's rides:</h3>
-            <TimeEdit 
-                onClose={() => setDialogOpen(false)} 
-                open={dialogOpen}
-                record={recordToEdit}
-            />
             <h4 className="viewlabel">Edit view</h4>
             <hr/>
             <div className={"history"}>
