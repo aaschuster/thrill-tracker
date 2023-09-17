@@ -40,6 +40,40 @@
     align-items: center;
 }
 
+.seatmap {
+    width: 95%;
+    margin-bottom: 15px;
+}
+
+.rideadd .row {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    justify-content: center;
+}
+
+.rideadd .seatmap .singlerow {
+    width: auto;
+    margin-right: 60px;
+}
+
+.rideadd .seatmap .singlerow p {
+    min-width: 60px;
+}
+
+.rideadd .seatbuttons {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.rideadd .row button {
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+}
+
 .seatcontainer {
     margin-bottom: 15px;
     margin-left: 39px;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import Dialog from "@mui/material/Dialog";
@@ -18,6 +18,7 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
     const historyInt = parseInt(historyId);
 
     const navigate = useNavigate();
+    const seatButtonsRef = useRef(null);
 
     const date = new Date().toLocaleDateString([], {year: "2-digit", month: "numeric", day: "numeric"});
     const editMode = historyId !== "add";
@@ -29,6 +30,7 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
         notes: ""
     }
 
+    const [seatButtonsWidth, setSeatButtonsWidth] = useState("auto");
     const [ride, setRide] = useState({});
     const [seatArr, setSeatArr] = useState([]);
     const [record, setRecord] = useState(null);
@@ -36,7 +38,6 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
     const [dialogOpen, setDialogOpen] = useState(false);
 
     function onChange(evt) {
-        console.log(ride);
         const {target} = evt;
         setForm({...form, [target.id]: target.value});
     }
@@ -111,11 +112,19 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
         }
     }, [record])
 
+    useEffect(() => {
+        if(seatButtonsRef.current) {
+            if(seatButtonsRef.current.offsetHeight > 51) {
+                setSeatButtonsWidth(`${ride.seats / 2 * 50}px`);
+            }
+        }
+    }, [seatArr]);
+
     return (
         <div className="rideaddcontainer"> 
         {
             ride ?
-            <div className="rideadd">
+            <div className="rideadd" >
                 <Dialog onClose={() => setDialogOpen(false)} open={dialogOpen}>
                     <div className="quicktip dialog">
                         <p>Count from left for seat numbers.</p>
@@ -133,11 +142,19 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
                             <div className="seatmap"> {
                                 seatArr.map( (row, idx) => {
                                     return (
-                                        <div className="row" key={idx}> <p>Row {idx+1}</p>{
-                                            row.map( (seat, idx) => {
-                                                return <button key={idx}>{seat}</button>
-                                            })
-                                            }
+                                        <div className={`row ${seatButtonsWidth === "auto" ? "singlerow":""}`} key={idx}> 
+                                            <p style={{width: seatButtonsWidth === "auto" ? "auto" : "100%"}}>Row {idx+1}</p>
+                                            <div 
+                                                className={"seatbuttons"} 
+                                                ref={seatButtonsRef} 
+                                                style={{width: seatButtonsWidth}}
+                                            >
+                                                {
+                                                    row.map( (seat, idx) => {
+                                                        return <button key={idx}>{seat}</button>
+                                                    })
+                                                }
+                                            </div>
                                         </div>
                                     )
                                 })                            
