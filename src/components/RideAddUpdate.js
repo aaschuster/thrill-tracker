@@ -54,6 +54,17 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
         setRide(currentRide);
 
         if(historyId !== "add") {
+            const [currentRecord] = history.filter( 
+                historyItem => 
+                    historyItem.history_id === parseInt(historyId)
+            );
+            setRecord(currentRecord);
+        }
+
+    }, [rideId, rides, historyId, history])
+
+    useEffect(() => {
+        if(record.history_id !== undefined) {
             const recordTimestamp = new Date(record.timestamp);
             setForm({
                 row: record.row || "",
@@ -62,14 +73,7 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
                 notes: record.notes || ""
             })
         }
-
-    }, [rideId, rides, historyId, history])
-
-    // useEffect(() => {
-    //     if(historyId !== null) {
-    //         const [currentRecord] = history.filter( record => history.history_id === parseInt(historyId))
-    //     }
-    // }, [historyId, history])
+    }, [record])
 
     return (
         <div className="rideaddcontainer"> 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { delRecord } from "../../actions/historyActions";
 
@@ -25,12 +26,13 @@ function EditMode( {currentHistory, delRecord} ) {
         track_length: null
     }
 
+    const navigate = useNavigate();
+
     const [dialogOpen, setDialogOpen] = useState(false);
     const [recordToEdit, setRecordToEdit] = useState(blankRecord);
 
     function editOnClick(record) {
-        setRecordToEdit(record);
-        setDialogOpen(true);
+        navigate(`/addupdate/${record.rides_id}/${record.history_id}`);
     }
 
     return (
