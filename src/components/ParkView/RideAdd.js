@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import Dialog from "@mui/material/Dialog";
 
 import { AiFillQuestionCircle } from "react-icons/ai"
 
+import { addRecord } from "../../actions/historyActions";
+
 import "../../styles/RideAdd.css";
 
-function RideAdd( { rides } ) {
+function RideAdd( { rides, addRecord } ) {
 
     const { rideId } = useParams();
 
+    const navigate = useNavigate();
+
+    const date = new Date().toLocaleDateString([], {year: "2-digit", month: "numeric", day: "numeric"});
+
     const initForm = {
-        row: null,
-        seat: null,
+        row: "",
+        seat: "",
         time: (new Date()).toLocaleTimeString([], { hourCycle: "h24", timeStyle: "short" }),
         notes: ""
     }
@@ -25,6 +31,19 @@ function RideAdd( { rides } ) {
     function onChange(evt) {
         const {target} = evt;
         setForm({...form, [target.id]: target.value});
+    }
+
+    function onSubmit(evt) {
+        evt.preventDefault();
+        const newTimestamp = new Date (`${date} ${form.time}`)
+        addRecord({
+            rides_id: ride.rides_id,
+            timestamp: `${date}, ${newTimestamp.toLocaleTimeString([], { hour: "numeric", minute: "numeric" })}`,
+            notes: form.notes,
+            row: form.row,
+            seat: form.seat
+        });
+        navigate(-1);
     }
 
     useEffect(() => {
@@ -45,7 +64,7 @@ function RideAdd( { rides } ) {
                     </div>
                 </Dialog>
                 <h3>{ride.name}</h3>       
-                <form>
+                <form onSubmit={onSubmit}>
                     <label>
                         Row number: <input type={"number"} id={"row"} value={form.row} min={1} onChange={onChange}/>
                     </label>      
@@ -76,4 +95,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(RideAdd);
+export default connect(mapStateToProps, { addRecord })(RideAdd);

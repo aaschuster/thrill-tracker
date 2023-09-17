@@ -70,6 +70,7 @@ textarea::placeholder {
     font-size: 1.3rem;
     background: var(--secondary-background-color);
     color: var(--white);
+    min-height: 150px;
 }
 
 .rideadd button {
