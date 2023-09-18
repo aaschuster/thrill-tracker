@@ -74,6 +74,11 @@
     margin: 5px;
 }
 
+.rideadd .fakedisabled {
+  background-color: var(--button-disabled-background-color);
+  color: var(--button-disabled-text-color);
+}
+
 .seatcontainer {
     margin-bottom: 15px;
     margin-left: 39px;

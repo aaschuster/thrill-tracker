@@ -75,7 +75,10 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
     }
 
     function seatOnClick(row, seat) {
-        setForm({...form, row: row, seat: seat});
+        if(checkSeat(row, seat))
+            setForm({...form, row: "", seat: ""});
+        else
+            setForm({...form, row: row, seat: seat});
     }
 
     useEffect(() => {
@@ -163,8 +166,9 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
                                                 {
                                                     row.map( (seat, seatIdx) => {
                                                         return <button 
+                                                                    type={"button"}
                                                                     key={seatIdx}
-                                                                    disabled={checkSeat(rowIdx+1, seat)}
+                                                                    className={checkSeat(rowIdx+1, seat) ? "fakedisabled" : ""}
                                                                     onClick={() => seatOnClick(rowIdx+1, seat)}
                                                                 >
                                                                     {seat}
