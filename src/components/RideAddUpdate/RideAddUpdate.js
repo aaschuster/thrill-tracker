@@ -110,6 +110,7 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
                 for(let i = 1; i<=ride.rows; i++) {
                     seatMap.push(row);
                 }
+                setSeatMapView(true);
             }
             
             setSeatArr(seatMap);
@@ -147,7 +148,7 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
                 <form onSubmit={onSubmit}>
                     <button 
                         type="button" 
-                        className={showSeatSelect ? "fakedisabled" : ""}
+                        className={`togglebutton ${showSeatSelect ? "fakedisabled":""}`}
                         onClick={() => setShowSeatSelect(!showSeatSelect)}
                     >
                         Show seat select
@@ -155,12 +156,12 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
 
                     {
                         showSeatSelect ?
-                        <div> 
+                        <div className="seatselectcontainer"> 
                             {
                                 seatArr.length ? 
                                     <button 
                                         type="button"
-                                        className={seatMapView ? "fakedisabled":""}
+                                        className={`togglebutton ${seatMapView ? "fakedisabled":""}`}
                                         onClick={() => setSeatMapView(!seatMapView)}
                                     >
                                         Show seat map
