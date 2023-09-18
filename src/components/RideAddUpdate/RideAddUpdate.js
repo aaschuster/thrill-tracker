@@ -1,15 +1,17 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import Dialog from "@mui/material/Dialog";
 
-import BackButton from "./BackButton";
+import BackButton from "../BackButton";
+
+import SeatMap from "./SeatMap";
 
 import { AiFillQuestionCircle } from "react-icons/ai"
 
-import { addRecord, updateRecord } from "../actions/historyActions";
+import { addRecord, updateRecord } from "../../actions/historyActions";
 
-import "../styles/RideAddUpdate.css";
+import "../../styles/RideAddUpdate.css";
 
 function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
 
@@ -18,7 +20,6 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
     const historyInt = parseInt(historyId);
 
     const navigate = useNavigate();
-    const seatButtonsRef = useRef(null);
 
     const date = new Date().toLocaleDateString([], {year: "2-digit", month: "numeric", day: "numeric"});
     const editMode = historyId !== "add";
@@ -26,11 +27,12 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
     const initForm = {
         row: "",
         seat: "",
-        time: (new Date()).toLocaleTimeString([], { hourCycle: "h24", timeStyle: "short" }),
+        time: (new Date()).toLocaleTimeString([], { hourCycle: "h23", timeStyle: "short" }),
         notes: ""
     }
 
-    const [seatButtonsWidth, setSeatButtonsWidth] = useState("auto");
+    const [showSeatSelect, setShowSeatSelect] = useState(true);
+    const [seatMapView, setSeatMapView] = useState(false);
     const [ride, setRide] = useState({});
     const [seatArr, setSeatArr] = useState([]);
     const [record, setRecord] = useState(null);
@@ -120,19 +122,11 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
             setForm({
                 row: record.row || "",
                 seat: record.seat || "",
-                time: recordTimestamp.toLocaleTimeString([], { hourCycle: "h24", timeStyle: "short" }),
+                time: recordTimestamp.toLocaleTimeString([], { hourCycle: "h23", timeStyle: "short" }),
                 notes: record.notes || ""
             })
         }
     }, [record])
-
-    useEffect(() => {
-        if(seatButtonsRef.current) {
-            if(seatButtonsRef.current.offsetHeight > 51) {
-                setSeatButtonsWidth(`${ride.seats / 2 * 50}px`);
-            }
-        }
-    }, [seatArr]);
 
     return (
         <div className="rideaddcontainer"> 
@@ -151,51 +145,34 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
                     <h2>{ride.name}</h2>       
                 </div>
                 <form onSubmit={onSubmit}>
+                    <button 
+                        type="button" 
+                        className={showSeatSelect ? "fakedisabled" : ""}
+                        onClick={() => setShowSeatSelect(!showSeatSelect)}
+                    >
+                        Show seat select
+                    </button>
                     {
-                        seatArr.length ? 
-                            <div className="seatmap"> {
-                                seatArr.map( (row, rowIdx) => {
-                                    return (
-                                        <div className={`row ${seatButtonsWidth === "auto" ? "singlerow":""}`} key={rowIdx}> 
-                                            <p style={{width: seatButtonsWidth === "auto" ? "auto" : "100%"}}>Row {rowIdx+1}</p>
-                                            <div 
-                                                className={"seatbuttons"} 
-                                                ref={seatButtonsRef} 
-                                                style={{width: seatButtonsWidth}}
-                                            > 
-                                                {
-                                                    row.map( (seat, seatIdx) => {
-                                                        return <button 
-                                                                    type={"button"}
-                                                                    key={seatIdx}
-                                                                    className={checkSeat(rowIdx+1, seat) ? "fakedisabled" : ""}
-                                                                    onClick={() => seatOnClick(rowIdx+1, seat)}
-                                                                >
-                                                                    {seat}
-                                                                </button>
-                                                    })
-                                                }
-                                            </div>
-                                        </div>
-                                    )
-                                })                            
-                            }
-                            </div>                       
-                    :
+                        showSeatSelect ? 
+                            <> {
+                            seatArr.length ? 
+                                <SeatMap seatArr={seatArr} checkSeat={checkSeat} seatOnClick={seatOnClick}/>
+                            :
 
-                    <div className={"rowseatcontainer"}>
-                        <label>
-                            Row number: <input type={"number"} id={"row"} value={form.row} min={1} onChange={onChange}/>
-                        </label>      
-                        <div className={"seatcontainer"}>
-                            <label>
-                                Seat number: <input type={"number"} id={"seat"} value={form.seat} min={1} onChange={onChange}/>
-                            </label>                    
-                            <AiFillQuestionCircle className={"questionbutton"} onClick={() => setDialogOpen(true)}/>
-                        </div>  
-                    </div>  
+                            <div className={"rowseatcontainer"}>
+                                <label>
+                                    Row number: <input type={"number"} id={"row"} value={form.row} min={1} onChange={onChange}/>
+                                </label>      
+                                <div className={"seatcontainer"}>
+                                    <label>
+                                        Seat number: <input type={"number"} id={"seat"} value={form.seat} min={1} onChange={onChange}/>
+                                    </label>                    
+                                    <AiFillQuestionCircle className={"questionbutton"} onClick={() => setDialogOpen(true)}/>
+                                </div>  
+                            </div>  
                     
-                    }
+                            }</>:<></>
+                }
                     <input type={"time"} id={"time"} value={form.time} onChange={onChange}/>
                     <label>
                         Notes: 

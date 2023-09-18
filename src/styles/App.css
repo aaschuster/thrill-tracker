@@ -35,6 +35,11 @@ button:disabled {
   color: var(--button-disabled-text-color);
 }
 
+.fakedisabled {
+  background-color: var(--button-disabled-background-color);
+  color: var(--button-disabled-text-color);
+}
+
 hr {
   margin: 0;
   padding: 0;

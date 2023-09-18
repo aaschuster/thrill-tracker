@@ -10,7 +10,7 @@ import '../styles/App.css';
 
 import ParkSelect from "./ParkSelect"
 import AtParkView from "./ParkView/AtParkView";
-import RideAddUpdate from "./RideAddUpdate";
+import RideAddUpdate from "./RideAddUpdate/RideAddUpdate";
 
 const App = props => {
 
