@@ -1,27 +1,34 @@
 @import "styles.css";
 
-.rideaddcontainer {
+.recordaddupdatecontainer {
     height: 100vh;
 }
 
-.rideadd {
+.recordaddupdate {
     height: 100%;
     display: flex;
     flex-direction: column;
+    max-width: 550px;
+    width: 95%;
+    margin: 0 auto;
 }
 
-.rideaddupdateheader {
+.recordaddupdate p {
+    margin: auto 0;
+}
+
+.recordaddupdateupdateheader {
     display: flex;
     align-items: center;
-    margin: 15px 0;
+    margin: 20px 0;
 }
 
-.rideaddupdateheader h2 {
-    width: calc(100% - 60px);
+.recordaddupdateupdateheader h2 {
+    width: calc(100% - 92px);
     margin: 0;
 }
 
-.rideadd form {
+.recordaddupdate form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +36,7 @@
     margin-top: 10px;
 }
 
-.rideadd label {
+.recordaddupdate label {
     font-size: 1.4rem;
     margin-bottom: 15px;
 }
@@ -40,10 +47,10 @@
     width: 100%;
 }
 
-.rideadd .togglebutton {
+.recordaddupdate .togglebutton {
     margin: 0 auto 15px auto;
     padding: 10px;
-    width: 50%;
+    width: 200px;
 }
 
 .rowseatcontainer {
@@ -55,33 +62,36 @@
 
 .seatmap {
     width: 95%;
-    margin: 0 auto;
-    margin-bottom: 15px;
+    margin: 15px auto;
 }
 
-.rideadd .row {
+.recordaddupdate .row {
     display: flex;
     flex-flow: row wrap;
     width: 100%;
     justify-content: center;
 }
 
-.rideadd .seatmap .singlerow {
+.recordaddupdate .seatmap .singlerow {
     width: auto;
     margin-right: 60px;
 }
 
-.rideadd .seatmap .singlerow p {
+.recordaddupdate .seatmap .singlerow p {
     min-width: 60px;
 }
 
-.rideadd .seatbuttons {
+.recordaddupdate .seatbuttons {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
 }
 
-.rideadd .row button {
+.recordaddupdate .multirow .seatbuttons {
+    margin: 15px 0;
+}
+
+.recordaddupdate .row button {
     padding: 8px;
     width: 40px;
     height: 40px;
@@ -90,7 +100,7 @@
 
 .seatcontainer {
     margin-bottom: 15px;
-    margin-left: 39px;
+    margin-left: 40px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -136,12 +146,14 @@ textarea::placeholder {
     background: var(--secondary-background-color);
     color: var(--white);
     min-height: 150px;
+    max-width: 550px;
 }
 
-.rideadd button {
+.recordaddupdate button {
     margin: 15px;
     font-size: 1.2rem;
     width: 60%;
+    max-width: 250px;
 }
 
 .quicktip {

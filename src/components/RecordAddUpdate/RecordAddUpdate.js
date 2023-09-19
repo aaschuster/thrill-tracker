@@ -11,9 +11,9 @@ import { AiFillQuestionCircle } from "react-icons/ai"
 
 import { addRecord, updateRecord } from "../../actions/historyActions";
 
-import "../../styles/RideAddUpdate.css";
+import "../../styles/RecordAddUpdate.css";
 
-function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
+function RecordAddUpdate( { rides, history, addRecord, updateRecord } ) {
 
     let { rideId, historyId } = useParams();
     rideId = parseInt(rideId);
@@ -31,7 +31,6 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
         notes: ""
     }
 
-    const [showSeatSelect, setShowSeatSelect] = useState(true);
     const [seatMapView, setSeatMapView] = useState(false);
     const [ride, setRide] = useState({});
     const [seatArr, setSeatArr] = useState([]);
@@ -130,10 +129,10 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
     }, [record])
 
     return (
-        <div className="rideaddcontainer"> 
+        <div className="recordaddupdatecontainer"> 
         {
             ride ?
-            <div className="rideadd" >
+            <div className="recordaddupdate" >
                 <Dialog onClose={() => setDialogOpen(false)} open={dialogOpen}>
                     <div className="quicktip dialog">
                         <p>Count from left for seat numbers.</p>
@@ -141,54 +140,44 @@ function RideAddUpdate( { rides, history, addRecord, updateRecord } ) {
                         <button onClick={() => setDialogOpen(false)}>Close</button>
                     </div>
                 </Dialog>
-                <div className="rideaddupdateheader">
+                <div className="recordaddupdateupdateheader">
                     <BackButton/>
                     <h2>{ride.name}</h2>       
                 </div>
                 <form onSubmit={onSubmit}>
-                    <button 
-                        type="button" 
-                        className={`togglebutton ${showSeatSelect ? "fakedisabled":""}`}
-                        onClick={() => setShowSeatSelect(!showSeatSelect)}
-                    >
-                        Show seat select
-                    </button>
-
-                    {
-                        showSeatSelect ?
-                        <div className="seatselectcontainer"> 
-                            {
-                                seatArr.length ? 
-                                    <button 
-                                        type="button"
-                                        className={`togglebutton ${seatMapView ? "fakedisabled":""}`}
-                                        onClick={() => setSeatMapView(!seatMapView)}
-                                    >
-                                        Show seat map
-                                    </button>
-                                    :
-                                    <></>
-                            } 
-                            <div>
-                                {
-                                seatMapView ?
-                                <SeatMap seatArr={seatArr} checkSeat={checkSeat} seatOnClick={seatOnClick}/>
+                    
+                    <div className="seatselectcontainer"> 
+                        {
+                            seatArr.length ? 
+                                <button 
+                                    type="button"
+                                    className={`togglebutton ${seatMapView ? "fakedisabled":""}`}
+                                    onClick={() => setSeatMapView(!seatMapView)}
+                                >
+                                    Show seat map
+                                </button>
                                 :
-                                <div className={"rowseatcontainer"}>
+                                <></>
+                        } 
+                        <div>
+                            {
+                            seatMapView ?
+                            <SeatMap seatArr={seatArr} checkSeat={checkSeat} seatOnClick={seatOnClick}/>
+                            :
+                            <div className={"rowseatcontainer"}>
+                                <label>
+                                    Row number: <input type={"number"} id={"row"} value={form.row} min={1} onChange={onChange}/>
+                                </label>      
+                                <div className={"seatcontainer"}>
                                     <label>
-                                        Row number: <input type={"number"} id={"row"} value={form.row} min={1} onChange={onChange}/>
-                                    </label>      
-                                    <div className={"seatcontainer"}>
-                                        <label>
-                                            Seat number: <input type={"number"} id={"seat"} value={form.seat} min={1} onChange={onChange}/>
-                                        </label>                    
-                                        <AiFillQuestionCircle className={"questionbutton"} onClick={() => setDialogOpen(true)}/>
-                                    </div>  
-                                </div>
-                                }
+                                        Seat number: <input type={"number"} id={"seat"} value={form.seat} min={1} onChange={onChange}/>
+                                    </label>                    
+                                    <AiFillQuestionCircle className={"questionbutton"} onClick={() => setDialogOpen(true)}/>
+                                </div>  
                             </div>
-                        </div>:<></>
-                    }
+                            }
+                        </div>
+                    </div>
                     
                     <input type={"time"} id={"time"} value={form.time} onChange={onChange}/>
                     <label>
@@ -212,4 +201,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { addRecord, updateRecord })(RideAddUpdate);
+export default connect(mapStateToProps, { addRecord, updateRecord })(RecordAddUpdate);

@@ -4,10 +4,13 @@
     display: flex;
     flex-direction: column;
     height: 98vh;
+    max-width: 550px;
+    width: 95%;
+    margin: 0 auto;
 }
 
 .atparkview h3 {
-    margin-top: 0;
+    margin-bottom: 15px;
 }
 
 .history {
@@ -45,16 +48,21 @@
     border-radius: 7px 7px 0px 0px; 
 }
 
+.ridelist {
+    margin: 2%;
+}
+
 .ridecontainer {
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    align-content: stretch;
+    justify-content: center;
     margin: 0 auto;
 }
   
 .ridename {
     width: 75%;
+    max-width: 300px;
 }
   
 .ridename, .quickadd {
@@ -63,11 +71,12 @@
 
 .viewbuttons {
     width: 95%;
+    max-width: 450px;
     display: flex;
     margin: 15px auto 10px auto;
 }
   
 .viewbuttons button {
     width: 100%;
-    padding: 1em 0 1em 0;
+    padding: 1em 5px;
 }

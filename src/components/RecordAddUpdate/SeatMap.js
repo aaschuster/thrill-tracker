@@ -3,13 +3,20 @@ import React, { useState, useRef, useEffect } from "react";
 function SeatMap( { seatArr, checkSeat, seatOnClick } ) {
 
     const [seatButtonsWidth, setSeatButtonsWidth] = useState("auto");
+    const [rowLabelWrapped, setRowLabelWrapped] = useState(false);
 
     const seatButtonsRef = useRef(null);
+    const rowRef = useRef(null);
 
     useEffect(() => {
-        if(seatButtonsRef.current) {
-            if(seatButtonsRef.current.offsetHeight > 51) {
+        const rowHeight = rowRef.current.offsetHeight;
+
+        if(rowRef.current) {
+            if(rowHeight > 70) { //seat buttons have wrapped into multiple rows
                 setSeatButtonsWidth(`${seatArr[0].length / 2 * 50}px`);
+            }
+            if(rowHeight > 50) { //row label has wrapped
+                setRowLabelWrapped(true);
             }
         }
     }, [seatArr]);
@@ -19,8 +26,8 @@ function SeatMap( { seatArr, checkSeat, seatOnClick } ) {
             {
                 seatArr.map( (row, rowIdx) => {
                     return (
-                        <div className={`row ${seatButtonsWidth === "auto" ? "singlerow":""}`} key={rowIdx}> 
-                            <p style={{width: seatButtonsWidth === "auto" ? "auto" : "100%"}}>Row {rowIdx+1}</p>
+                        <div className={`row ${!rowLabelWrapped ? "singlerow": "multirow"}`} key={rowIdx} ref={rowRef}> 
+                            <p style={{width: !rowLabelWrapped ? "auto" : "100%"}}>Row {rowIdx+1}</p>
                             <div 
                                 className={"seatbuttons"} 
                                 ref={seatButtonsRef} 

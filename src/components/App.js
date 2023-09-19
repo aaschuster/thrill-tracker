@@ -10,7 +10,7 @@ import '../styles/App.css';
 
 import ParkSelect from "./ParkSelect"
 import AtParkView from "./ParkView/AtParkView";
-import RideAddUpdate from "./RideAddUpdate/RideAddUpdate";
+import RecordAddUpdate from "./RecordAddUpdate/RecordAddUpdate";
 
 const App = props => {
 
@@ -44,7 +44,7 @@ const App = props => {
             }/>
           <Route
             path="/addupdate/:rideId/:historyId" element={
-              <RideAddUpdate/>
+              <RecordAddUpdate/>
             }/>
         </Routes>
     </div>

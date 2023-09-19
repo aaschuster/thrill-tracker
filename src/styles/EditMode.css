@@ -5,6 +5,8 @@
     flex-direction: column;
     flex-grow: 1;
     min-height: 0;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .parkviewedit .history {
@@ -13,7 +15,7 @@
 
 .parkviewedit .historyitem {
     font-size: 1.1rem;
-    margin: 10px 0;
+    margin: 7px 0;
     display: flex;
 }
 
@@ -30,10 +32,6 @@
     justify-content: flex-end;
     align-items: center;
     width: 90px;
-}
-
-.parkviewedit .recordname {
-    padding: 0 5px;
 }
 
 .parkviewedit .timestamp {

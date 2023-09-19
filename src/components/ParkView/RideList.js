@@ -24,7 +24,7 @@ function RideList( {currentHistory, currentTotals, currentRides, addRecord} ) {
     return (
         <div className={"addmode"}>
             <h3>Today's rides:</h3>
-            <div>
+            <div className="historycontainer">
                     <h4 className="viewlabel">{totalsView ? "By times" : "Totals"} view</h4>
                     <hr/>
                     {
@@ -72,7 +72,7 @@ function RideList( {currentHistory, currentTotals, currentRides, addRecord} ) {
                 <button onClick={() => navigate("edit")}>Edit mode</button>
             </div>
 
-            <div>
+            <div className="ridelist">
             {
                 currentRides.map( (ride, idx) => {
                         return (
