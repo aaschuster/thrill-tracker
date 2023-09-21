@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../styles/Login.css";
@@ -7,13 +7,25 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    const initForm = {
+        email: "",
+        password: ""
+    }
+
+    const [form, setForm] = useState(initForm);
+
+    function onChange(evt) {
+        const {target} = evt;
+        setForm({...form, [target.id]: [target.value]})
+    }
+
     return (
         <div className="login">
             <h1>ThrillTracker.com</h1>
             <form>
                 <div className="logininputs">
-                    <input placeholder="Email..."/>
-                    <input placeholder="Password..."/>
+                    <input id="username" placeholder="Username..." onChange={onChange} value={form.username}/>
+                    <input type="password" id="password" placeholder="Password..." onChange={onChange} value={form.password}/>
                     <button>Login</button>
                 </div>
                 <div className="otherbuttons">
