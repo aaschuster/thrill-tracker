@@ -14,7 +14,7 @@ h1, h2, h3, h4, p, label {
 
 h1 {
   font-size: 2rem;
-  margin: 5% auto;
+  margin: 20px auto;
 }
 
 h2 {
@@ -42,6 +42,7 @@ button {
 input {
   background-color: var(--white);
   border: 2px solid var(--black);
+  font-size: 1.1rem;
 }
 
 button:disabled {

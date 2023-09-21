@@ -8,6 +8,17 @@
   margin: 0 auto;
 }
 
+.parkselectheader {
+  display: flex;
+  align-items: center;
+}
+
+.parkselectheader h1 {
+  margin-left: 0;
+  margin-right: 0;
+  width: calc(100% - 92px);
+}
+
 .parkselect button {
   margin: 10px auto;
   width: 85%;
@@ -16,5 +27,4 @@
 
 .parkselect input {
   margin: 25px 0;
-  font-size: 1.1rem;
 }

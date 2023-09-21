@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Park from "./Park";
+import BackButton from "./BackButton";
 
 import "../styles/ParkSelect.css";
 
@@ -18,7 +19,10 @@ const ParkSelect = props => {
 
     return (
         <div className="parkselect">
-            <h1>ThrillTracker.com</h1>  
+            <div className="parkselectheader">
+                <BackButton/>
+                <h1>ThrillTracker.com</h1>  
+            </div>
             <input placeholder="Search..."/>
             {parks.map( (park, idx) => {
                 return <Park park={park} key={idx} onClick={() => onClick(idx)}/>;
