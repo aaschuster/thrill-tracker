@@ -17,8 +17,6 @@ const App = props => {
 
   const { getParks, getRides, getHistory } = props;
 
-  const serverURL = process.env.REACT_APP_SERVERURL;
-
   const [history, setHistory] = useState([])
 
   useEffect(() => {
