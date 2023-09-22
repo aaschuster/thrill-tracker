@@ -44,7 +44,7 @@ const Login = () => {
                     <button>Login</button>
                 </div>
                 <div className="otherbuttons">
-                    <button type="button">Create account</button>
+                    <button type="button" onClick={() => navigate("/createaccount")}>Create account</button>
                     <button type="button" onClick={() => navigate("/parkselect")}>Continue without signing in</button>
                 </div>
             </form>

@@ -9,6 +9,7 @@ import { getHistory } from "../actions/historyActions";
 import '../styles/App.css';
 
 import Login from "./Login"
+import CreateAccount from "./CreateAccount";
 import ParkSelect from "./ParkSelect"
 import AtParkView from "./ParkView/AtParkView";
 import RecordAddUpdate from "./RecordAddUpdate/RecordAddUpdate";
@@ -41,6 +42,10 @@ const App = props => {
           <Route
             path="/parkselect"
             element={<ParkSelect/>}
+          />
+          <Route
+            path="/createaccount"
+            element={<CreateAccount/>}
           />
           <Route path="/atparkview/:id/*" element={
             <AtParkView/>

@@ -1,0 +1,12 @@
+@import "styles.css";
+
+.mainheader {
+    display: flex;
+    align-items: center;
+}
+  
+.mainheader h1 {
+    margin-left: 0;
+    margin-right: 0;
+    width: calc(100% - 92px);
+}
