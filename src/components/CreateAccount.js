@@ -27,8 +27,18 @@ const CreateAccount = () => {
     }
 
     function onSubmit(evt) {
+
         evt.preventDefault();
-        console.log(form);
+        axios.post(`${serverURL}/users/`, {
+            email: form.email,
+            username: form.username,
+            password: form.password
+        })
+            .then( res => {
+                navigate("/");
+            })
+            .catch( err => console.error(err));
+
     }
 
     return (
