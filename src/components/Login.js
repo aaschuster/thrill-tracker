@@ -36,7 +36,7 @@ const Login = ( { message, setMessage } ) => {
                 navigate("/parkselect")
             })
             .catch( err => {
-                setMessage(err.message);
+                setMessage(err.response.data.message);
                 console.error(err)
             });
     }
