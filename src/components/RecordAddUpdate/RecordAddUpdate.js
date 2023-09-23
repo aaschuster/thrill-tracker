@@ -13,7 +13,7 @@ import { addRecord, updateRecord } from "../../actions/historyActions";
 
 import "../../styles/RecordAddUpdate.css";
 
-function RecordAddUpdate( { rides, history, addRecord, updateRecord } ) {
+function RecordAddUpdate( { rides, history, user, addRecord, updateRecord } ) {
 
     let { rideId, historyId } = useParams();
     rideId = parseInt(rideId);
@@ -60,7 +60,8 @@ function RecordAddUpdate( { rides, history, addRecord, updateRecord } ) {
             timestamp: `${newDate}, ${newTimestamp.toLocaleTimeString([], { hour: "numeric", minute: "numeric" })}`,
             notes: form.notes,
             row: form.row,
-            seat: form.seat
+            seat: form.seat,
+            users_id: user.users_id
         };
 
         if(editMode) updateRecord(newRecord, historyInt);
@@ -197,7 +198,8 @@ function RecordAddUpdate( { rides, history, addRecord, updateRecord } ) {
 const mapStateToProps = state => {
     return {
         rides: state.rides.rides,
-        history: state.history.history
+        history: state.history.history,
+        user: state.login.user
     }
 }
 

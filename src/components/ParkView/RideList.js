@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { addRecord } from "../../actions/historyActions";
 
-function RideList( {currentHistory, currentTotals, currentRides, addRecord} ) {
+function RideList( {currentHistory, currentTotals, currentRides, user, addRecord} ) {
 
     const [totalsView, setTotalsView] = useState(false);
 
@@ -13,7 +13,7 @@ function RideList( {currentHistory, currentTotals, currentRides, addRecord} ) {
 
     function quickAdd(rides_id) {
         const timestamp = new Date().toLocaleString([], {dateStyle: "short", timeStyle: "short"});
-        const record = {rides_id, timestamp}
+        const record = {rides_id, timestamp, users_id: user.users_id}
         addRecord(record);
     }
 
@@ -100,4 +100,10 @@ function RideList( {currentHistory, currentTotals, currentRides, addRecord} ) {
     )
 }
 
-export default connect(null, {addRecord})(RideList);
+const mapStateToProps = state => {
+    return {
+        user: state.login.user
+    }
+}
+
+export default connect(mapStateToProps, {addRecord})(RideList);
