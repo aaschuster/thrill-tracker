@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 import axios from "axios";
+
+import { setMessage } from "../actions/loginActions";
 
 import "../styles/Login.css";
 
 const serverURL = process.env.REACT_APP_SERVERURL;
 
-const Login = () => {
+const Login = ( { message, setMessage } ) => {
 
     const navigate = useNavigate();
 
@@ -20,6 +23,7 @@ const Login = () => {
     function onChange(evt) {
         const {target} = evt;
         setForm({...form, [target.id]: target.value})
+        setMessage("");
     }
 
     function onSubmit(evt) {
@@ -31,7 +35,10 @@ const Login = () => {
                 console.log(res);
                 navigate("/parkselect")
             })
-            .catch( err => console.error(err));
+            .catch( err => {
+                setMessage(err.message);
+                console.error(err)
+            });
     }
 
     return (
@@ -42,6 +49,7 @@ const Login = () => {
                     <input id="username" placeholder="Username..." onChange={onChange} value={form.username}/>
                     <input type="password" id="password" placeholder="Password..." onChange={onChange} value={form.password}/>
                     <button>Login</button>
+                    <p>{message}</p>
                 </div>
                 <div className="otherbuttons">
                     <button type="button" onClick={() => navigate("/createaccount")}>Create account</button>
@@ -52,4 +60,10 @@ const Login = () => {
     )
 }
 
-export default Login;
+function mapStateToProps(state) {
+    return {
+        message: state.login.message
+    }
+}
+
+export default connect(mapStateToProps, { setMessage })(Login);

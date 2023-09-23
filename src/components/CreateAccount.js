@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 import axios from "axios";
+
+import { setMessage } from "../actions/loginActions";
 
 import MainHeader from "./MainHeader";
 
@@ -8,7 +11,7 @@ import "../styles/CreateAccount.css";
 
 const serverURL = process.env.REACT_APP_SERVERURL;
 
-const CreateAccount = () => {
+const CreateAccount = ( { setMessage } ) => {
 
     const navigate = useNavigate();
 
@@ -35,6 +38,7 @@ const CreateAccount = () => {
             password: form.password
         })
             .then( res => {
+                setMessage("Account creation successful.");
                 navigate("/");
             })
             .catch( err => console.error(err));
@@ -81,4 +85,4 @@ const CreateAccount = () => {
     )
 }
 
-export default CreateAccount;
+export default connect(null, { setMessage } )(CreateAccount);
