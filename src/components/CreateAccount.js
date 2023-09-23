@@ -32,21 +32,34 @@ const CreateAccount = ( { setMessage } ) => {
     }
 
     function onSubmit(evt) {
-
         evt.preventDefault();
-        axios.post(`${serverURL}/users/`, {
-            email: form.email,
-            username: form.username,
-            password: form.password
-        })
-            .then( res => {
-                setMessage("Account creation successful.");
-                navigate("/");
+
+        let formErr = "";
+
+        if(form.password !== form.confirmpassword) formErr = "Passwords do not match";
+        if(!form.password) formErr = "Please provide a password.";
+        if(!form.username) formErr = "Please provide a username.";
+        if(!form.email) formErr = "Please provide an email.";
+
+        if(formErr) {
+            setErr(formErr);
+        } else {
+
+            axios.post(`${serverURL}/users/`, {
+                email: form.email,
+                username: form.username,
+                password: form.password
             })
-            .catch( err => {
-                console.error(err)
-                setErr(err.response.data.message);
-            });
+                .then( res => {
+                    setMessage("Account creation successful.");
+                    navigate("/");
+                })
+                .catch( err => {
+                    console.error(err)
+                    setErr(err.response.data.message);
+                });
+
+        }
 
     }
 
