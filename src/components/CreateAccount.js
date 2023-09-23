@@ -23,8 +23,10 @@ const CreateAccount = ( { setMessage } ) => {
     }
 
     const [form, setForm] = useState(initForm);
+    const [err, setErr] = useState("");
 
     function onChange(evt) {
+        setErr("");
         const {target} = evt;
         setForm({...form, [target.id]: target.value});
     }
@@ -41,7 +43,10 @@ const CreateAccount = ( { setMessage } ) => {
                 setMessage("Account creation successful.");
                 navigate("/");
             })
-            .catch( err => console.error(err));
+            .catch( err => {
+                console.error(err)
+                setErr(err.response.data.message);
+            });
 
     }
 
@@ -80,6 +85,7 @@ const CreateAccount = ( { setMessage } ) => {
                     />
                 </div>
                 <button>Submit</button>
+                <p>{err}</p>
             </form>
         </div>
     )
