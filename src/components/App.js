@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import { getParks } from "../actions/parksActions";
 import { getRides } from "../actions/ridesActions";
-import { getHistory } from "../actions/historyActions";
 
 import '../styles/App.css';
 
@@ -16,21 +15,12 @@ import RecordAddUpdate from "./RecordAddUpdate/RecordAddUpdate";
 
 const App = props => {
 
-  const { getParks, getRides, getHistory } = props;
-
-  const [history, setHistory] = useState([])
+  const { getParks, getRides } = props;
 
   useEffect(() => {
-    refreshData();
-  }, []);
-
-  function refreshData() {
-
     getParks();
     getRides();
-    getHistory();
-    
-  }
+  }, []);
 
   return (
     <div className="App">
@@ -59,4 +49,4 @@ const App = props => {
   );
 }
 
-export default connect(null, {getParks, getRides, getHistory})(App);
+export default connect(null, {getParks, getRides})(App);

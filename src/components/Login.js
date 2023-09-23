@@ -4,12 +4,13 @@ import { connect } from "react-redux";
 import axios from "axios";
 
 import { setMessage, setUser } from "../actions/loginActions";
+import { getHistory } from "../actions/historyActions";
 
 import "../styles/Login.css";
 
 const serverURL = process.env.REACT_APP_SERVERURL;
 
-const Login = ( { message, setMessage, setUser } ) => {
+const Login = ( { message, setMessage, setUser, getHistory } ) => {
 
     const navigate = useNavigate();
 
@@ -33,6 +34,7 @@ const Login = ( { message, setMessage, setUser } ) => {
         axios.post(`${serverURL}/users/login/`, {username: form.username, password: form.password})
             .then( res => {
                 setUser(res.data.user);
+                getHistory();
                 navigate("/parkselect")
             })
             .catch( err => {
@@ -65,4 +67,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { setMessage, setUser })(Login);
+export default connect(mapStateToProps, { setMessage, setUser, getHistory })(Login);
