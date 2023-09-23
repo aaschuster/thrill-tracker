@@ -8,15 +8,26 @@
   margin: 0 auto;
 }
 
-.parkselectheader {
+.parkselect .loggedincontainer {
   display: flex;
+  flex-direction: row;
+  height: min-content;
+  justify-content: flex-start;
   align-items: center;
+  margin-top: 7px;
 }
 
-.parkselectheader h1 {
-  margin-left: 0;
-  margin-right: 0;
-  width: calc(100% - 92px);
+.parkselect .loggedincontainer button {
+  width: min-content;
+  margin: 0;
+  margin-left: 10px;
+  padding: 7px;
+  font-size: 0.8rem;
+}
+
+.parkselect .loggedincontainer p {
+  width: calc(100% - 120px);
+  margin-left: 60px;
 }
 
 .parkselect button {

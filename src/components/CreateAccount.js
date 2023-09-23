@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { setMessage } from "../actions/loginActions";
 
-import MainHeader from "./MainHeader";
+import BackButton from "./BackButton";
 
 import "../styles/CreateAccount.css";
 
@@ -55,7 +55,6 @@ const CreateAccount = ( { setMessage } ) => {
                     navigate("/");
                 })
                 .catch( err => {
-                    console.error(err)
                     setErr(err.response.data.message);
                 });
 
@@ -65,7 +64,10 @@ const CreateAccount = ( { setMessage } ) => {
 
     return (
         <div className="createaccount">
-            <MainHeader/>
+            <div className="createaccountheader">
+                <BackButton/>
+                <h1>ThrillTracker.com</h1>
+            </div>
             <form onSubmit={onSubmit}>
                 <div className="formitem">
                     <label>Email:

@@ -6,6 +6,17 @@
     margin: 0 auto;
 }
 
+.createaccountheader {
+    display: flex;
+    align-items: center;
+}
+  
+.createaccountheader h1 {
+    margin-left: 0;
+    margin-right: 0;
+    width: calc(100% - 92px);
+}
+
 .createaccount .formitem {
     display: flex;
     margin: 1% 0;
