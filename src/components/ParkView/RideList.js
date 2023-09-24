@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { addRecord } from "../../actions/historyActions";
@@ -10,6 +10,8 @@ function RideList( {currentHistory, currentTotals, currentRides, user, addRecord
 
     const navigate = useNavigate();
     const historyRef = useRef(null);
+
+    const { id } = useParams();
 
     function quickAdd(rides_id) {
         const timestamp = new Date().toLocaleString([], {dateStyle: "short", timeStyle: "short"});
@@ -29,7 +31,7 @@ function RideList( {currentHistory, currentTotals, currentRides, user, addRecord
                     <hr/>
                     {
                         !totalsView ?
-                        <div className={"history"} ref={historyRef}>
+                        <div className={"historyitemscontainer"} ref={historyRef}>
                             <div className={"spacer"}></div>
                             {
                                 currentHistory.map( (record, idx) => {
@@ -43,7 +45,7 @@ function RideList( {currentHistory, currentTotals, currentRides, user, addRecord
                             }
                         </div>
                     : 
-                    <div className={"history totals"}>
+                    <div className={"historyitemscontainer totals"}>
                         {
                             Object.keys(currentTotals).map(( key ) => {
                                 return (
@@ -69,7 +71,7 @@ function RideList( {currentHistory, currentTotals, currentRides, user, addRecord
                     onClick={() => setTotalsView(true)}
                 >
                     View by totals</button>
-                <button onClick={() => navigate("edit")}>Edit mode</button>
+                <button onClick={() => navigate(`/history/${id}`)}>Edit mode</button>
             </div>
 
             <div className="ridelist">

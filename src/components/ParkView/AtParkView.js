@@ -4,7 +4,6 @@ import { Routes, Route, useParams } from "react-router-dom";
 
 import ParkViewHeader from "./ParkViewHeader";
 import RideList from "./RideList";
-import EditMode from "../History";
 
 import "../../styles/AtParkView.css";
 
@@ -79,20 +78,11 @@ function AtParkView( {parks, rides, history} ) {
         <div className={"atparkview"}>
             {park ? <>
                     <ParkViewHeader name={park.name}/>
-                    <Routes>
-                        <Route path="/" exact element={
-                            <RideList
-                                currentHistory = {currentHistory}
-                                currentTotals = {currentTotals}
-                                currentRides = {currentRides}
-                            />
-                        }/>
-                        <Route path="/edit" element={
-                            <EditMode
-                                currentHistory = {currentHistory}
-                            />
-                        }/>
-                    </Routes>
+                        <RideList
+                            currentHistory = {currentHistory}
+                            currentTotals = {currentTotals}
+                            currentRides = {currentRides}
+                        />
                 </>
                 :
                 <p>Please wait...</p>

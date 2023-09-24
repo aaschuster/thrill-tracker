@@ -3,14 +3,41 @@
 .history {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    min-height: 0;
-    width: 100%;
+    max-width: 550px;
+    width: 95%;
     margin: 0 auto;
+    align-items: center;
+    height: 98vh;
+}
+
+.history .historyheader {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.history .historyheader h2 {
+    margin: 0;
+    width: calc(100% - 92px);
+}
+
+.history .datebuttons {
+    margin: 15px 0;
 }
 
 .history .historyitemscontainer {
+    width: 100%;
     flex-grow: 1;
+    background-color: var(--secondary-background-color);
+    color: var(--white);
+    padding: 7px;
+    display: flex;
+    flex-direction:column;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px; 
+    overflow-y: auto;
 }
 
 .history .historyitem {

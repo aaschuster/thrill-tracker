@@ -40,9 +40,6 @@ const App = props => {
       history.forEach( record => {
         const newRecord = {...record};
 
-        const [date, time] = record.timestamp.split(", ");
-        newRecord.timeonly = time;
-
         rides.forEach( ride => {
           if(ride.rides_id === record.rides_id) 
             newRecord.name = ride.name;
@@ -50,7 +47,7 @@ const App = props => {
 
         processedHistory.push(newRecord);
       })
-      
+
       setProcessedHistory(processedHistory);
     }
   }, [history])
