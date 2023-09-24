@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { delRecord } from "../../actions/historyActions";
+import { delRecord } from "../actions/historyActions";
 
 import {MdDeleteForever} from "react-icons/md";
 import {AiFillEdit} from "react-icons/ai";
 
-import "../../styles/EditMode.css";
+import "../styles/History.css";
 
-function EditMode( {currentHistory, delRecord} ) {
+function EditMode( {processedHistory, delRecord} ) {
 
     const blankRecord = {
         drop_height: null,
@@ -30,14 +30,15 @@ function EditMode( {currentHistory, delRecord} ) {
         navigate(`/addupdate/${record.rides_id}/${record.history_id}`);
     }
 
+   
     return (
-        <div className={"parkviewedit"}>
+        <div className={"history"}>
             <h3>Today's rides:</h3>
             <h4 className="viewlabel">Edit view</h4>
             <hr/>
-            <div className={"history"}>
+            <div className={"historyitemscontainer"}>
                 {
-                    currentHistory.map( (record, idx) => {
+                    processedHistory.map( (record, idx) => {
                         return (
                             <div key={idx} className={"historyitem"}>
                                 <div className={"textcontainer"}>
@@ -57,4 +58,11 @@ function EditMode( {currentHistory, delRecord} ) {
     )
 }
 
-export default connect(null, { delRecord })(EditMode);
+const mapStateToProps = state => {
+    return {
+        history: state.history.history,
+        processedHistory: state.history.processedHistory
+    }
+}
+
+export default connect(mapStateToProps, { delRecord })(EditMode);

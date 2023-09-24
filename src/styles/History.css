@@ -1,6 +1,6 @@
 @import "styles.css";
 
-.parkviewedit {
+.history {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -9,17 +9,17 @@
     margin: 0 auto;
 }
 
-.parkviewedit .history {
+.history .historyitemscontainer {
     flex-grow: 1;
 }
 
-.parkviewedit .historyitem {
+.history .historyitem {
     font-size: 1.1rem;
     margin: 7px 0;
     display: flex;
 }
 
-.parkviewedit .textcontainer {
+.history .textcontainer {
     width: calc(100% - 90px);    
     display: flex;
     flex-direction: column;
@@ -27,18 +27,18 @@
     text-align: center;
 }
 
-.parkviewedit .editbuttoncontainer {
+.history .editbuttoncontainer {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     width: 90px;
 }
 
-.parkviewedit .timestamp {
+.history .timestamp {
     font-size: 0.9rem;
 }
 
-.parkviewedit .editbutton {
+.history .editbutton {
     background-color: #4b5052;
 	border: 2px solid var(--black);
 	color: var(--white);

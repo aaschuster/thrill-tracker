@@ -3,6 +3,7 @@ import {
     GET_HISTORY_SUCCESS,
     GET_HISTORY_ERR,
     SET_FETCHING_TRUE,
+    SET_PROCESSED_HISTORY,
     ADD_RECORD,
     DEL_RECORD,
     UPDATE_RECORD
@@ -10,6 +11,7 @@ import {
 
 const initState = {
     history: [],
+    processedHistory: [],
     isFetching: false,
     error: ""
 };
@@ -24,6 +26,8 @@ export const reducer = (state = initState, action) => {
             return {...state, isFetching: false, history: action.payload};
         case GET_HISTORY_ERR:
             return {...state, isFetching: false, error: action.payload};
+        case SET_PROCESSED_HISTORY:
+            return {...state, processedHistory: action.payload};
         case ADD_RECORD:
             return state;
         case DEL_RECORD:

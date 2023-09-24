@@ -6,6 +6,7 @@ export const GET_HISTORY = "GET_HISTORY";
 export const GET_HISTORY_SUCCESS = "GET_HISTORY_SUCCESS";
 export const GET_HISTORY_ERR = "GET_HISTORY_ERR";
 export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
+export const SET_PROCESSED_HISTORY = "SET_PROCESSED_HISTORY";
 export const ADD_RECORD = "ADD_RECORD";
 export const DEL_RECORD = "DEL_RECORD";
 export const UPDATE_RECORD = "UPDATE_RECORD";
@@ -32,6 +33,10 @@ const getHistorySuccess = history => {
 
 const getHistoryErr = err => {
     return {type: GET_HISTORY_ERR, payload: err.message};
+}
+
+export const setProcessedHistory = processedHistory => {
+    return {type: SET_PROCESSED_HISTORY, payload: processedHistory}
 }
 
 export const addRecord = record => dispatch => {   
