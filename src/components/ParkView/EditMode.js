@@ -46,7 +46,7 @@ function EditMode( {currentHistory, delRecord} ) {
                                 </div>                                
                                 <div className={"editbuttoncontainer"}>
                                     <AiFillEdit className={"editbutton"} onClick={() => editOnClick(record)}/>
-                                    <MdDeleteForever className={"editbutton"} onClick={() => delRecord(record)}/>
+                                    <MdDeleteForever className={"editbutton"} onClick={() => delRecord(record.history_id)}/>
                                 </div>
                             </div>
                         )

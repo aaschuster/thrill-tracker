@@ -3,6 +3,7 @@ import {Routes, Route} from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 
+import { setUser } from "../actions/loginActions"
 import { getParks } from "../actions/parksActions";
 import { getRides } from "../actions/ridesActions";
 
@@ -16,13 +17,20 @@ import RecordAddUpdate from "./RecordAddUpdate/RecordAddUpdate";
 
 const App = props => {
 
-  const { getParks, getRides } = props;
+  const { user, setUser, getParks, getRides } = props;
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
+    setUser();
     getParks();
     getRides();
   }, []);
+
+  useEffect(() => {
+    if(user)
+      console.log(user);
+    else console.log("no user");
+  }, [user])
 
   return (
     <div className="App">
@@ -51,4 +59,10 @@ const App = props => {
   );
 }
 
-export default connect(null, {getParks, getRides})(App);
+const mapStateToProps = state => {
+  return {
+    user: state.login.user
+  }
+}
+
+export default connect(mapStateToProps, {setUser, getParks, getRides})(App);

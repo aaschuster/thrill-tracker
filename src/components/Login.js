@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -10,7 +10,7 @@ import "../styles/Login.css";
 
 const serverURL = process.env.REACT_APP_SERVERURL;
 
-const Login = ( { message, setMessage, setUser, getHistory } ) => {
+const Login = ( { message, history, setMessage, setUser, getHistory } ) => {
 
     const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ const Login = ( { message, setMessage, setUser, getHistory } ) => {
             .then( res => {
                 const {user} = res.data;
                 setUser(user);
-                getHistory(user.users_id);
+                getHistory();
                 navigate("/parkselect")
             })
             .catch( err => {
@@ -64,7 +64,8 @@ const Login = ( { message, setMessage, setUser, getHistory } ) => {
 
 function mapStateToProps(state) {
     return {
-        message: state.login.message
+        message: state.login.message,
+        history: state.history.history
     }
 }
 

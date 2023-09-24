@@ -10,10 +10,10 @@ export const ADD_RECORD = "ADD_RECORD";
 export const DEL_RECORD = "DEL_RECORD";
 export const UPDATE_RECORD = "UPDATE_RECORD";
 
-export const getHistory = userID => dispatch => {
+export const getHistory = () => dispatch => {
     dispatch(setFetchingTrue());
 
-    axios.get(`${serverURL}/history/userid/${userID}`)
+    axios.get(`${serverURL}/history/`)
         .then( res => {
             dispatch(getHistorySuccess(res.data));
         })
@@ -35,23 +35,23 @@ const getHistoryErr = err => {
 }
 
 export const addRecord = record => dispatch => {   
-    axios.post(`${serverURL}/history`, record)
-        .then( () => dispatch(getHistory(record.users_id)))
+    axios.post(`${serverURL}/history/`, record)
+        .then( () => dispatch(getHistory()))
         .catch( err => console.error(err));
 
     return {type: ADD_RECORD};
 }
 
-export const delRecord = (record) => dispatch => {
-    axios.delete(`${serverURL}/history/${record.history_id}`)
-        .then( () => dispatch(getHistory(record.users_id)));
+export const delRecord = (recordID) => dispatch => {
+    axios.delete(`${serverURL}/history/${recordID}`)
+        .then( () => dispatch(getHistory()));
 
     return {type: DEL_RECORD};
 }
 
-export const updateRecord = (record, id) => dispatch => {
-    axios.put(`${serverURL}/history/${id}`, record)
-        .then( () => dispatch(getHistory(record.users_id)))
+export const updateRecord = (record) => dispatch => {
+    axios.put(`${serverURL}/history/${record.history_id}`, record)
+        .then( () => dispatch(getHistory()))
         .catch(err => console.error(err));
 
     return {type: UPDATE_RECORD};
