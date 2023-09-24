@@ -5,6 +5,8 @@ import { Routes, Route, useParams } from "react-router-dom";
 import ParkViewHeader from "./ParkViewHeader";
 import RideList from "./RideList";
 
+import { filterByToday } from "../../utils";
+
 import "../../styles/AtParkView.css";
 
 function AtParkView( {parks, rides, history} ) {
@@ -31,18 +33,18 @@ function AtParkView( {parks, rides, history} ) {
 
     function getCurrentHistory() {
 
-        const newCurrent = [];
+        let newCurrent = [];
         const totalsObj = {};
         const totalsArr = [];
 
-        history.forEach( (record, idx) => {
+        filterByToday(history).forEach( (record, idx) => {
             let showRecord = false;
             let i = 0;
 
             const [date, time] = record.timestamp.split(", ");
 
             while(i<currentRides.length && showRecord === false) {
-                if(currentRides[i].rides_id === record.rides_id && date === new Date().toLocaleString([], {dateStyle: "short"})) {
+                if(currentRides[i].rides_id === record.rides_id) {
                     showRecord = true;
                     newCurrent.push({...currentRides[i], timeonly: time, ...record});
                     if(totalsObj[currentRides[i].rides_id])

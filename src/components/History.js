@@ -9,6 +9,8 @@ import {AiFillEdit} from "react-icons/ai";
 
 import BackButton from "./BackButton";
 
+import { filterByToday } from "../utils";
+
 import "../styles/History.css";
 
 function History( {processedHistory, parks, rides, delRecord} ) {
@@ -29,17 +31,26 @@ function History( {processedHistory, parks, rides, delRecord} ) {
     const { id: parkIdx } = useParams();
     const park = parkIdx==="all" ? null : parks[parkIdx];
 
+    const view = "todayHistory";
+
     const navigate = useNavigate();
 
     const [currentHistory, setCurrentHistory] = useState(processedHistory);
+    const [todayHistory, setTodayHistory] = useState([]);
+    const [todayView, setTodayView] = useState(false);
 
     function editOnClick(record) {
         navigate(`/addupdate/${record.rides_id}/${record.history_id}`);
     }
 
+    function records() {
+        return todayView ? todayHistory : currentHistory;
+    }
+
     useEffect(() => {
         let newHistory = processedHistory;
         if(park) {
+            setTodayView(true);
             const currentRides = [];
 
             rides.forEach( ride => {
@@ -57,6 +68,9 @@ function History( {processedHistory, parks, rides, delRecord} ) {
             })
         }    
         setCurrentHistory(newHistory);
+        
+        setTodayHistory(filterByToday(newHistory));
+
     }, [park, processedHistory])
    
     return (
@@ -67,12 +81,12 @@ function History( {processedHistory, parks, rides, delRecord} ) {
             </div>
             <h3>{park ? park.name : ""}</h3>
             <div className="datebuttons">
-                <button>All time</button>
-                <button>Today</button>
+                <button disabled={!todayView} onClick={() => setTodayView(!todayView)}>All time</button>
+                <button disabled={todayView} onClick={() => setTodayView(!todayView)}>Today</button>
             </div>
             <div className={"historyitemscontainer"}>
                 {
-                    currentHistory.map( (record, idx) => {
+                    records().map( (record, idx) => {
                         return (
                             <div key={idx} className={"historyitem"}>
                                 <div className={"textcontainer"}>
