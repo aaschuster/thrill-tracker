@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {Routes, Route} from "react-router-dom";
 import { connect } from "react-redux";
+import axios from "axios";
 
 import { getParks } from "../actions/parksActions";
 import { getRides } from "../actions/ridesActions";
@@ -18,6 +19,7 @@ const App = props => {
   const { getParks, getRides } = props;
 
   useEffect(() => {
+    axios.defaults.withCredentials = true;
     getParks();
     getRides();
   }, []);

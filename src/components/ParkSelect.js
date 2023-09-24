@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import { setUser } from "../actions/loginActions";
 
@@ -19,8 +20,11 @@ const ParkSelect = props => {
     }
 
     function logout() {
-        setUser({});
-        navigate("/");
+        axios.get(`${process.env.REACT_APP_SERVERURL}/users/logout`)
+            .then( res => {
+                navigate("/");
+            })
+            .catch( err => console.error(err));
     }
 
     return (

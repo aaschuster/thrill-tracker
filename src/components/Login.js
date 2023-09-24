@@ -33,8 +33,9 @@ const Login = ( { message, setMessage, setUser, getHistory } ) => {
 
         axios.post(`${serverURL}/users/login/`, {username: form.username, password: form.password})
             .then( res => {
-                setUser(res.data.user);
-                getHistory();
+                const {user} = res.data;
+                setUser(user);
+                getHistory(user.users_id);
                 navigate("/parkselect")
             })
             .catch( err => {
