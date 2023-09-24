@@ -3,7 +3,8 @@ import {
     SET_USER,
     SET_USER_SUCCESS,
     SET_USER_ERR,
-    SET_FETCHING_TRUE
+    SET_FETCHING_TRUE,
+    CLEAR_USER
 } from "../actions/loginActions";
 
 const initState = {
@@ -25,6 +26,8 @@ export const reducer = (state = initState, action) => {
             return {...state, isFetching: false, error: action.payload};
         case SET_FETCHING_TRUE:
             return {...state, isFetching: true};
+        case CLEAR_USER:
+            return {...state, user: {}};
         default:
             return state;
     }

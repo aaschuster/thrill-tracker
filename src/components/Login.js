@@ -10,7 +10,7 @@ import "../styles/Login.css";
 
 const serverURL = process.env.REACT_APP_SERVERURL;
 
-const Login = ( { message, history, setMessage, setUser, getHistory } ) => {
+const Login = ( { message, user, setMessage, setUser, getHistory } ) => {
 
     const navigate = useNavigate();
 
@@ -35,13 +35,17 @@ const Login = ( { message, history, setMessage, setUser, getHistory } ) => {
             .then( res => {
                 const {user} = res.data;
                 setUser(user);
-                getHistory();
-                navigate("/parkselect")
             })
             .catch( err => {
                 setMessage(err.response.data.message);
             });
     }
+
+    useEffect(() => {
+        if(user.username) {
+            navigate("/parkselect");
+        }
+    }, [user])
 
     return (
         <div className="login">
@@ -65,7 +69,7 @@ const Login = ( { message, history, setMessage, setUser, getHistory } ) => {
 function mapStateToProps(state) {
     return {
         message: state.login.message,
-        history: state.history.history
+        user: state.login.user
     }
 }
 

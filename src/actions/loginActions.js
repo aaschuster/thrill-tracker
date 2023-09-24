@@ -7,6 +7,7 @@ export const SET_USER = "SET_USER";
 export const SET_USER_SUCCESS = "SET_USER_SUCCESS";
 export const SET_USER_ERR = "SET_USER_ERR";
 export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
+export const CLEAR_USER = "CLEAR_USER";
 
 export const setMessage = message => {
     return {type: SET_MESSAGE, payload: message};
@@ -34,4 +35,8 @@ const setUserSuccess = user => {
 
 const setUserErr = err => {
     return {type: SET_USER_ERR, payload: err.message};
+}
+
+export const clearUser = () => {
+    return {type: CLEAR_USER};
 }

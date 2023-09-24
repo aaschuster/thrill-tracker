@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { setUser } from "../actions/loginActions";
+import { clearUser } from "../actions/loginActions";
 
 import Park from "./Park";
 
@@ -11,7 +11,7 @@ import "../styles/ParkSelect.css";
 
 const ParkSelect = props => {
 
-    const { parks, isFetching, error, user } = props;
+    const { parks, isFetching, error, user, clearUser } = props;
 
     const navigate = useNavigate();
 
@@ -22,6 +22,7 @@ const ParkSelect = props => {
     function logout() {
         axios.get(`${process.env.REACT_APP_SERVERURL}/users/logout`)
             .then( res => {
+                clearUser();
                 navigate("/");
             })
             .catch( err => console.error(err));
@@ -51,4 +52,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { setUser })(ParkSelect);
+export default connect(mapStateToProps, { clearUser })(ParkSelect);

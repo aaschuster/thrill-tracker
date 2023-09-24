@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {Routes, Route} from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 
 import { setUser } from "../actions/loginActions"
+import { getHistory } from "../actions/historyActions";
 import { getParks } from "../actions/parksActions";
 import { getRides } from "../actions/ridesActions";
 
@@ -17,7 +18,7 @@ import RecordAddUpdate from "./RecordAddUpdate/RecordAddUpdate";
 
 const App = props => {
 
-  const { user, setUser, getParks, getRides } = props;
+  const { user, setUser, getHistory, getParks, getRides } = props;
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -27,9 +28,8 @@ const App = props => {
   }, []);
 
   useEffect(() => {
-    if(user)
-      console.log(user);
-    else console.log("no user");
+    if(user.username)
+      getHistory();
   }, [user])
 
   return (
@@ -65,4 +65,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {setUser, getParks, getRides})(App);
+export default connect(mapStateToProps, {setUser, getHistory, getParks, getRides})(App);
