@@ -8,26 +8,26 @@
   margin: 0 auto;
 }
 
-.parkselect .loggedincontainer {
+.parkselect .accountcontainer {
   display: flex;
   flex-direction: row;
   height: min-content;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   margin-top: 7px;
 }
 
-.parkselect .loggedincontainer button {
-  width: min-content;
-  margin: 0;
-  margin-left: 10px;
-  padding: 7px;
-  font-size: 0.8rem;
+.parkselect .accountbuttons {
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.parkselect .loggedincontainer p {
-  width: calc(100% - 120px);
-  margin-left: 60px;
+.parkselect .accountcontainer button {
+  width: min-content;
+  margin: 0;
+  padding: 7px;
+  font-size: 0.8rem;
 }
 
 .parkselect button {

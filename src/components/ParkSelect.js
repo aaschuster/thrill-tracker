@@ -30,8 +30,12 @@ const ParkSelect = props => {
 
     return (
         <div className="parkselect">
-            <div className="loggedincontainer">
-                <p>Logged in as {user.username}</p> <button onClick={logout}>Logout</button>
+            <div className="accountcontainer">
+                <p>Logged in as {user.username}</p> 
+                <div className="accountbuttons">
+                    <button onClick={() => navigate("/history/all")}>History</button>
+                    <button onClick={logout}>Logout</button>
+                </div>
             </div>
             <h1>ThrillTracker.com</h1>
             <input placeholder="Search..."/>
