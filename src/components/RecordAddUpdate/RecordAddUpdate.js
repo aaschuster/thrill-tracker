@@ -21,13 +21,13 @@ function RecordAddUpdate( { rides, history, user, addRecord, updateRecord } ) {
 
     const navigate = useNavigate();
 
-    const date = new Date().toLocaleDateString([], {year: "2-digit", month: "numeric", day: "numeric"});
+    const now = new Date();
     const editMode = historyId !== "add";
 
     const initForm = {
         row: "",
         seat: "",
-        time: (new Date()).toLocaleTimeString([], { hourCycle: "h23", timeStyle: "short" }),
+        time: inputFormat(now),
         notes: ""
     }
 
@@ -38,6 +38,15 @@ function RecordAddUpdate( { rides, history, user, addRecord, updateRecord } ) {
     const [form, setForm] = useState(initForm);
     const [dialogOpen, setDialogOpen] = useState(false);
 
+    function inputFormat(date) {
+        return `${
+            date.getFullYear()}-${
+            leadingZero(date.getMonth()+1)}-${
+            leadingZero(date.getDate())}T${
+            leadingZero(date.getHours())}:${
+            leadingZero(date.getMinutes())}`;
+    }
+
     function onChange(evt) {
         const {target} = evt;
         setForm({...form, [target.id]: target.value});
@@ -45,26 +54,19 @@ function RecordAddUpdate( { rides, history, user, addRecord, updateRecord } ) {
 
     function onSubmit(evt) {
         evt.preventDefault();
-
-        let newDate = date;
         
-        if(editMode) {
-            const [recordDate, recordTime] = record.timestamp.split(", ");
-            newDate = recordDate;
-        }
-        
-        const newTimestamp = new Date (`${newDate} ${form.time}`)
+        const newTimestamp = new Date(form.time);
 
         const newRecord = {
             rides_id: ride.rides_id,
-            timestamp: `${newDate}, ${newTimestamp.toLocaleTimeString([], { hour: "numeric", minute: "numeric" })}`,
+            timestamp: newTimestamp.toLocaleString([], {dateStyle: "short", timeStyle: "short"}),
             notes: form.notes,
             row: form.row,
             seat: form.seat,
             users_id: user.users_id
         };
 
-        if(editMode) updateRecord(newRecord, historyInt);
+        if(editMode) updateRecord({...newRecord, history_id: record.history_id});
         else addRecord(newRecord);
         navigate(-1);
     }
@@ -117,13 +119,18 @@ function RecordAddUpdate( { rides, history, user, addRecord, updateRecord } ) {
         }
     }, [ride])
 
+    function leadingZero(num) {
+        if(num < 10)
+            return "0" + num;
+        return num;
+    }
+
     useEffect(() => {
-        if(record) {
-            const recordTimestamp = new Date(record.timestamp);
+        if(record) {        
             setForm({
                 row: record.row || "",
                 seat: record.seat || "",
-                time: recordTimestamp.toLocaleTimeString([], { hourCycle: "h23", timeStyle: "short" }),
+                time: inputFormat(new Date(record.timestamp)),
                 notes: record.notes || ""
             })
         }
@@ -180,7 +187,7 @@ function RecordAddUpdate( { rides, history, user, addRecord, updateRecord } ) {
                         </div>
                     </div>
                     
-                    <input type={"time"} id={"time"} value={form.time} onChange={onChange}/>
+                    <input type={"datetime-local"} id={"time"} value={form.time} onChange={onChange}/>
                     <label>
                         Notes: 
                     </label>

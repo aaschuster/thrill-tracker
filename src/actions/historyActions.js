@@ -49,12 +49,14 @@ export const addRecord = record => dispatch => {
 
 export const delRecord = (recordID) => dispatch => {
     axios.delete(`${serverURL}/history/${recordID}`)
-        .then( () => dispatch(getHistory()));
+        .then( () => {dispatch(getHistory())})
+        .catch(err => console.error(err));
 
     return {type: DEL_RECORD};
 }
 
 export const updateRecord = (record) => dispatch => {
+
     axios.put(`${serverURL}/history/${record.history_id}`, record)
         .then( () => dispatch(getHistory()))
         .catch(err => console.error(err));
