@@ -1,0 +1,17 @@
+@import "styles.css";
+
+.parkaddupdate {
+    width: 90%;
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+.parkaddupdateheader {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.parkaddupdateheader h2 {
+    width: calc(100% - 92px);
+}

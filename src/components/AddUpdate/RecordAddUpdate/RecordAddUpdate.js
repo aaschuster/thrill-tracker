@@ -3,15 +3,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import Dialog from "@mui/material/Dialog";
 
-import BackButton from "../BackButton";
+import BackButton from "../../BackButton";
 
 import SeatMap from "./SeatMap";
 
 import { AiFillQuestionCircle } from "react-icons/ai"
 
-import { addRecord, updateRecord } from "../../actions/historyActions";
+import { addRecord, updateRecord } from "../../../actions/historyActions";
 
-import "../../styles/RecordAddUpdate.css";
+import "../../../styles/RecordAddUpdate.css";
 
 function RecordAddUpdate( { rides, history, user, addRecord, updateRecord } ) {
 

@@ -42,6 +42,7 @@ const ParkSelect = props => {
             {parks.map( (park, idx) => {
                 return <Park park={park} key={idx} onClick={() => onClick(idx)}/>;
             })} 
+            <button onClick={() => navigate("/addupdate/park/new")}>Add Park</button>
         </div>
     )    
    

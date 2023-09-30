@@ -55,6 +55,7 @@ const CreateAccount = ( { setMessage } ) => {
                     navigate("/");
                 })
                 .catch( err => {
+                    console.error(err);
                     setErr(err.response.data.message);
                 });
 

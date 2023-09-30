@@ -7,6 +7,7 @@ import { setUser } from "../actions/loginActions"
 import { getHistory, setProcessedHistory } from "../actions/historyActions";
 import { getParks } from "../actions/parksActions";
 import { getRides } from "../actions/ridesActions";
+import { getChains } from "../actions/chainsActions";
 
 import '../styles/App.css';
 
@@ -15,17 +16,19 @@ import CreateAccount from "./CreateAccount";
 import ParkSelect from "./ParkSelect"
 import History from "./History";
 import AtParkView from "./ParkView/AtParkView";
-import RecordAddUpdate from "./RecordAddUpdate/RecordAddUpdate";
+import RecordAddUpdate from "./AddUpdate/RecordAddUpdate/RecordAddUpdate";
+import ParkAddUpdate from "./AddUpdate/ParkAddUpdate";
 
 const App = props => {
 
-  const { user, rides, history, setUser, setProcessedHistory, getHistory, getParks, getRides } = props;
+  const { user, rides, history, setUser, setProcessedHistory, getHistory, getParks, getRides, getChains } = props;
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
     setUser();
     getParks();
     getRides();
+    getChains();
   }, []);
 
   useEffect(() => {
@@ -75,9 +78,14 @@ const App = props => {
             <AtParkView/>
           }/>
           <Route
-            path="/addupdate/:rideId/:historyId" element={
+            path="/addupdate/record/:rideId/:historyId" element={
               <RecordAddUpdate/>
             }/>
+          <Route
+            path="/addupdate/park/:id" element={
+              <ParkAddUpdate/>
+            }
+          />
         </Routes>
     </div>
   );
@@ -91,4 +99,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {setUser, getHistory, setProcessedHistory, getParks, getRides})(App);
+export default connect(mapStateToProps, {setUser, getHistory, setProcessedHistory, getParks, getRides, getChains})(App);

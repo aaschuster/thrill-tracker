@@ -40,7 +40,7 @@ function History( {processedHistory, parks, rides, delRecord} ) {
     const [todayView, setTodayView] = useState(false);
 
     function editOnClick(record) {
-        navigate(`/addupdate/${record.rides_id}/${record.history_id}`);
+        navigate(`/addupdate/record/${record.rides_id}/${record.history_id}`);
     }
 
     function records() {

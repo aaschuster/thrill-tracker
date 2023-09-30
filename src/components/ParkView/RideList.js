@@ -82,7 +82,7 @@ function RideList( {currentHistory, currentTotals, currentRides, user, addRecord
 
                                 <button 
                                     className={"ridename"} 
-                                    onClick={() => navigate(`/addupdate/${ride.rides_id}/add`)}
+                                    onClick={() => navigate(`/addupdate/record/${ride.rides_id}/add`)}
                                 >
                                     {ride.name}
                                 </button>
