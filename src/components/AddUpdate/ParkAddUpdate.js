@@ -7,7 +7,7 @@ import Dropdown from "../Dropdown";
 
 import "../../styles/ParkAddUpdate.css";
 
-function ParkAddUpdate( {chains} ) {
+function ParkAddUpdate( {chains, states, countries} ) {
 
     const navigate = useNavigate();
 
@@ -38,6 +38,7 @@ function ParkAddUpdate( {chains} ) {
     }
 
     useEffect(() => {
+
         setInputWidth(inputRef.current.offsetWidth);
 
         const marginSize = (formRef.current.offsetWidth - labelSize - inputWidth) / 2;
@@ -73,9 +74,21 @@ function ParkAddUpdate( {chains} ) {
                     <label>State:</label>
                     <input id="state" value={form.state} onChange={onChange}/>
                 </div>
+                <div className={`dropdowncontainer ${ openDropdown === "state" ? "" : "hidden"}`} style={{
+                    width: inputWidth-4,
+                    transform: transformStr 
+                }}>
+                    <Dropdown items={states} />
+                </div>
                 <div className="formitem">
                     <label>Country:</label>
                     <input id="country" value={form.country} onChange={onChange}/>
+                </div>
+                <div className={`dropdowncontainer ${ openDropdown === "country" ? "" : "hidden"}`} style={{
+                    width: inputWidth-4,
+                    transform: transformStr 
+                }}>
+                    <Dropdown items={countries} />
                 </div>
                 <div className="formitem">
                     <label>Opening year:</label>
@@ -88,7 +101,9 @@ function ParkAddUpdate( {chains} ) {
 
 function mapStateToProps(state) {
     return {
-        chains: state.chains.chains
+        chains: state.chains.chains,
+        states: state.states.states,
+        countries: state.countries.countries
     }
 }
 

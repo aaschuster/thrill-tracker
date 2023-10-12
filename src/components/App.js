@@ -8,6 +8,8 @@ import { getHistory, setProcessedHistory } from "../actions/historyActions";
 import { getParks } from "../actions/parksActions";
 import { getRides } from "../actions/ridesActions";
 import { getChains } from "../actions/chainsActions";
+import { getCountries } from "../actions/countriesActions";
+import { getStates } from "../actions/statesActions";
 
 import '../styles/App.css';
 
@@ -21,7 +23,18 @@ import ParkAddUpdate from "./AddUpdate/ParkAddUpdate";
 
 const App = props => {
 
-  const { user, rides, history, setUser, setProcessedHistory, getHistory, getParks, getRides, getChains } = props;
+  const { 
+    user, 
+    rides, 
+    history, 
+    setUser, 
+    setProcessedHistory, 
+    getHistory, 
+    getParks, 
+    getRides, 
+    getChains, 
+    getCountries, 
+    getStates } = props;
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -29,6 +42,8 @@ const App = props => {
     getParks();
     getRides();
     getChains();
+    getCountries();
+    getStates();
   }, []);
 
   useEffect(() => {
@@ -99,4 +114,14 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {setUser, getHistory, setProcessedHistory, getParks, getRides, getChains})(App);
+export default connect(
+  mapStateToProps, {
+    setUser, 
+    getHistory, 
+    setProcessedHistory, 
+    getParks, 
+    getRides,
+    getChains, 
+    getCountries, 
+    getStates
+  })(App);
