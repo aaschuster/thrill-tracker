@@ -34,12 +34,12 @@
     width: calc(100% - 92px);
 }
 
-.parkaddupdate .dropdown {
+.parkaddupdate .dropdowncontainer {
     background-color: var(--white);
     position: absolute;
 }
 
-.parkaddupdate .dropdown p {
+.parkaddupdate .dropdowncontainer p {
     color: var(--background-color);
 }
 

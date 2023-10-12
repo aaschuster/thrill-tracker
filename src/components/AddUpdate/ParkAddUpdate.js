@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 import BackButton from "../BackButton";
+import Dropdown from "../Dropdown";
 
 import "../../styles/ParkAddUpdate.css";
 
@@ -22,6 +23,7 @@ function ParkAddUpdate( {chains} ) {
     const [err, setErr] = useState("");
     const [inputWidth, setInputWidth] = useState(100);
     const [transformStr, setTransformStr] = useState("");
+    const [openDropdown, setOpenDropdown] = useState("none");
 
     const inputRef = useRef(null);
     const formRef = useRef(null);
@@ -31,6 +33,7 @@ function ParkAddUpdate( {chains} ) {
     function onChange(evt) {
         setErr("");
         const {target} = evt;
+        setOpenDropdown(target.id);
         setForm({...form, [target.id]: target.value})
     }
 
@@ -60,17 +63,11 @@ function ParkAddUpdate( {chains} ) {
                     <label>Chain:</label>
                     <input id="chain" value={form.chain} onChange={onChange}/>
                 </div>
-                <div className="dropdown hidden" style={{
+                <div className={`dropdowncontainer ${ openDropdown === "chain" ? "" : "hidden"}`} style={{
                     width: inputWidth-4,
                     transform: transformStr 
                 }}>
-                    {
-                        chains.map( chain => {
-                            return (
-                                <p>{chain.name}</p>
-                            )
-                        })
-                    }
+                    <Dropdown items={chains} />
                 </div>
                 <div className="formitem">
                     <label>State:</label>
