@@ -37,6 +37,8 @@
 .parkaddupdate .dropdowncontainer {
     background-color: var(--white);
     position: absolute;
+    margin: 0 2px;
+    z-index: 3;
 }
 
 .parkaddupdate .dropdowncontainer p {
@@ -45,4 +47,11 @@
 
 .parkaddupdate .hidden {
     display: none;
+}
+
+.parkaddupdate .background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
 }

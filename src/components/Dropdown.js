@@ -4,8 +4,10 @@ function Dropdown( {items} ) {
     return (
         <div className="dropdown">
             {
-                items.map( item => (
+                items.map( (item, idx) => (
+                    <div key={idx}>
                     <p>{item.name}</p>
+                    </div>
                 ))
             }
         </div>

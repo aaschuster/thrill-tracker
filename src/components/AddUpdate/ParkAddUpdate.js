@@ -22,13 +22,18 @@ function ParkAddUpdate( {chains, states, countries} ) {
     const [form, setForm] = useState(initForm);
     const [err, setErr] = useState("");
     const [inputWidth, setInputWidth] = useState(100);
-    const [transformStr, setTransformStr] = useState("");
     const [openDropdown, setOpenDropdown] = useState("none");
 
     const inputRef = useRef(null);
-    const formRef = useRef(null);
 
     const labelSize = 125;
+
+    function searchList(list, keyword) {
+        keyword = keyword.toLowerCase();
+        return list.filter( li => {
+            if(li.name.toLowerCase().includes(keyword)) return li;
+        })
+    }
 
     function onChange(evt) {
         setErr("");
@@ -41,59 +46,64 @@ function ParkAddUpdate( {chains, states, countries} ) {
 
         setInputWidth(inputRef.current.offsetWidth);
 
-        const marginSize = (formRef.current.offsetWidth - labelSize - inputWidth) / 2;
-        
-        setTransformStr(
-            `translate(${( (marginSize < 0 ? 0 : marginSize) + labelSize + 2 )}px)`
-        ); //+2 to account for input border
-
     }, [inputWidth])
 
     return (
         <div className="parkaddupdate">
+            {
+                openDropdown === "none" ? <></> : <div className="background" onClick={() => setOpenDropdown("none")}></div>
+            }
             <div className="parkaddupdateheader">
                 <BackButton/>
                 <h2>Add Park</h2>
             </div>
-            <form ref={formRef}>
+            <form>
+
                 <div className="formitem">
                     <label>Name:</label>
                     <input id="name" value={form.name} onChange={onChange} ref={inputRef}/>
                 </div>
+
                 <div className="formitem">
                     <label>Chain:</label>
-                    <input id="chain" value={form.chain} onChange={onChange}/>
+                    <div>
+                        <input id="chain" value={form.chain} onChange={onChange}/>
+                        <div 
+                            className={`dropdowncontainer ${ openDropdown === "chain" ? "" : "hidden"}`} 
+                            style={{width: inputWidth-4}}
+                        >
+                            <Dropdown items={searchList(chains, form.chain)} />
+                        </div>
+                    </div>
                 </div>
-                <div className={`dropdowncontainer ${ openDropdown === "chain" ? "" : "hidden"}`} style={{
-                    width: inputWidth-4,
-                    transform: transformStr 
-                }}>
-                    <Dropdown items={chains} />
-                </div>
+
                 <div className="formitem">
                     <label>State:</label>
                     <input id="state" value={form.state} onChange={onChange}/>
                 </div>
+
                 <div className={`dropdowncontainer ${ openDropdown === "state" ? "" : "hidden"}`} style={{
-                    width: inputWidth-4,
-                    transform: transformStr 
+                    width: inputWidth-4
                 }}>
                     <Dropdown items={states} />
                 </div>
+
                 <div className="formitem">
                     <label>Country:</label>
                     <input id="country" value={form.country} onChange={onChange}/>
                 </div>
+
                 <div className={`dropdowncontainer ${ openDropdown === "country" ? "" : "hidden"}`} style={{
-                    width: inputWidth-4,
-                    transform: transformStr 
+                    width: inputWidth-4
                 }}>
                     <Dropdown items={countries} />
                 </div>
+
                 <div className="formitem">
                     <label>Opening year:</label>
                     <input id="openingyear" value={form.openingyear} onChange={onChange}/>
                 </div>
+
             </form>
         </div>
     )
