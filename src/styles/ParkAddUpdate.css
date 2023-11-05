@@ -12,7 +12,7 @@
     justify-content: center;
 }
 
-.parkaddupdate label {
+.parkaddupdate .inputlabel {
     text-align: right;
     width: 120px;
     min-width: 120px;
@@ -20,8 +20,12 @@
 }
 
 .parkaddupdate input {
-    max-width: 180px;
+    box-sizing: border-box;
+    width: 100%;
     min-width: 100px;
+    max-width: 300px;
+    padding: 0 2px;
+    border: 2px solid var(--black);
 }
 
 .parkaddupdateheader {
@@ -34,24 +38,38 @@
     width: calc(100% - 92px);
 }
 
-.parkaddupdate .dropdowncontainer {
-    background-color: var(--white);
+.datalistcontainer {
+    width: 100%;
+    max-width: 300px;
+}
+
+.react-datalist-input__container > * {
+    box-sizing: border-box;
+}
+
+.react-datalist-input__container {
+    width: 100%;
+    position: relative;
+}
+
+.react-datalist-input__textbox {
+    width: 100%;
+    min-width: 100px;
+    max-width: 300px;
+    padding: 0 2px;
+    border: 2px solid var(--black);
+}
+
+.react-datalist-input__label {
+    width: 0px;
+    padding: 0;
+}
+
+.react-datalist-input__listbox {
+    width: 100%;
     position: absolute;
-    margin: 0 2px;
-    z-index: 3;
-}
-
-.parkaddupdate .dropdowncontainer p {
-    color: var(--background-color);
-}
-
-.parkaddupdate .hidden {
-    display: none;
-}
-
-.parkaddupdate .background {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
     z-index: 2;
 }
