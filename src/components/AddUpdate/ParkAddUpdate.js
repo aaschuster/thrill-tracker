@@ -8,15 +8,21 @@ import BackButton from "../BackButton";
 
 import "../../styles/ParkAddUpdate.css";
 
-function ParkAddUpdate( {chains, states, countries} ) {
+import {addPark} from "../../actions/parksActions";
+
+function ParkAddUpdate( {chains, states, countries, addPark} ) {
 
     const navigate = useNavigate();
 
     const initForm = {
         name: "",
         chain: "",
+        chainID: null,
+        city: "",
         state: "",
+        stateID: null,
         country: "",
+        countryID: null,
         openingyear: ""
     }
 
@@ -24,10 +30,29 @@ function ParkAddUpdate( {chains, states, countries} ) {
     const [datalists, setDatalists] = useState({});
     const [err, setErr] = useState("");
 
-    function onChange(evt) {
+    function onChange(evt, id) {
         setErr("");
         const {target} = evt;
-        setForm({...form, [target.id]: target.value})
+        setForm({...form, [id ? id : target.id]: target.value})
+    }
+
+    function onSubmit(e) {
+        e.preventDefault();
+
+        const filtered = {};
+
+        filtered.chain = chains.filter( chain => form.chain.toLowerCase() === chain.name.toLowerCase());
+        filtered.state = states.filter( state => form.state.toLowerCase() === state.name.toLowerCase());
+        filtered.country = countries.filter( country => form.country.toLowerCase() === country.name.toLowerCase());
+
+        addPark({
+            name: form.name,
+            city: form.city,
+            opened: form.openingyear || null,
+            chains_id: filtered.chain.length === 1 ? filtered.chain[0].chains_id : null,
+            states_id: filtered.state.length === 1 ? filtered.state[0].states_id : null,
+            countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null
+        });
     }
 
     useEffect(() => {
@@ -50,8 +75,7 @@ function ParkAddUpdate( {chains, states, countries} ) {
                 <BackButton/>
                 <h2>Add Park</h2>
             </div>
-            <form>
-
+            <form onSubmit={onSubmit}>
                 <div className="formitem">
                     <label className="inputlabel">Name:</label>
                     <input id="name" value={form.name} onChange={onChange} autoFocus/>
@@ -63,10 +87,23 @@ function ParkAddUpdate( {chains, states, countries} ) {
                         {
                             datalists.chains ?
                             <DatalistInput
+                                value={form.chain}
+                                onChange={e => onChange(e, "chain")}
+                                showLabel={false}
                                 items={datalists.chains}
+                                onSelect={item => setForm({
+                                    ...form,
+                                    chain: item.value, 
+                                    chainID: item.id
+                                })}
                             /> : <></>
                         }
                     </div>
+                </div>
+
+                <div className="formitem">
+                    <label className="inputlabel">City:</label>
+                    <input id="city" value={form.city} onChange={onChange}/>
                 </div>
 
                 <div className="formitem">
@@ -75,7 +112,15 @@ function ParkAddUpdate( {chains, states, countries} ) {
                         {
                             datalists.states ?
                             <DatalistInput
+                                value={form.state}
+                                onChange={e => onChange(e, "state")}
+                                showLabel={false}
                                 items={datalists.states}
+                                onSelect={item => setForm({
+                                    ...form, 
+                                    state: item.value,
+                                    stateID: item.id
+                                })}
                             /> : <></>
                         }
                     </div>
@@ -87,7 +132,15 @@ function ParkAddUpdate( {chains, states, countries} ) {
                         {
                             datalists.countries ?
                             <DatalistInput
+                                value={form.country}
+                                onChange={e => onChange(e, "country")}
+                                showLabel={false}
                                 items={datalists.countries}
+                                onSelect={item => setForm({
+                                    ...form, 
+                                    country: item.value,
+                                    countryID: item.id
+                                })}
                             /> : <></>
                         }
                     </div>
@@ -95,8 +148,10 @@ function ParkAddUpdate( {chains, states, countries} ) {
 
                 <div className="formitem">
                     <label className="inputlabel">Opening year:</label>
-                    <input id="openingyear" value={form.openingyear} onChange={onChange}/>
+                    <input type="number" id="openingyear" value={form.openingyear} onChange={onChange}/>
                 </div>
+
+                <button>Add</button>
 
             </form>
         </div>
@@ -111,4 +166,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(ParkAddUpdate);
+export default connect(mapStateToProps, {addPark})(ParkAddUpdate);

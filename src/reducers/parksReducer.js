@@ -2,7 +2,8 @@ import {
     GET_PARKS,
     GET_PARKS_SUCCESS,
     GET_PARKS_ERR,
-    SET_FETCHING_TRUE
+    SET_FETCHING_TRUE,
+    ADD_PARK
 } from "../actions/parksActions";
 
 const initState = {
@@ -21,6 +22,8 @@ export const reducer = (state = initState, action) => {
             return {...state, isFetching: false, parks: action.payload};
         case GET_PARKS_ERR:
             return {...state, isFetching: false, error: action.payload};
+        case ADD_PARK:
+            return state;
         default:
             return state;
     }

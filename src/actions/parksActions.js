@@ -6,6 +6,7 @@ export const GET_PARKS = "GET_PARKS";
 export const GET_PARKS_SUCCESS = "GET_PARKS_SUCCESS";
 export const GET_PARKS_ERR = "GET_PARKS_ERR";
 export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
+export const ADD_PARK = "ADD_PARK";
 
 export const getParks = () => dispatch => {
     dispatch(setFetchingTrue());
@@ -29,4 +30,12 @@ const getParksSuccess = parks => {
 
 const getParksErr = err => {
     return {type: GET_PARKS_ERR, payload: err.message};
+}
+
+export const addPark = park => dispatch => {
+    axios.post(`${serverURL}/parks`, park) 
+        .then( () => dispatch(getParks()))
+        .catch( err => console.error(err));
+
+    return {type: ADD_PARK};
 }

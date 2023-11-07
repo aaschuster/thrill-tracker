@@ -6,6 +6,11 @@
     margin: 0 auto;
 }
 
+.parkaddupdate form {
+    display: flex;
+    flex-direction: column;
+}
+
 .parkaddupdate .formitem {
     display: flex;
     align-items: center;
@@ -67,9 +72,22 @@
 
 .react-datalist-input__listbox {
     width: 100%;
+    max-height: 70vh;
+    overflow-y: auto;
     position: absolute;
     display: flex;
     flex-direction: column;
     background-color: white;
     z-index: 2;
+}
+
+.react-datalist-input__listbox-option {
+    padding: 7px;
+}
+
+.parkaddupdate button {
+    margin: 0 auto;
+    width: 25%;
+    min-width: 70px;
+    margin-top: 10px;
 }
