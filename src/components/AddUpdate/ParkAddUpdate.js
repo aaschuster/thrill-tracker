@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
+import Dialog from "@mui/material/Dialog"
 
 import DatalistInput from 'react-datalist-input';
 
@@ -27,23 +28,18 @@ function ParkAddUpdate( {chains, states, countries, addPark} ) {
     }
 
     const [form, setForm] = useState(initForm);
+    const [filtered, setFiltered] = useState({
+        chain: [],
+        state: [],
+        country: []
+    });
     const [datalists, setDatalists] = useState({});
     const [err, setErr] = useState("");
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [dialogMessage, setDialogMessage] = useState("An error has occurred.");
+    const [submitFired, setSubmitFired] = useState(false);
 
-    function onChange(evt, id) {
-        setErr("");
-        const {target} = evt;
-        setForm({...form, [id ? id : target.id]: target.value})
-    }
-
-    function onSubmit(e) {
-        e.preventDefault();
-
-        const filtered = {};
-
-        filtered.chain = chains.filter( chain => form.chain.toLowerCase() === chain.name.toLowerCase());
-        filtered.state = states.filter( state => form.state.toLowerCase() === state.name.toLowerCase());
-        filtered.country = countries.filter( country => form.country.toLowerCase() === country.name.toLowerCase());
+    function submitPark() {
 
         addPark({
             name: form.name,
@@ -53,6 +49,28 @@ function ParkAddUpdate( {chains, states, countries, addPark} ) {
             states_id: filtered.state.length === 1 ? filtered.state[0].states_id : null,
             countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null
         });
+
+        navigate("/parkselect");
+
+    }
+
+    function onChange(evt, id) {
+        setErr("");
+        const {target} = evt;
+        setForm({...form, [id ? id : target.id]: target.value})
+    }
+
+    async function onSubmit(e) {
+        e.preventDefault();
+        setSubmitFired(true);
+
+        setFiltered({
+            chain: chains.filter( chain => form.chain.toLowerCase() === chain.name.toLowerCase()),
+            state: states.filter( state => form.state.toLowerCase() === state.name.toLowerCase()),
+            country: countries.filter( country => form.country.toLowerCase() === country.name.toLowerCase())
+        });
+
+        //triggers filtered useEffect -- logic continues below
     }
 
     useEffect(() => {
@@ -69,8 +87,57 @@ function ParkAddUpdate( {chains, states, countries, addPark} ) {
         });
     }, [])
 
+    useEffect(() => {
+
+        if(submitFired) {
+
+            let dialogState = "none";
+
+            if(filtered.chain.length === 0 && form.chain && filtered.country.length === 0 && form.country) 
+                dialogState = "both";
+            else {
+                if(filtered.chain.length === 0 && form.chain) 
+                    dialogState = "chain";
+                if(filtered.country.length === 0 && form.country) 
+                    dialogState = "country";
+            }
+
+            switch(dialogState) {
+
+                case "none":
+                    submitPark();
+                    break;
+
+                case "both":
+                    setDialogMessage(`This will add "${form.chain}" as a chain and "${form.country}" to the database.`);
+                    break;
+
+                case "chain":
+                    setDialogMessage(`This will add "${form.chain}" as a chain to the database.`);
+                    break;
+
+                case "country":
+                    setDialogMessage(`This will add "${form.country}" as a country to the database.`);
+                    break;
+
+            }
+
+            if(dialogState !== "none")
+                setDialogOpen(true);
+
+        }
+
+    }, [filtered])
+
     return (
         <div className="parkaddupdate">
+            <Dialog onClose={() => setDialogOpen(false)} open={dialogOpen}>
+                <div className="addchaincountry dialog">
+                    <p>{dialogMessage}</p>
+                    <button onClick={submitPark}>Confirm</button>
+                    <button onClick={() => setDialogOpen(false)}>Cancel</button>
+                </div>
+            </Dialog>
             <div className="parkaddupdateheader">
                 <BackButton/>
                 <h2>Add Park</h2>
