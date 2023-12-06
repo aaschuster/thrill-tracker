@@ -6,6 +6,7 @@ export const GET_COUNTRIES = "GET_COUNTRIES";
 export const GET_COUNTRIES_SUCCESS = "GET_COUNTRIES_SUCCESS";
 export const GET_COUNTRIES_ERR = "GET_COUNTRIES_ERR";
 export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
+export const ADD_COUNTRY = "ADD_CHAIN";
 
 export const getCountries = () => dispatch => {
     dispatch(setFetchingTrue());
@@ -29,4 +30,12 @@ const getCountriesSuccess = countries => {
 
 const getCountriesErr = err => {
     return {type: GET_COUNTRIES_ERR, payload: err.message};
+}
+
+export const addCountry = country => dispatch => {
+    axios.post(`${serverURL}/countries`, country)
+        .then( () => dispatch(getCountries()))
+        .catch( err => console.error(err));
+
+    return {type: ADD_COUNTRY};
 }

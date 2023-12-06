@@ -10,10 +10,17 @@ import BackButton from "../BackButton";
 import "../../styles/ParkAddUpdate.css";
 
 import {addPark} from "../../actions/parksActions";
+import {addChain} from "../../actions/chainsActions";
+import {addCountry} from "../../actions/countriesActions";
 
-function ParkAddUpdate( {chains, states, countries, addPark} ) {
+function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChain} ) {
 
     const navigate = useNavigate();
+
+    const NONE = "NONE";
+    const BOTH = "BOTH";
+    const CHAIN = "CHAIN";
+    const COUNTRY = "COUNTRY";
 
     const initForm = {
         name: "",
@@ -35,8 +42,11 @@ function ParkAddUpdate( {chains, states, countries, addPark} ) {
     });
     const [datalists, setDatalists] = useState({});
     const [err, setErr] = useState("");
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [dialogMessage, setDialogMessage] = useState("An error has occurred.");
+    const [dialog, setDialog] = useState({
+        open: false,
+        message: "An error has occurred.",
+        state: NONE
+    });
     const [submitFired, setSubmitFired] = useState(false);
 
     function submitPark() {
@@ -49,6 +59,12 @@ function ParkAddUpdate( {chains, states, countries, addPark} ) {
             states_id: filtered.state.length === 1 ? filtered.state[0].states_id : null,
             countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null
         });
+
+        if(dialog.state === COUNTRY || dialog.state === BOTH)
+            addCountry({name: form.country});
+
+        if(dialog.state === CHAIN || dialog.state === BOTH)
+            addChain({name: form.chain});
 
         navigate("/parkselect");
 
@@ -91,51 +107,64 @@ function ParkAddUpdate( {chains, states, countries, addPark} ) {
 
         if(submitFired) {
 
-            let dialogState = "none";
-
             if(filtered.chain.length === 0 && form.chain && filtered.country.length === 0 && form.country) 
-                dialogState = "both";
+                setDialog({...dialog, state: BOTH});
             else {
                 if(filtered.chain.length === 0 && form.chain) 
-                    dialogState = "chain";
+                    setDialog({...dialog, state: CHAIN});
                 if(filtered.country.length === 0 && form.country) 
-                    dialogState = "country";
+                    setDialog({...dialog, state: COUNTRY});
             }
-
-            switch(dialogState) {
-
-                case "none":
-                    submitPark();
-                    break;
-
-                case "both":
-                    setDialogMessage(`This will add "${form.chain}" as a chain and "${form.country}" to the database.`);
-                    break;
-
-                case "chain":
-                    setDialogMessage(`This will add "${form.chain}" as a chain to the database.`);
-                    break;
-
-                case "country":
-                    setDialogMessage(`This will add "${form.country}" as a country to the database.`);
-                    break;
-
-            }
-
-            if(dialogState !== "none")
-                setDialogOpen(true);
 
         }
 
     }, [filtered])
 
+    useEffect(() => {
+
+        if(submitFired) {
+
+            switch(dialog.state) {
+                case NONE:
+                    submitPark();
+                    break;
+
+                case BOTH:
+                    setDialog({
+                        ...dialog, 
+                        message: `This will add "${form.chain}" as a chain and "${form.country}" as a country to the database.`, 
+                        open: true
+                    });
+                    break;
+
+                case CHAIN:
+                    setDialog({
+                        ...dialog,
+                        message: `This will add "${form.chain}" as a chain to the database.`,
+                        open: true
+                    });
+                    break;
+
+                case COUNTRY:
+                    setDialog({
+                        ...dialog, 
+                        message: `This will add "${form.country}" as a country to the database.`,
+                        open: true
+                    });
+                    break;
+            }
+
+        }
+
+    }, [dialog.state])
+
     return (
         <div className="parkaddupdate">
-            <Dialog onClose={() => setDialogOpen(false)} open={dialogOpen}>
+            <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
                 <div className="addchaincountry dialog">
-                    <p>{dialogMessage}</p>
+                    <p>{dialog.message}</p>
                     <button onClick={submitPark}>Confirm</button>
-                    <button onClick={() => setDialogOpen(false)}>Cancel</button>
+                    <button onClick={() => setDialog({...dialog, open: false})}>Cancel</button>
                 </div>
             </Dialog>
             <div className="parkaddupdateheader">
@@ -233,4 +262,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {addPark})(ParkAddUpdate);
+export default connect(mapStateToProps, {addPark, addCountry, addChain})(ParkAddUpdate);

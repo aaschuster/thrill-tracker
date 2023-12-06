@@ -2,7 +2,8 @@ import {
     GET_COUNTRIES,
     GET_COUNTRIES_SUCCESS,
     GET_COUNTRIES_ERR,
-    SET_FETCHING_TRUE
+    SET_FETCHING_TRUE,
+    ADD_COUNTRY
 } from "../actions/countriesActions";
 
 const initState = {
@@ -21,6 +22,8 @@ export const reducer = (state = initState, action) => {
             return {...state, isFetching: false, countries: action.payload};
         case GET_COUNTRIES_ERR:
             return {...state, isFetching: false, error: action.payload};
+        case ADD_COUNTRY:
+            return state;
         default:
             return state;
     }

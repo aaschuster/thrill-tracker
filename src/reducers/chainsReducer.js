@@ -2,7 +2,8 @@ import {
     GET_CHAINS,
     GET_CHAINS_SUCCESS,
     GET_CHAINS_ERR,
-    SET_FETCHING_TRUE
+    SET_FETCHING_TRUE,
+    ADD_CHAIN
 } from "../actions/chainsActions";
 
 const initState = {
@@ -21,6 +22,8 @@ export const reducer = (state = initState, action) => {
             return {...state, isFetching: false, chains: action.payload};
         case GET_CHAINS_ERR:
             return {...state, isFetching: false, error: action.payload};
+        case ADD_CHAIN:
+            return state;
         default:
             return state;
     }

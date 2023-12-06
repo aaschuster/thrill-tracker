@@ -6,6 +6,7 @@ export const GET_CHAINS = "GET_CHAINS";
 export const GET_CHAINS_SUCCESS = "GET_CHAINS_SUCCESS";
 export const GET_CHAINS_ERR = "GET_CHAINS_ERR";
 export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
+export const ADD_CHAIN = "ADD_CHAIN";
 
 export const getChains = () => dispatch => {
     dispatch(setFetchingTrue());
@@ -29,4 +30,12 @@ const getChainsSuccess = chains => {
 
 const getChainsErr = err => {
     return {type: GET_CHAINS_ERR, payload: err.message};
+}
+
+export const addChain = chain => dispatch => {
+    axios.post(`${serverURL}/chains`, chain)
+        .then( () => dispatch(getChains()))
+        .catch( err => console.error(err));
+
+    return {type: ADD_CHAIN};
 }
