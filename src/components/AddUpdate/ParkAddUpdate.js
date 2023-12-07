@@ -97,10 +97,12 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
 
     async function onSubmit(e) {
         e.preventDefault();
-        setSubmitFired(true);
-        filterData();      
 
-        //triggers filtered useEffect -- logic continues below
+        if(form.name && form.city && form.country) {
+            setSubmitFired(true);
+            filterData(); //triggers filtered useEffect -- logic continues below
+        } else setErr("Please fill out required fields.");
+
     }
 
     useEffect(() => {
@@ -167,12 +169,12 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
             </div>
             <form onSubmit={onSubmit}>
                 <div className="formitem">
-                    <label className="inputlabel">Name:</label>
+                    <label className="inputlabel">Name*</label>
                     <input id="name" value={form.name} onChange={onChange} autoFocus/>
                 </div>
 
                 <div className="formitem">
-                    <label className="inputlabel">Chain:</label>
+                    <label className="inputlabel">Chain</label>
                     <div className="datalistcontainer">
                         {
                             datalists.chains ?
@@ -192,12 +194,12 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
                 </div>
 
                 <div className="formitem">
-                    <label className="inputlabel">City:</label>
+                    <label className="inputlabel">City*</label>
                     <input id="city" value={form.city} onChange={onChange}/>
                 </div>
 
                 <div className="formitem">
-                    <label className="inputlabel">State:</label>
+                    <label className="inputlabel">State</label>
                     <div className="datalistcontainer">
                         {
                             datalists.states ?
@@ -217,7 +219,7 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
                 </div>
 
                 <div className="formitem">
-                    <label className="inputlabel">Country:</label>
+                    <label className="inputlabel">Country*</label>
                     <div className="datalistcontainer">
                         {
                             datalists.countries ?
@@ -237,9 +239,12 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
                 </div>
 
                 <div className="formitem">
-                    <label className="inputlabel">Opening year:</label>
+                    <label className="inputlabel">Opening year</label>
                     <input type="number" id="openingyear" value={form.openingyear} onChange={onChange}/>
                 </div>
+
+                <p>*Required fields</p>
+                <p>{err}</p>
 
                 <button>Add</button>
 
