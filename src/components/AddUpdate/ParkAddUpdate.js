@@ -72,7 +72,7 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
         if(dialog.state === CHAIN || dialog.state === BOTH)
             addChain({name: form.chain});  
 
-        console.log(countries, chains);
+        //triggers chains/countries useEffect -- logic continues there
 
     }
 
@@ -82,6 +82,11 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
             state: states.filter( state => form.state.toLowerCase() === state.name.toLowerCase()),
             country: countries.filter( country => form.country.toLowerCase() === country.name.toLowerCase())
         });
+    }
+
+    function cancelDialog() {
+        setDialog({...dialog, open: false})
+        setSubmitFired(false);
     }
 
     function onChange(evt, id) {
@@ -119,55 +124,29 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
             if(filtered.chain.length === 1 && filtered.country.length === 1)
                 submitPark();
             else if(filtered.chain.length === 0 && form.chain && filtered.country.length === 0 && form.country) 
-                setDialog({...dialog, state: BOTH});
+                setDialog({
+                    state: BOTH,
+                    message: `This will add "${form.chain}" as a chain and "${form.country}" as a country to the database.`, 
+                    open: true
+                });
             else {
                 if(filtered.chain.length === 0 && form.chain) 
-                    setDialog({...dialog, state: CHAIN});
+                    setDialog({
+                        state: CHAIN,
+                        message: `This will add "${form.chain}" as a chain to the database.`,
+                        open: true
+                    });
                 if(filtered.country.length === 0 && form.country) 
-                    setDialog({...dialog, state: COUNTRY});
+                    setDialog({
+                        state: COUNTRY,
+                        message: `This will add "${form.country}" as a country to the database.`,
+                        open: true
+                    });
             }
 
         }
 
     }, [filtered])
-
-    useEffect(() => {
-
-        if(submitFired) {
-
-            switch(dialog.state) {
-                case NONE:
-                    submitPark();
-                    break;
-
-                case BOTH:
-                    setDialog({
-                        ...dialog, 
-                        message: `This will add "${form.chain}" as a chain and "${form.country}" as a country to the database.`, 
-                        open: true
-                    });
-                    break;
-
-                case CHAIN:
-                    setDialog({
-                        ...dialog,
-                        message: `This will add "${form.chain}" as a chain to the database.`,
-                        open: true
-                    });
-                    break;
-
-                case COUNTRY:
-                    setDialog({
-                        ...dialog, 
-                        message: `This will add "${form.country}" as a country to the database.`,
-                        open: true
-                    });
-                    break;
-            }
-
-        }
-
-    }, [dialog.state])
 
     useEffect(() => {
         filterData();
@@ -179,7 +158,7 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
                 <div className="addchaincountry dialog">
                     <p>{dialog.message}</p>
                     <button onClick={submitFromDialog}>Confirm</button>
-                    <button onClick={() => setDialog({...dialog, open: false})}>Cancel</button>
+                    <button onClick={cancelDialog}>Cancel</button>
                 </div>
             </Dialog>
             <div className="parkaddupdateheader">
