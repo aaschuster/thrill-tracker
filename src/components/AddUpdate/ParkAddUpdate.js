@@ -60,14 +60,28 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
             countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null
         });
 
+        navigate("/parkselect");
+
+    }
+
+    function submitFromDialog() {
+
         if(dialog.state === COUNTRY || dialog.state === BOTH)
             addCountry({name: form.country});
 
         if(dialog.state === CHAIN || dialog.state === BOTH)
-            addChain({name: form.chain});
+            addChain({name: form.chain});  
 
-        navigate("/parkselect");
+        console.log(countries, chains);
 
+    }
+
+    function filterData() {
+        setFiltered({
+            chain: chains.filter( chain => form.chain.toLowerCase() === chain.name.toLowerCase()),
+            state: states.filter( state => form.state.toLowerCase() === state.name.toLowerCase()),
+            country: countries.filter( country => form.country.toLowerCase() === country.name.toLowerCase())
+        });
     }
 
     function onChange(evt, id) {
@@ -79,12 +93,7 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
     async function onSubmit(e) {
         e.preventDefault();
         setSubmitFired(true);
-
-        setFiltered({
-            chain: chains.filter( chain => form.chain.toLowerCase() === chain.name.toLowerCase()),
-            state: states.filter( state => form.state.toLowerCase() === state.name.toLowerCase()),
-            country: countries.filter( country => form.country.toLowerCase() === country.name.toLowerCase())
-        });
+        filterData();      
 
         //triggers filtered useEffect -- logic continues below
     }
@@ -107,7 +116,9 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
 
         if(submitFired) {
 
-            if(filtered.chain.length === 0 && form.chain && filtered.country.length === 0 && form.country) 
+            if(filtered.chain.length === 1 && filtered.country.length === 1)
+                submitPark();
+            else if(filtered.chain.length === 0 && form.chain && filtered.country.length === 0 && form.country) 
                 setDialog({...dialog, state: BOTH});
             else {
                 if(filtered.chain.length === 0 && form.chain) 
@@ -158,12 +169,16 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
 
     }, [dialog.state])
 
+    useEffect(() => {
+        filterData();
+    }, [chains, countries])
+
     return (
         <div className="parkaddupdate">
             <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
                 <div className="addchaincountry dialog">
                     <p>{dialog.message}</p>
-                    <button onClick={submitPark}>Confirm</button>
+                    <button onClick={submitFromDialog}>Confirm</button>
                     <button onClick={() => setDialog({...dialog, open: false})}>Cancel</button>
                 </div>
             </Dialog>
