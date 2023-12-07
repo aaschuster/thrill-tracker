@@ -159,8 +159,10 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
             <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
                 <div className="addchaincountry dialog">
                     <p>{dialog.message}</p>
-                    <button onClick={submitFromDialog}>Confirm</button>
-                    <button onClick={cancelDialog}>Cancel</button>
+                    <div className="dialogbuttons">
+                        <button onClick={submitFromDialog}>Confirm</button>
+                        <button onClick={cancelDialog}>Cancel</button>
+                    </div>
                 </div>
             </Dialog>
             <div className="parkaddupdateheader">
@@ -243,8 +245,10 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
                     <input type="number" id="openingyear" value={form.openingyear} onChange={onChange}/>
                 </div>
 
-                <p>*Required fields</p>
-                <p>{err}</p>
+                <div className="textcontainer">
+                    <p>*Required fields</p>
+                    <p className="err">{err}</p>
+                </div>
 
                 <button>Add</button>
 

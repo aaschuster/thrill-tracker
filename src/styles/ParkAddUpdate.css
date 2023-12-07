@@ -6,6 +6,19 @@
     margin: 0 auto;
 }
 
+.addchaincountry {
+    padding: 20px 15px;
+}
+
+.addchaincountry p {
+    margin-bottom: 15px;
+}
+
+.addchaincountry .dialogbuttons {
+    display: flex;
+    justify-content: center;
+}
+
 .parkaddupdate form {
     display: flex;
     flex-direction: column;
@@ -85,9 +98,20 @@
     padding: 7px;
 }
 
+.parkaddupdate .textcontainer {
+    margin: 15px 0;
+}
+
+.parkaddupdate p {
+    margin: 5px 0;
+}
+
+.parkaddupdate .textcontainer .err {
+    color: rgb(209, 49, 0);
+}
+
 .parkaddupdate button {
     margin: 0 auto;
     width: 25%;
     min-width: 70px;
-    margin-top: 10px;
 }
