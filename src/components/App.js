@@ -97,7 +97,7 @@ const App = props => {
               <RecordAddUpdate/>
             }/>
           <Route
-            path="/addupdate/park/:id" element={
+            path="/addupdate/park/:parkId" element={
               <ParkAddUpdate/>
             }
           />

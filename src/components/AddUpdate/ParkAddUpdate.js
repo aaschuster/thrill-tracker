@@ -13,9 +13,15 @@ import {addPark} from "../../actions/parksActions";
 import {addChain} from "../../actions/chainsActions";
 import {addCountry} from "../../actions/countriesActions";
 
-function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChain} ) {
+function ParkAddUpdate( {chains, states, countries, parks, addPark, addCountry, addChain} ) {
+
+    const { parkId } = useParams();
+
+    const parkInt = parseInt(parkId);
 
     const navigate = useNavigate();
+
+    const editMode = parkId !== "add";
 
     const NONE = "NONE";
     const BOTH = "BOTH";
@@ -48,6 +54,7 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
         state: NONE
     });
     const [submitFired, setSubmitFired] = useState(false);
+    const [currentPark, setCurrentPark] = useState(null);
 
     function submitPark() {
 
@@ -106,6 +113,7 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
     }
 
     useEffect(() => {
+
         setDatalists({...datalists, 
             chains: chains.map( chain => {
                 return{id: chain.chains_id, value: chain.name}
@@ -117,7 +125,41 @@ function ParkAddUpdate( {chains, states, countries, addPark, addCountry, addChai
                 return{id: country.countries_id, value: country.name}
             }),
         });
-    }, [])
+
+        if(editMode) {
+            const [filteredPark] = parks.filter(
+                park =>
+                    park.parks_id === parkInt
+            );
+            setCurrentPark(filteredPark)
+        }
+
+    }, [parks])
+
+    useEffect(() => {
+        
+        if(currentPark) {
+
+            const currentParkData = {
+                chain: chains.filter( chain => chain.chains_id === currentPark.chains_id),
+                state: states.filter( state => state.states_id === currentPark.states_id),
+                country: countries.filter( country => country.countries_id === currentPark.countries_id)
+            };     
+
+            console.log(currentPark);
+
+            setForm({
+                name: currentPark.name,
+                chain: currentParkData.chain[0].name,
+                city: currentPark.city,
+                state: currentParkData.state[0].name,
+                country: currentParkData.country[0].name,
+                openingyear: currentPark.opened
+            });
+
+        }
+
+    }, [currentPark, chains, states, countries])
 
     useEffect(() => {
 
@@ -261,7 +303,8 @@ function mapStateToProps(state) {
     return {
         chains: state.chains.chains,
         states: state.states.states,
-        countries: state.countries.countries
+        countries: state.countries.countries,
+        parks: state.parks.parks
     }
 }
 
