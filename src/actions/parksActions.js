@@ -7,6 +7,7 @@ export const GET_PARKS_SUCCESS = "GET_PARKS_SUCCESS";
 export const GET_PARKS_ERR = "GET_PARKS_ERR";
 export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
 export const ADD_PARK = "ADD_PARK";
+export const UPDATE_PARK = "UPDATE_PARK";
 
 export const getParks = () => dispatch => {
     dispatch(setFetchingTrue());
@@ -38,4 +39,12 @@ export const addPark = park => dispatch => {
         .catch( err => console.error(err));
 
     return {type: ADD_PARK};
+}
+
+export const updatePark = park => dispatch => {
+    axios.put(`${serverURL}/parks/${park.parks_id}`, park)
+        .then( () => dispatch(getParks()))
+        .catch( err => console.error(err));
+
+    return {type: UPDATE_PARK}
 }

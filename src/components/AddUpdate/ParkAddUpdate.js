@@ -9,11 +9,20 @@ import BackButton from "../BackButton";
 
 import "../../styles/ParkAddUpdate.css";
 
-import {addPark} from "../../actions/parksActions";
+import {addPark, updatePark} from "../../actions/parksActions";
 import {addChain} from "../../actions/chainsActions";
 import {addCountry} from "../../actions/countriesActions";
 
-function ParkAddUpdate( {chains, states, countries, parks, addPark, addCountry, addChain} ) {
+function ParkAddUpdate({
+    chains, 
+    states, 
+    countries, 
+    parks, 
+    addPark, 
+    updatePark, 
+    addCountry, 
+    addChain
+}) {
 
     const { parkId } = useParams();
 
@@ -58,14 +67,25 @@ function ParkAddUpdate( {chains, states, countries, parks, addPark, addCountry, 
 
     function submitPark() {
 
-        addPark({
-            name: form.name,
-            city: form.city,
-            opened: form.openingyear || null,
-            chains_id: filtered.chain.length === 1 ? filtered.chain[0].chains_id : null,
-            states_id: filtered.state.length === 1 ? filtered.state[0].states_id : null,
-            countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null
-        });
+        if(editMode) {
+            updatePark({
+                parks_id: currentPark.parks_id,
+                name: form.name,
+                city: form.city,
+                opened: form.openingyear || null,
+                chains_id: filtered.chain.length === 1 ? filtered.chain[0].chains_id : null,
+                states_id: filtered.state.length === 1 ? filtered.state[0].states_id : null,
+                countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null
+            })
+        } else
+            addPark({
+                name: form.name,
+                city: form.city,
+                opened: form.openingyear || null,
+                chains_id: filtered.chain.length === 1 ? filtered.chain[0].chains_id : null,
+                states_id: filtered.state.length === 1 ? filtered.state[0].states_id : null,
+                countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null
+            });
 
         navigate("/parkselect");
 
@@ -146,8 +166,6 @@ function ParkAddUpdate( {chains, states, countries, parks, addPark, addCountry, 
                 country: countries.filter( country => country.countries_id === currentPark.countries_id)
             };     
 
-            console.log(currentPark);
-
             setForm({
                 name: currentPark.name,
                 chain: currentParkData.chain[0].name,
@@ -209,7 +227,7 @@ function ParkAddUpdate( {chains, states, countries, parks, addPark, addCountry, 
             </Dialog>
             <div className="parkaddupdateheader">
                 <BackButton/>
-                <h2>Add Park</h2>
+                <h2>{editMode ? "Update" : "Add"} Park</h2>
             </div>
             <form onSubmit={onSubmit}>
                 <div className="formitem">
@@ -292,7 +310,7 @@ function ParkAddUpdate( {chains, states, countries, parks, addPark, addCountry, 
                     <p className="err">{err}</p>
                 </div>
 
-                <button>Add</button>
+                <button>{editMode ? "Update" : "Add"}</button>
 
             </form>
         </div>
@@ -308,4 +326,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {addPark, addCountry, addChain})(ParkAddUpdate);
+export default connect(mapStateToProps, {addPark, updatePark, addCountry, addChain})(ParkAddUpdate);
