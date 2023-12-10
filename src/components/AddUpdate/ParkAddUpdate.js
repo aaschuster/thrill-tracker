@@ -77,7 +77,7 @@ function ParkAddUpdate({
                 states_id: filtered.state.length === 1 ? filtered.state[0].states_id : null,
                 countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null
             })
-        } else
+        } else 
             addPark({
                 name: form.name,
                 city: form.city,
@@ -88,7 +88,6 @@ function ParkAddUpdate({
             });
 
         navigate("/parkselect");
-
     }
 
     function submitFromDialog() {
@@ -168,11 +167,11 @@ function ParkAddUpdate({
 
             setForm({
                 name: currentPark.name,
-                chain: currentParkData.chain[0].name,
+                chain: currentParkData.chain[0] ? currentParkData.chain[0].name : "",
                 city: currentPark.city,
-                state: currentParkData.state[0].name,
+                state: currentParkData.state[0] ? currentParkData.state[0].name : "",
                 country: currentParkData.country[0].name,
-                openingyear: currentPark.opened
+                openingyear: currentPark.opened ? currentPark.opened : ""
             });
 
         }
