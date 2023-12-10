@@ -23,6 +23,7 @@ function RideAddUpdate( {parks, currentParkID, manufacturers} ) {
         duration: "",
         track_length: "",
         inversions: "",
+        ride_height: "",
         drop_height: "",
         rows: "",
         seats: "",
@@ -51,7 +52,11 @@ function RideAddUpdate( {parks, currentParkID, manufacturers} ) {
             park: currentPark.name
         })
 
-    }, [parks, currentParkID])
+    }, [parks, manufacturers, currentParkID])
+
+    useEffect(() => {
+        console.log(datalists);
+    }, [datalists])
 
     function onSubmit(e) {
         e.preventDefault();
@@ -116,6 +121,41 @@ function RideAddUpdate( {parks, currentParkID, manufacturers} ) {
                     </div>
                 </div>
 
+                <div className="formitem">
+                    <label className="inputlabel">{"Duration (seconds)"}</label>
+                    <input type="number" id="duration" value={form.name} onChange={onChange}/>
+                </div>
+
+                <div className="formitem">
+                    <label className="inputlabel">{"Track length (ft)"}</label>
+                    <input type="number" id="track_length" value={form.track_length} onChange={onChange}/>
+                </div>
+
+                <div className="formitem">
+                    <label className="inputlabel">Inversions</label>
+                    <input type="number" id="inversions" value={form.inversions} onChange={onChange}/>
+                </div>
+
+                <div className="formitem">
+                    <label className="inputlabel">{"Ride height (ft)"}</label>
+                    <input type="number" id="ride_height" value={form.ride_height} onChange={onChange}/>
+                </div>
+
+                <div className="formitem">
+                    <label className="inputlabel">{"Drop height (ft)"}</label>
+                    <input type="number" id="drop_height" value={form.drop_height} onChange={onChange}/>
+                </div>
+
+                <div className="formitem">
+                    <label className="inputlabel">{"Rows (train length)"}</label>
+                    <input type="number" id="rows" value={form.rows} onChange={onChange}/>
+                </div>
+
+                <div className="formitem">
+                    <label className="inputlabel">{"Seats (train width)"}</label>
+                    <input type="number" id="seats" value={form.seats} onChange={onChange}/>
+                </div>
+                
                 <div className="textcontainer">
                     <p>*Required fields</p>
                     <p className="err">{err}</p>

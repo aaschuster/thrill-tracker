@@ -29,3 +29,8 @@
 .parkaddupdateheader h2 {
     width: calc(100% - 92px);
 }
+
+.parkaddupdate .inputlabel {
+    width: 120px;
+    min-width: 120px;
+}

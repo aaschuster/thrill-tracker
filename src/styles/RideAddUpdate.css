@@ -5,3 +5,8 @@
     max-width: 550px;
     margin: 0 auto;
 }
+
+.rideaddupdate .inputlabel {
+    width: 155px;
+    min-width: 155px;
+}

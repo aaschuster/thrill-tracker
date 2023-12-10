@@ -10,6 +10,7 @@ import { getRides } from "../actions/ridesActions";
 import { getChains } from "../actions/chainsActions";
 import { getCountries } from "../actions/countriesActions";
 import { getStates } from "../actions/statesActions";
+import { getManufacturers } from "../actions/manufacturersActions";
 
 import '../styles/App.css';
 
@@ -45,6 +46,7 @@ const App = props => {
     getChains();
     getCountries();
     getStates();
+    getManufacturers();
   }, []);
 
   useEffect(() => {
@@ -129,5 +131,6 @@ export default connect(
     getRides,
     getChains, 
     getCountries, 
-    getStates
+    getStates,
+    getManufacturers
   })(App);
