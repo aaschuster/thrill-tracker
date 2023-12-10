@@ -34,7 +34,7 @@ function RideAddUpdate( {parks, currentParkID, manufacturers} ) {
     const [datalists, setDatalists] = useState({});
 
     useEffect(() => {
-
+        
         setDatalists({...datalists,
             parks: parks.map( park => {
                 return{id: park.parks_id, value: park.name};
@@ -46,17 +46,14 @@ function RideAddUpdate( {parks, currentParkID, manufacturers} ) {
     
         const [currentPark] = parks.filter( park => park.parks_id === currentParkID);
 
-        setForm({
-            ...form, 
-            parkID: currentParkID,
-            park: currentPark.name
-        })
+        if(currentParkID) 
+            setForm({
+                ...form, 
+                parkID: currentParkID,
+                park: currentPark.name
+            })
 
     }, [parks, manufacturers, currentParkID])
-
-    useEffect(() => {
-        console.log(datalists);
-    }, [datalists])
 
     function onSubmit(e) {
         e.preventDefault();
@@ -123,7 +120,7 @@ function RideAddUpdate( {parks, currentParkID, manufacturers} ) {
 
                 <div className="formitem">
                     <label className="inputlabel">{"Duration (seconds)"}</label>
-                    <input type="number" id="duration" value={form.name} onChange={onChange}/>
+                    <input type="number" id="duration" value={form.duration} onChange={onChange}/>
                 </div>
 
                 <div className="formitem">

@@ -36,13 +36,14 @@ const App = props => {
     getRides, 
     getChains, 
     getCountries, 
-    getStates } = props;
+    getStates,
+    getManufacturers } = props;
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
     setUser();
     getParks();
-    getRides();
+  getRides();
     getChains();
     getCountries();
     getStates();
