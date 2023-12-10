@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import Dialog from "@mui/material/Dialog"
@@ -121,7 +121,7 @@ function ParkAddUpdate({
         setForm({...form, [id ? id : target.id]: target.value})
     }
 
-    async function onSubmit(e) {
+    function onSubmit(e) {
         e.preventDefault();
 
         if(form.name && form.city && form.country) {
@@ -228,7 +228,7 @@ function ParkAddUpdate({
                 <BackButton/>
                 <h2>{editMode ? "Update" : "Add"} Park</h2>
             </div>
-            <form onSubmit={onSubmit}>
+            <form className="addupdateform" onSubmit={onSubmit}>
                 <div className="formitem">
                     <label className="inputlabel">Name*</label>
                     <input id="name" value={form.name} onChange={onChange} autoFocus/>

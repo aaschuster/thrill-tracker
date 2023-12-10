@@ -4,11 +4,13 @@ import {
     GET_PARKS_ERR,
     SET_FETCHING_TRUE,
     ADD_PARK,
-    UPDATE_PARK
+    UPDATE_PARK,
+    SET_CURRENT_PARK_ID
 } from "../actions/parksActions";
 
 const initState = {
     parks: [],
+    currentParkID: null,
     isFetching: false,
     error: ""
 };
@@ -27,6 +29,8 @@ export const reducer = (state = initState, action) => {
             return state;
         case UPDATE_PARK:
             return state;
+        case SET_CURRENT_PARK_ID:
+            return {...state, currentParkID: action.payload};
         default:
             return state;
     }

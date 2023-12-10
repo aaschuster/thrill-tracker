@@ -8,6 +8,7 @@ export const GET_PARKS_ERR = "GET_PARKS_ERR";
 export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
 export const ADD_PARK = "ADD_PARK";
 export const UPDATE_PARK = "UPDATE_PARK";
+export const SET_CURRENT_PARK_ID = "SET_CURRENT_PARK_ID";
 
 export const getParks = () => dispatch => {
     dispatch(setFetchingTrue());
@@ -47,4 +48,8 @@ export const updatePark = park => dispatch => {
         .catch( err => console.error(err));
 
     return {type: UPDATE_PARK}
+}
+
+export const setCurrentParkID = parkID => {
+    return {type: SET_CURRENT_PARK_ID, payload: parkID};
 }

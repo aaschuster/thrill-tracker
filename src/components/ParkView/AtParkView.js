@@ -80,11 +80,11 @@ function AtParkView( {parks, rides, history} ) {
         <div className={"atparkview"}>
             {park ? <>
                     <ParkViewHeader name={park.name} parkID={park.parks_id}/>
-                        <RideList
-                            currentHistory = {currentHistory}
-                            currentTotals = {currentTotals}
-                            currentRides = {currentRides}
-                        />
+                    <RideList
+                        currentHistory = {currentHistory}
+                        currentTotals = {currentTotals}
+                        currentRides = {currentRides}
+                    />
                 </>
                 :
                 <p>Please wait...</p>

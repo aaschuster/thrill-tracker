@@ -1,4 +1,5 @@
 @import "styles.css";
+@import "addUpdateForm.css";
 
 .parkaddupdate {
     width: 90%;
@@ -19,33 +20,6 @@
     justify-content: center;
 }
 
-.parkaddupdate form {
-    display: flex;
-    flex-direction: column;
-}
-
-.parkaddupdate .formitem {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.parkaddupdate .inputlabel {
-    text-align: right;
-    width: 120px;
-    min-width: 120px;
-    padding-right: 5px;
-}
-
-.parkaddupdate input {
-    box-sizing: border-box;
-    width: 100%;
-    min-width: 100px;
-    max-width: 300px;
-    padding: 0 2px;
-    border: 2px solid var(--black);
-}
-
 .parkaddupdateheader {
     display: flex;
     align-items: center;
@@ -54,64 +28,4 @@
 
 .parkaddupdateheader h2 {
     width: calc(100% - 92px);
-}
-
-.datalistcontainer {
-    width: 100%;
-    max-width: 300px;
-}
-
-.react-datalist-input__container > * {
-    box-sizing: border-box;
-}
-
-.react-datalist-input__container {
-    width: 100%;
-    position: relative;
-}
-
-.react-datalist-input__textbox {
-    width: 100%;
-    min-width: 100px;
-    max-width: 300px;
-    padding: 0 2px;
-    border: 2px solid var(--black);
-}
-
-.react-datalist-input__label {
-    width: 0px;
-    padding: 0;
-}
-
-.react-datalist-input__listbox {
-    width: 100%;
-    max-height: 70vh;
-    overflow-y: auto;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    z-index: 2;
-}
-
-.react-datalist-input__listbox-option {
-    padding: 7px;
-}
-
-.parkaddupdate .textcontainer {
-    margin: 15px 0;
-}
-
-.parkaddupdate p {
-    margin: 5px 0;
-}
-
-.parkaddupdate .textcontainer .err {
-    color: rgb(209, 49, 0);
-}
-
-.parkaddupdate button {
-    margin: 0 auto;
-    width: 25%;
-    min-width: 70px;
 }

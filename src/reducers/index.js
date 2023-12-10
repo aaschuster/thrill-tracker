@@ -7,6 +7,7 @@ import {reducer as login} from "./loginReducer";
 import {reducer as chains} from "./chainsReducer";
 import {reducer as states} from "./statesReducer";
 import {reducer as countries} from "./countriesReducer";
+import {reducer as manufacturers} from "./manufacturersReducer";
 
 export const reducer = combineReducers({
     parks,
@@ -15,5 +16,6 @@ export const reducer = combineReducers({
     login,
     chains,
     states,
-    countries
+    countries,
+    manufacturers
 })

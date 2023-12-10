@@ -13,3 +13,14 @@
     margin: 0;
     width: calc(100% - 92px);
 }
+
+.parkviewheaderbuttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.parkviewheaderbuttons button {
+    margin: 5px;
+}
