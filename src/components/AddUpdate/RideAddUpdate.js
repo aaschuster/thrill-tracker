@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import Dialog from "@mui/material/Dialog";
 
@@ -9,8 +9,12 @@ import BackButton from "../BackButton";
 
 import "../../styles/RideAddUpdate.css";
 
-function RideAddUpdate( {parks, currentParkID, manufacturers} ) {
+import { addRide } from "../../actions/ridesActions";
+
+function RideAddUpdate( {parks, currentParkID, manufacturers, addRide} ) {
     const { rideId } = useParams();
+
+    const navigate = useNavigate();
 
     const editMode = rideId !== "add";
 
@@ -31,7 +35,16 @@ function RideAddUpdate( {parks, currentParkID, manufacturers} ) {
 
     const [form, setForm] = useState(initForm);
     const [err, setErr] = useState("");
+    const [filtered, setFiltered] = useState({
+        park: [],
+        manufacturer: []
+    })
+    const [submitFired, setSubmitFired] = useState(false);
     const [datalists, setDatalists] = useState({});
+    const [dialog, setDialog] = useState({
+        open: false,
+        message: "An error has occurred."
+    })
 
     useEffect(() => {
         
@@ -55,8 +68,47 @@ function RideAddUpdate( {parks, currentParkID, manufacturers} ) {
 
     }, [parks, manufacturers, currentParkID])
 
+    useEffect(() => {
+        if(submitFired) {
+
+            if(filtered.park.length === 1 && filtered.manufacturer.length === 1)
+                submitRide();
+            else if(filtered.park.length === 0)
+                setErr("Please select a valid park.");
+            else
+                setDialog({
+                    message: `This will add "${form.manufacturer}" as a manufacturer to the database.`,
+                    open: true
+                })
+
+        }
+    }, [filtered])
+
     function onSubmit(e) {
         e.preventDefault();
+
+        if(form.name && form.park) {
+            setSubmitFired(true);
+            filterData();
+        } else setErr("Please fill out required fields.");
+    }
+
+    function submitRide() {
+
+        addRide({
+            name: form.name,
+            parks_id: filtered.park[0].parks_id,
+            manufacturers_id: filtered.manufacturer.length === 1 ? filtered.manufacturer[0].manufacturers_id : null,
+            duration: form.duration,
+            track_length: form.track_length,
+            inversions: form.inversions,
+            ride_height: form.ride_height,
+            drop_height: form.drop_height,
+            rows: form.rows,
+            seats: form.seats
+        });
+
+        navigate(-1);
     }
 
     function onChange(e, id) {
@@ -65,8 +117,25 @@ function RideAddUpdate( {parks, currentParkID, manufacturers} ) {
         setForm({...form, [id ? id : target.id]: target.value})
     }
 
+    function filterData() {
+        setFiltered({
+            park: parks.filter( park => form.park.toLowerCase() === park.name.toLowerCase()),
+            manufacturer: manufacturers.filter( manufacturer => form.manufacturer.toLowerCase() === manufacturer.name.toLowerCase())
+        })
+        //triggers filtered useEffect -- logic continues above
+    }
+
     return (
         <div className="rideaddupdate">
+            <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
+                <div className="addmanufacturer dialog">
+                    <p>{dialog.message}</p>
+                    <div className="dialogbuttons">
+                        <button>Confirm</button>
+                        <button>Cancel</button>
+                    </div>
+                </div>
+            </Dialog>
             <div className="rideaddupdateheader">
                 <BackButton/>
                 <h2>{editMode ? "Update" : "Add"} Ride</h2>
@@ -174,4 +243,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(RideAddUpdate);
+export default connect(mapStateToProps, { addRide })(RideAddUpdate);

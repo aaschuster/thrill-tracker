@@ -108,6 +108,7 @@ function ParkAddUpdate({
             state: states.filter( state => form.state.toLowerCase() === state.name.toLowerCase()),
             country: countries.filter( country => form.country.toLowerCase() === country.name.toLowerCase())
         });
+        //triggers filtered useEffect -- logic continues below
     }
 
     function cancelDialog() {
@@ -126,7 +127,7 @@ function ParkAddUpdate({
 
         if(form.name && form.city && form.country) {
             setSubmitFired(true);
-            filterData(); //triggers filtered useEffect -- logic continues below
+            filterData(); 
         } else setErr("Please fill out required fields.");
 
     }

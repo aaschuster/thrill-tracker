@@ -6,6 +6,7 @@ export const GET_RIDES = "GET_RIDES";
 export const GET_RIDES_SUCCESS = "GET_RIDES_SUCCESS";
 export const GET_RIDES_ERR = "GET_RIDES_ERR";
 export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
+export const ADD_RIDE = "ADD_RIDE";
 
 export const getRides = () => dispatch => {
     dispatch(setFetchingTrue());
@@ -29,4 +30,13 @@ const getRidesSuccess = rides => {
 
 const getRidesErr = err => {
     return {type: GET_RIDES_ERR, payload: err.message};
+}
+
+export const addRide = ride => dispatch => {
+    axios.post(`${serverURL}/rides`, ride)
+        .then( () => dispatch(getRides()))
+        .catch( err => console.error(err))
+
+    return {type: ADD_RIDE};
+
 }
