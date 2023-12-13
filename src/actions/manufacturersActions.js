@@ -6,6 +6,7 @@ export const GET_MANUFACTURERS = "GET_MANUFACTURERS";
 export const GET_MANUFACTURERS_SUCCESS = "GET_MANUFACTURERS_SUCCESS";
 export const GET_MANUFACTURERS_ERR = "GET_MANUFACTURERS_ERR";
 export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
+export const ADD_MANUFACTURER = "ADD_MANUFACTURER";
 
 export const getManufacturers = () => dispatch => {
     dispatch(setFetchingTrue());
@@ -29,4 +30,12 @@ const getManufacturersSuccess = manufacturers => {
 
 const getManufacturersErr = err => {
     return {type: GET_MANUFACTURERS_ERR, payload: err.message};
+}
+
+export const addManufacturer = manufacturer => dispatch => {
+    axios.post(`${serverURL}/manufacturers`, manufacturer)
+        .then( () => dispatch(getManufacturers()))
+        .catch( err => console.error(err));
+
+    return {type: ADD_MANUFACTURER};
 }

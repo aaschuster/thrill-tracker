@@ -10,8 +10,9 @@ import BackButton from "../BackButton";
 import "../../styles/RideAddUpdate.css";
 
 import { addRide } from "../../actions/ridesActions";
+import { addManufacturer } from "../../actions/manufacturersActions";
 
-function RideAddUpdate( {parks, currentParkID, manufacturers, addRide} ) {
+function RideAddUpdate( {parks, currentParkID, manufacturers, addRide, addManufacturer} ) {
     const { rideId } = useParams();
 
     const navigate = useNavigate();
@@ -70,6 +71,7 @@ function RideAddUpdate( {parks, currentParkID, manufacturers, addRide} ) {
 
     useEffect(() => {
         if(submitFired) {
+            setSubmitFired(false);
 
             if(filtered.park.length === 1 && (filtered.manufacturer.length === 1 || !form.manufacturer))
                 return submitRide();
@@ -84,6 +86,10 @@ function RideAddUpdate( {parks, currentParkID, manufacturers, addRide} ) {
 
         }
     }, [filtered])
+    
+    useEffect(() => {
+        filterData();
+    }, [manufacturers])
 
     function onSubmit(e) {
         e.preventDefault();
@@ -126,14 +132,24 @@ function RideAddUpdate( {parks, currentParkID, manufacturers, addRide} ) {
         //triggers filtered useEffect -- logic continues above
     }
 
+    function submitFromDialog() {
+        setSubmitFired(true);
+        addManufacturer({name: form.manufacturer});
+    }
+
+    function cancelDialog() {
+        setDialog({...dialog, open: false});
+        setSubmitFired(false);
+    }
+
     return (
         <div className="rideaddupdate">
             <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
                 <div className="addmanufacturer dialog">
                     <p>{dialog.message}</p>
                     <div className="dialogbuttons">
-                        <button>Confirm</button>
-                        <button>Cancel</button>
+                        <button onClick={submitFromDialog}>Confirm</button>
+                        <button onClick={cancelDialog}>Cancel</button>
                     </div>
                 </div>
             </Dialog>
@@ -244,4 +260,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { addRide })(RideAddUpdate);
+export default connect(mapStateToProps, { addRide, addManufacturer })(RideAddUpdate);

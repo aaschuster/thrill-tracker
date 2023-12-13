@@ -2,7 +2,8 @@ import {
     GET_MANUFACTURERS,
     GET_MANUFACTURERS_SUCCESS,
     GET_MANUFACTURERS_ERR,
-    SET_FETCHING_TRUE
+    SET_FETCHING_TRUE,
+    ADD_MANUFACTURER
 } from "../actions/manufacturersActions";
 
 const initState = {
@@ -21,6 +22,8 @@ export const reducer = (state = initState, action) => {
             return {...state, isFetching: false, manufacturers: action.payload};
         case GET_MANUFACTURERS_ERR:
             return {...state, isFetching: false, error: action.payload};
+        case ADD_MANUFACTURER:
+            return state;
         default: 
             return state;
     }
