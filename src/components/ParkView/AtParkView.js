@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 
 import ParkViewHeader from "./ParkViewHeader";
@@ -21,10 +21,11 @@ function AtParkView( {parks, rides, history} ) {
     const [currentTotals, setCurrentTotals] = useState({});
     const [dialog, setDialog] = useState({
         open: false,
-        message: "An error has occurred."
-    })
+        rideID: null
+    });
 
     const historyRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {  
         if(rides && parks[parkIdx]) {
@@ -83,12 +84,20 @@ function AtParkView( {parks, rides, history} ) {
 
     return (
         <div className={"atparkview"}>
+            <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
+                <div className="dialog addedit">
+                    <button onClick={() => navigate(`/addupdate/record/${dialog.rideID}/add`)}>Add ride record</button>
+                    <button>View/edit ride info</button>
+                    <button onClick={() => setDialog({...dialog, open: false})}>Cancel</button>
+                </div>
+            </Dialog>
             {park ? <>
                     <ParkViewHeader name={park.name} parkID={park.parks_id}/>
                     <RideList
                         currentHistory = {currentHistory}
                         currentTotals = {currentTotals}
                         currentRides = {currentRides}
+                        setDialog = {setDialog}
                     />
                 </>
                 :

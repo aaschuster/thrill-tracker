@@ -4,7 +4,14 @@ import { connect } from "react-redux";
 
 import { addRecord } from "../../actions/historyActions";
 
-function RideList( {currentHistory, currentTotals, currentRides, user, addRecord} ) {
+function RideList( {
+    currentHistory, 
+    currentTotals, 
+    currentRides, 
+    setDialog,
+    user, 
+    addRecord
+} ) {
 
     const [totalsView, setTotalsView] = useState(false);
 
@@ -82,7 +89,8 @@ function RideList( {currentHistory, currentTotals, currentRides, user, addRecord
 
                                 <button 
                                     className={"ridename"} 
-                                    onClick={() => navigate(`/addupdate/record/${ride.rides_id}/add`)}
+                                    onClick={() => setDialog({open: true, rideID: ride.rides_id})}
+                                    // onClick={() => navigate(`/addupdate/record/${ride.rides_id}/add`)}
                                 >
                                     {ride.name}
                                 </button>
