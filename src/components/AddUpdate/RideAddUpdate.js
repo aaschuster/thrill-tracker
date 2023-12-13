@@ -71,9 +71,10 @@ function RideAddUpdate( {parks, currentParkID, manufacturers, addRide} ) {
     useEffect(() => {
         if(submitFired) {
 
-            if(filtered.park.length === 1 && filtered.manufacturer.length === 1)
-                submitRide();
-            else if(filtered.park.length === 0)
+            if(filtered.park.length === 1 && (filtered.manufacturer.length === 1 || !form.manufacturer))
+                return submitRide();
+
+            if(filtered.park.length === 0)
                 setErr("Please select a valid park.");
             else
                 setDialog({
