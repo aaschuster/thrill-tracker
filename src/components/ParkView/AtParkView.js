@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import { Routes, Route, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Dialog from "@mui/material/Dialog";
 
 import ParkViewHeader from "./ParkViewHeader";
 import RideList from "./RideList";
@@ -18,6 +19,10 @@ function AtParkView( {parks, rides, history} ) {
     const [currentRides, setCurrentRides] = useState([]);
     const [currentHistory, setCurrentHistory] = useState([]);
     const [currentTotals, setCurrentTotals] = useState({});
+    const [dialog, setDialog] = useState({
+        open: false,
+        message: "An error has occurred."
+    })
 
     const historyRef = useRef(null);
 

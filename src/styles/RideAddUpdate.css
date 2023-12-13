@@ -16,6 +16,19 @@
     width: calc(100% - 92px);
 }
 
+.addmanufacturer {
+    padding: 20px 15px;
+}
+
+.addmanufacturer p {
+    margin-bottom: 15px;
+}
+
+.addmanufacturer .dialogbuttons {
+    display: flex;
+    justify-content: center;
+}
+
 .rideaddupdate .inputlabel {
     width: 155px;
     min-width: 155px;
