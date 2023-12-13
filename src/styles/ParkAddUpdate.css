@@ -1,18 +1,11 @@
 @import "styles.css";
 @import "addUpdateForm.css";
+@import "dialog.css";
 
 .parkaddupdate {
     width: 90%;
     max-width: 550px;
     margin: 0 auto;
-}
-
-.addchaincountry {
-    padding: 20px 15px;
-}
-
-.addchaincountry p {
-    margin-bottom: 15px;
 }
 
 .addchaincountry .dialogbuttons {

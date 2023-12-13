@@ -21,7 +21,8 @@ function AtParkView( {parks, rides, history} ) {
     const [currentTotals, setCurrentTotals] = useState({});
     const [dialog, setDialog] = useState({
         open: false,
-        rideID: null
+        rideID: null,
+        rideName: ""
     });
 
     const historyRef = useRef(null);
@@ -85,9 +86,10 @@ function AtParkView( {parks, rides, history} ) {
     return (
         <div className={"atparkview"}>
             <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
-                <div className="dialog addedit">
+                <div className="dialog parkviewoptions">
+                    <p>{dialog.rideName}</p>
                     <button onClick={() => navigate(`/addupdate/record/${dialog.rideID}/add`)}>Add ride record</button>
-                    <button>View/edit ride info</button>
+                    <button onClick={() => navigate(`/addupdate/ride/${dialog.rideID}`)}>View/edit ride info</button>
                     <button onClick={() => setDialog({...dialog, open: false})}>Cancel</button>
                 </div>
             </Dialog>

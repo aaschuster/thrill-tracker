@@ -89,8 +89,7 @@ function RideList( {
 
                                 <button 
                                     className={"ridename"} 
-                                    onClick={() => setDialog({open: true, rideID: ride.rides_id})}
-                                    // onClick={() => navigate(`/addupdate/record/${ride.rides_id}/add`)}
+                                    onClick={() => setDialog({open: true, rideID: ride.rides_id, rideName: ride.name})}
                                 >
                                     {ride.name}
                                 </button>
