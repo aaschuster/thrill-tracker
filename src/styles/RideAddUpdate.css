@@ -1,3 +1,4 @@
+@import "styles.css";
 @import "addUpdateForm.css";
 @import "dialog.css";
 
@@ -25,4 +26,13 @@
 .rideaddupdate .inputlabel {
     width: 155px;
     min-width: 155px;
+}
+
+.rideaddupdate .ridetypes {
+    background: var(--secondary-background-color);
+    margin: 10px auto 0 auto;
+    padding: 5px;
+    border-radius: var(--border-radius);
+    width: 100%;
+    max-width: 460px;
 }

@@ -45,15 +45,13 @@ function RideAddUpdate( {rides, parks, rideTypes, currentParkID, manufacturers, 
     })
     const [submitFired, setSubmitFired] = useState(false);
     const [datalists, setDatalists] = useState({});
-    const [rideTypeList, setRideTypeList] = [];
+    const [rideTypeList, setRideTypeList] = useState([]);
     const [dialog, setDialog] = useState({
         open: false,
         message: "An error has occurred."
     })
 
     useEffect(() => {
-
-        console.log(rideTypes);
         
         setDatalists({...datalists,
             parks: parks.map( park => {
@@ -297,18 +295,26 @@ function RideAddUpdate( {rides, parks, rideTypes, currentParkID, manufacturers, 
                     <input type="number" id="seats" value={form.seats} onChange={onChange}/>
                 </div>
 
-                <div className="formitem">
-                    <label className="inputlabel">Ride type</label>
-                    <div className="datalistcontainer">
+                <div className="ridetypes">
+                    <div className="formitem">
+                        <label className="inputlabel">{"Ride type(s)"}</label>
+                        <div className="datalistcontainer">
+                            {
+                                datalists.rideTypes ?
+                                <DatalistInput
+                                    value={form.ride_type}
+                                    onChange={e => onChange(e, "ride_type")}
+                                    showLabel={false}
+                                    items={datalists.rideTypes}
+                                    onSelect={item => rideTypeSelect(item)}
+                                /> : <></>
+                            }
+                        </div>
+                    </div>
+
+                    <div className="selectedridetypes">
                         {
-                            datalists.rideTypes ?
-                            <DatalistInput
-                                value={form.rideType}
-                                onChange={e => onChange(e, "rideType")}
-                                showLabel={false}
-                                items={datalists.rideTypes}
-                                onSelect={item => rideTypeSelect(item)}
-                            /> : <></>
+                            rideTypeList.map( rideType => (<p id={rideType.id}>{rideType.value}</p>))
                         }
                     </div>
                 </div>
