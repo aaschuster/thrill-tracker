@@ -9,11 +9,13 @@ import BackButton from "../BackButton";
 
 import "../../styles/RideAddUpdate.css";
 
-import { addRide } from "../../actions/ridesActions";
+import { addRide, updateRide } from "../../actions/ridesActions";
 import { addManufacturer } from "../../actions/manufacturersActions";
 
-function RideAddUpdate( {parks, currentParkID, manufacturers, addRide, addManufacturer} ) {
+function RideAddUpdate( {rides, parks, currentParkID, manufacturers, addRide, updateRide, addManufacturer} ) {
     const { rideId } = useParams();
+
+    const rideInt = parseInt(rideId);
 
     const navigate = useNavigate();
 
@@ -91,6 +93,34 @@ function RideAddUpdate( {parks, currentParkID, manufacturers, addRide, addManufa
         filterData();
     }, [manufacturers])
 
+    useEffect(() => {
+        if(editMode) {
+            let filteredRide;
+            [filteredRide] = rides.filter(
+                ride =>
+                    ride.rides_id === rideInt
+            )
+
+            const currentRideData = {
+                park: parks.filter( park => park.parks_id === filteredRide.parks_id),
+                manufacturer: manufacturers.filter( manufacturer => manufacturer.manufacturers_id === filteredRide.manufacturers_id)
+            }
+            
+            setForm({
+                name: filteredRide.name,
+                park: currentRideData.park[0].name,
+                manufacturer: currentRideData.manufacturer[0] ? currentRideData.manufacturer[0].name : "",
+                duration: filteredRide.duration,
+                track_length: filteredRide.track_length,
+                inversions: filteredRide.inversions,
+                ride_height: filteredRide.ride_height,
+                drop_height: filteredRide.drop_height,
+                rows: filteredRide.rows,
+                seats: filteredRide.seats
+            })
+        }
+    }, [])
+
     function onSubmit(e) {
         e.preventDefault();
 
@@ -102,18 +132,34 @@ function RideAddUpdate( {parks, currentParkID, manufacturers, addRide, addManufa
 
     function submitRide() {
 
-        addRide({
-            name: form.name,
-            parks_id: filtered.park[0].parks_id,
-            manufacturers_id: filtered.manufacturer.length === 1 ? filtered.manufacturer[0].manufacturers_id : null,
-            duration: form.duration,
-            track_length: form.track_length,
-            inversions: form.inversions,
-            ride_height: form.ride_height,
-            drop_height: form.drop_height,
-            rows: form.rows,
-            seats: form.seats
-        });
+        if(editMode) {
+            updateRide({
+                name: form.name,
+                parks_id: filtered.park[0].parks_id,
+                manufacturers_id: filtered.manufacturer.length === 1 ? filtered.manufacturer[0].manufacturers_id : null,
+                duration: form.duration,
+                track_length: form.track_length,
+                inversions: form.inversions,
+                ride_height: form.ride_height,
+                drop_height: form.drop_height,
+                rows: form.rows,
+                seats: form.seats,
+                rides_id: rideInt
+            })
+        } else {
+            addRide({
+                name: form.name,
+                parks_id: filtered.park[0].parks_id,
+                manufacturers_id: filtered.manufacturer.length === 1 ? filtered.manufacturer[0].manufacturers_id : null,
+                duration: form.duration,
+                track_length: form.track_length,
+                inversions: form.inversions,
+                ride_height: form.ride_height,
+                drop_height: form.drop_height,
+                rows: form.rows,
+                seats: form.seats
+            });
+        }
 
         navigate(-1);
     }
@@ -254,10 +300,11 @@ function RideAddUpdate( {parks, currentParkID, manufacturers, addRide, addManufa
 
 function mapStateToProps(state) {
     return {
+        rides: state.rides.rides,
         parks: state.parks.parks,
         currentParkID: state.parks.currentParkID,
         manufacturers: state.manufacturers.manufacturers
     }
 }
 
-export default connect(mapStateToProps, { addRide, addManufacturer })(RideAddUpdate);
+export default connect(mapStateToProps, { addRide, updateRide, addManufacturer })(RideAddUpdate);

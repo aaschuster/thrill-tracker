@@ -2,7 +2,9 @@ import {
     GET_RIDES,
     GET_RIDES_SUCCESS,
     GET_RIDES_ERR,
-    SET_FETCHING_TRUE
+    SET_FETCHING_TRUE,
+    UPDATE_RIDE,
+    ADD_RIDE
 } from "../actions/ridesActions";
 
 const initState = {
@@ -21,6 +23,10 @@ export const reducer = (state = initState, action) => {
             return {...state, isFetching: false, rides: action.payload};
         case GET_RIDES_ERR:
             return {...state, isFetching: false, error: action.payload};
+        case ADD_RIDE:
+            return state;
+        case UPDATE_RIDE:
+            return state;
         default:
             return state;
     }

@@ -7,6 +7,7 @@ export const GET_RIDES_SUCCESS = "GET_RIDES_SUCCESS";
 export const GET_RIDES_ERR = "GET_RIDES_ERR";
 export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
 export const ADD_RIDE = "ADD_RIDE";
+export const UPDATE_RIDE = "UPDATE_RIDE";
 
 export const getRides = () => dispatch => {
     dispatch(setFetchingTrue());
@@ -39,4 +40,12 @@ export const addRide = ride => dispatch => {
 
     return {type: ADD_RIDE};
 
+}
+
+export const updateRide = ride => dispatch => {
+    axios.put(`${serverURL}/rides/${ride.rides_id}`, ride)
+        .then( () => dispatch(getRides()))
+        .catch( err => console.error(err));
+
+    return {type: UPDATE_RIDE};
 }

@@ -89,7 +89,7 @@ function AtParkView( {parks, rides, history} ) {
                 <div className="dialog parkviewoptions">
                     <p>{dialog.rideName}</p>
                     <button onClick={() => navigate(`/addupdate/record/${dialog.rideID}/add`)}>Add ride record</button>
-                    <button onClick={() => navigate(`/addupdate/ride/${dialog.rideID}`)}>View/edit ride info</button>
+                    <button onClick={() => navigate(`/addupdate/ride/${dialog.rideID}`)}>View or edit ride info</button>
                     <button onClick={() => setDialog({...dialog, open: false})}>Cancel</button>
                 </div>
             </Dialog>
