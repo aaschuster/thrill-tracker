@@ -12,7 +12,7 @@ import "../../styles/RideAddUpdate.css";
 import { addRide, updateRide } from "../../actions/ridesActions";
 import { addManufacturer } from "../../actions/manufacturersActions";
 
-function RideAddUpdate( {rides, parks, currentParkID, manufacturers, addRide, updateRide, addManufacturer} ) {
+function RideAddUpdate( {rides, parks, rideTypes, currentParkID, manufacturers, addRide, updateRide, addManufacturer} ) {
     const { rideId } = useParams();
 
     const rideInt = parseInt(rideId);
@@ -34,6 +34,7 @@ function RideAddUpdate( {rides, parks, currentParkID, manufacturers, addRide, up
         drop_height: "",
         rows: "",
         seats: "",
+        ride_type: ""
     }
 
     const [form, setForm] = useState(initForm);
@@ -44,12 +45,15 @@ function RideAddUpdate( {rides, parks, currentParkID, manufacturers, addRide, up
     })
     const [submitFired, setSubmitFired] = useState(false);
     const [datalists, setDatalists] = useState({});
+    const [rideTypeList, setRideTypeList] = [];
     const [dialog, setDialog] = useState({
         open: false,
         message: "An error has occurred."
     })
 
     useEffect(() => {
+
+        console.log(rideTypes);
         
         setDatalists({...datalists,
             parks: parks.map( park => {
@@ -57,6 +61,9 @@ function RideAddUpdate( {rides, parks, currentParkID, manufacturers, addRide, up
             }),
             manufacturers: manufacturers.map( manufacturer => {
                 return{id: manufacturer.manufacturers_id, value: manufacturer.name}
+            }),
+            rideTypes: rideTypes.map( rideType => {
+                return{id: rideType.ride_types_id, value: rideType.ride_type};
             })
         })
     
@@ -188,6 +195,11 @@ function RideAddUpdate( {rides, parks, currentParkID, manufacturers, addRide, up
         setSubmitFired(false);
     }
 
+    function rideTypeSelect(item) {
+        setForm({...form, ride_type: ""});
+        setRideTypeList([...rideTypeList, item]);
+    }
+
     return (
         <div className="rideaddupdate">
             <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
@@ -284,6 +296,22 @@ function RideAddUpdate( {rides, parks, currentParkID, manufacturers, addRide, up
                     <label className="inputlabel">{"Seats (train width)"}</label>
                     <input type="number" id="seats" value={form.seats} onChange={onChange}/>
                 </div>
+
+                <div className="formitem">
+                    <label className="inputlabel">Ride type</label>
+                    <div className="datalistcontainer">
+                        {
+                            datalists.rideTypes ?
+                            <DatalistInput
+                                value={form.rideType}
+                                onChange={e => onChange(e, "rideType")}
+                                showLabel={false}
+                                items={datalists.rideTypes}
+                                onSelect={item => rideTypeSelect(item)}
+                            /> : <></>
+                        }
+                    </div>
+                </div>
                 
                 <div className="textcontainer">
                     <p>*Required fields</p>
@@ -302,6 +330,7 @@ function mapStateToProps(state) {
     return {
         rides: state.rides.rides,
         parks: state.parks.parks,
+        rideTypes: state.rideTypes.rideTypes,
         currentParkID: state.parks.currentParkID,
         manufacturers: state.manufacturers.manufacturers
     }

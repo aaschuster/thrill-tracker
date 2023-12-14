@@ -8,6 +8,7 @@ import {reducer as chains} from "./chainsReducer";
 import {reducer as states} from "./statesReducer";
 import {reducer as countries} from "./countriesReducer";
 import {reducer as manufacturers} from "./manufacturersReducer";
+import {reducer as rideTypes} from "./rideTypesReducer";
 
 export const reducer = combineReducers({
     parks,
@@ -17,5 +18,6 @@ export const reducer = combineReducers({
     chains,
     states,
     countries,
-    manufacturers
+    manufacturers,
+    rideTypes
 })

@@ -11,6 +11,7 @@ import { getChains } from "../actions/chainsActions";
 import { getCountries } from "../actions/countriesActions";
 import { getStates } from "../actions/statesActions";
 import { getManufacturers } from "../actions/manufacturersActions";
+import { getRideTypes } from "../actions/rideTypesActions";
 
 import '../styles/App.css';
 
@@ -37,17 +38,19 @@ const App = props => {
     getChains, 
     getCountries, 
     getStates,
-    getManufacturers } = props;
+    getManufacturers,
+    getRideTypes } = props;
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
     setUser();
     getParks();
-  getRides();
+    getRides();
     getChains();
     getCountries();
     getStates();
     getManufacturers();
+    getRideTypes();
   }, []);
 
   useEffect(() => {
@@ -133,5 +136,6 @@ export default connect(
     getChains, 
     getCountries, 
     getStates,
-    getManufacturers
+    getManufacturers,
+    getRideTypes
   })(App);
