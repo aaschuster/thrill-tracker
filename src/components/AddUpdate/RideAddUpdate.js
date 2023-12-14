@@ -5,6 +5,8 @@ import Dialog from "@mui/material/Dialog";
 
 import DatalistInput from "react-datalist-input";
 
+import { MdDeleteForever } from "react-icons/md";
+
 import BackButton from "../BackButton";
 
 import "../../styles/RideAddUpdate.css";
@@ -99,7 +101,7 @@ function RideAddUpdate( {rides, parks, rideTypes, currentParkID, manufacturers, 
     }, [manufacturers])
 
     useEffect(() => {
-        if(editMode) {
+        if(editMode && rides[0]) {
             let filteredRide;
             [filteredRide] = rides.filter(
                 ride =>
@@ -124,7 +126,7 @@ function RideAddUpdate( {rides, parks, rideTypes, currentParkID, manufacturers, 
                 seats: filteredRide.seats
             })
         }
-    }, [])
+    }, [rides])
 
     function onSubmit(e) {
         e.preventDefault();
@@ -194,8 +196,15 @@ function RideAddUpdate( {rides, parks, rideTypes, currentParkID, manufacturers, 
     }
 
     function rideTypeSelect(item) {
-        setForm({...form, ride_type: ""});
+        setDatalists({...datalists, rideTypes: datalists.rideTypes.filter( rideType => rideType.id !== item.id )});
         setRideTypeList([...rideTypeList, item]);
+        setForm({...form, ride_type: ""});
+    }
+
+    function removeRideTypeSelect(item) {
+        setDatalists({...datalists, rideTypes: [...datalists.rideTypes, item]})
+        setRideTypeList(rideTypeList.filter( rideType => rideType.id !== item.id))
+        setForm({...form, ride_type: ""});
     }
 
     return (
@@ -312,9 +321,14 @@ function RideAddUpdate( {rides, parks, rideTypes, currentParkID, manufacturers, 
                         </div>
                     </div>
 
-                    <div className="selectedridetypes">
+                    <div className="selectedtypescontainer">
                         {
-                            rideTypeList.map( rideType => (<p id={rideType.id}>{rideType.value}</p>))
+                            rideTypeList.map( rideType => (
+                            <div key={rideType.id} className="selectedtypeitem">
+                                <p>{rideType.value}</p>
+                                <MdDeleteForever className="editbutton" onClick={() => removeRideTypeSelect(rideType)}/>
+                            </div>
+                            ))
                         }
                     </div>
                 </div>

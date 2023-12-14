@@ -33,6 +33,31 @@
     margin: 10px auto 0 auto;
     padding: 5px;
     border-radius: var(--border-radius);
+}
+
+.rideaddupdate .ridetypes label {
+    max-width: 135px;
+    min-width: auto;
+}
+
+.rideaddupdate .selectedtypeitem {
+    display: flex;
     width: 100%;
-    max-width: 460px;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.rideaddupdate .selectedtypeitem p {
+    width: 100%;
+}
+
+.rideaddupdate .editbutton {
+    background-color: #4b5052;
+	border: 2px solid var(--black);
+	color: var(--white);
+	text-align: center;
+	display: inline-block;
+    box-shadow: 3px 3px 8px 0 var(--black);
+    padding: 6px;
+    margin: 0;
 }
