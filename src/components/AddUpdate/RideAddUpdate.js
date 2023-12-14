@@ -14,7 +14,7 @@ import "../../styles/RideAddUpdate.css";
 import { addRide, updateRide } from "../../actions/ridesActions";
 import { addManufacturer } from "../../actions/manufacturersActions";
 
-function RideAddUpdate( {rides, parks, rideTypes, currentParkID, manufacturers, addRide, updateRide, addManufacturer} ) {
+function RideAddUpdate( {rides, parks, rideTypes, ridesRideTypes, currentParkID, manufacturers, addRide, updateRide, addManufacturer} ) {
     const { rideId } = useParams();
 
     const rideInt = parseInt(rideId);
@@ -127,6 +127,10 @@ function RideAddUpdate( {rides, parks, rideTypes, currentParkID, manufacturers, 
             })
         }
     }, [rides])
+
+    useEffect(() => {
+        console.log(ridesRideTypes);
+    }, [ridesRideTypes])
 
     function onSubmit(e) {
         e.preventDefault();
@@ -351,6 +355,7 @@ function mapStateToProps(state) {
         rides: state.rides.rides,
         parks: state.parks.parks,
         rideTypes: state.rideTypes.rideTypes,
+        ridesRideTypes: state.ridesRideTypes.ridesRideTypes,
         currentParkID: state.parks.currentParkID,
         manufacturers: state.manufacturers.manufacturers
     }

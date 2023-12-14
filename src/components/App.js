@@ -12,6 +12,7 @@ import { getCountries } from "../actions/countriesActions";
 import { getStates } from "../actions/statesActions";
 import { getManufacturers } from "../actions/manufacturersActions";
 import { getRideTypes } from "../actions/rideTypesActions";
+import { getRidesRideTypes } from "../actions/ridesRideTypesActions";
 
 import '../styles/App.css';
 
@@ -39,7 +40,9 @@ const App = props => {
     getCountries, 
     getStates,
     getManufacturers,
-    getRideTypes } = props;
+    getRideTypes,
+    getRidesRideTypes
+  } = props;
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -51,6 +54,7 @@ const App = props => {
     getStates();
     getManufacturers();
     getRideTypes();
+    getRidesRideTypes();
   }, []);
 
   useEffect(() => {
@@ -137,5 +141,6 @@ export default connect(
     getCountries, 
     getStates,
     getManufacturers,
-    getRideTypes
+    getRideTypes,
+    getRidesRideTypes
   })(App);
