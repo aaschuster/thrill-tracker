@@ -112,25 +112,32 @@ function RideAddUpdate( {rides, parks, rideTypes, ridesRideTypes, currentParkID,
                 park: parks.filter( park => park.parks_id === filteredRide.parks_id),
                 manufacturer: manufacturers.filter( manufacturer => manufacturer.manufacturers_id === filteredRide.manufacturers_id)
             }
+
+            const filteredRideTypes = [];
+
+            ridesRideTypes.forEach( ridesRideType => {
+                if(ridesRideType.rides_id === filteredRide.rides_id) {
+                    const [rideTypeToAdd] = rideTypes.filter( rideType => rideType.ride_types_id === ridesRideType.ride_types_id);
+                    filteredRideTypes.push({id: rideTypeToAdd.ride_types_id, value: rideTypeToAdd.ride_type});
+                }
+            })
+
+            setRideTypeList(filteredRideTypes);
             
             setForm({
                 name: filteredRide.name,
                 park: currentRideData.park[0].name,
                 manufacturer: currentRideData.manufacturer[0] ? currentRideData.manufacturer[0].name : "",
-                duration: filteredRide.duration,
-                track_length: filteredRide.track_length,
-                inversions: filteredRide.inversions,
-                ride_height: filteredRide.ride_height,
-                drop_height: filteredRide.drop_height,
-                rows: filteredRide.rows,
-                seats: filteredRide.seats
+                duration: filteredRide.duration || "",
+                track_length: filteredRide.track_length || "",
+                inversions: filteredRide.inversions === null || filteredRide.inversions === undefined ? "" : filteredRide.inversions,
+                ride_height: filteredRide.ride_height || "",
+                drop_height: filteredRide.drop_height || "",
+                rows: filteredRide.rows || "",
+                seats: filteredRide.seats || ""
             })
         }
-    }, [rides])
-
-    useEffect(() => {
-        console.log(ridesRideTypes);
-    }, [ridesRideTypes])
+    }, [rides, ridesRideTypes])
 
     function onSubmit(e) {
         e.preventDefault();
