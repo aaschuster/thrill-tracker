@@ -13,8 +13,22 @@ import "../../styles/RideAddUpdate.css";
 
 import { addRide, updateRide } from "../../actions/ridesActions";
 import { addManufacturer } from "../../actions/manufacturersActions";
+import { addRidesRideType, delRidesRideType } from "../../actions/ridesRideTypesActions";
 
-function RideAddUpdate( {rides, parks, rideTypes, ridesRideTypes, currentParkID, manufacturers, addRide, updateRide, addManufacturer} ) {
+function RideAddUpdate( {
+    rides, 
+    parks, 
+    rideTypes, 
+    ridesRideTypes, 
+    currentParkID, 
+    manufacturers, 
+    addRide, 
+    updateRide, 
+    addManufacturer,
+    addRidesRideType,
+    delRidesRideType
+} ) {
+
     const { rideId } = useParams();
 
     const rideInt = parseInt(rideId);
@@ -47,6 +61,7 @@ function RideAddUpdate( {rides, parks, rideTypes, ridesRideTypes, currentParkID,
     })
     const [submitFired, setSubmitFired] = useState(false);
     const [datalists, setDatalists] = useState({});
+    const [origRideTypes, setOrigRideTypes] = useState([]);
     const [rideTypeList, setRideTypeList] = useState([]);
     const [dialog, setDialog] = useState({
         open: false,
@@ -114,14 +129,17 @@ function RideAddUpdate( {rides, parks, rideTypes, ridesRideTypes, currentParkID,
             }
 
             const filteredRideTypes = [];
+            const ridesRideTypesToStore = [];
 
             ridesRideTypes.forEach( ridesRideType => {
                 if(ridesRideType.rides_id === filteredRide.rides_id) {
+                    ridesRideTypesToStore.push(ridesRideType);
                     const [rideTypeToAdd] = rideTypes.filter( rideType => rideType.ride_types_id === ridesRideType.ride_types_id);
                     filteredRideTypes.push({id: rideTypeToAdd.ride_types_id, value: rideTypeToAdd.ride_type});
                 }
             })
 
+            setOrigRideTypes(ridesRideTypesToStore);
             setRideTypeList(filteredRideTypes);
             
             setForm({
@@ -151,6 +169,7 @@ function RideAddUpdate( {rides, parks, rideTypes, ridesRideTypes, currentParkID,
     function submitRide() {
 
         if(editMode) {
+
             updateRide({
                 name: form.name,
                 parks_id: filtered.park[0].parks_id,
@@ -164,6 +183,21 @@ function RideAddUpdate( {rides, parks, rideTypes, ridesRideTypes, currentParkID,
                 seats: form.seats,
                 rides_id: rideInt
             })
+
+            console.log(rideTypeList);
+            console.log(origRideTypes);
+
+            rideTypeList.forEach( newRideType => { //newRideType example = {id: 1, value: "Rollercoaster"}
+                let addRideType = true;
+                origRideTypes.forEach( origRideType => {
+                    if(newRideType.id === origRideType.ride_types_id) {
+                        addRideType = false;
+                    }
+                })
+                if(addRideType)
+                    addRidesRideType({ride_types_id: newRideType.id, rides_id: rideInt})
+            })
+
         } else {
             addRide({
                 name: form.name,
@@ -368,4 +402,12 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { addRide, updateRide, addManufacturer })(RideAddUpdate);
+export default connect(
+    mapStateToProps, { 
+        addRide, 
+        updateRide, 
+        addManufacturer,
+        addRidesRideType,
+        delRidesRideType
+    }
+)(RideAddUpdate);
