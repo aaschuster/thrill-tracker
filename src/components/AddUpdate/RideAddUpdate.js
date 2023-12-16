@@ -187,7 +187,10 @@ function RideAddUpdate( {
             console.log(rideTypeList);
             console.log(origRideTypes);
 
-            rideTypeList.forEach( newRideType => { //newRideType example = {id: 1, value: "Rollercoaster"}
+            //newRideType example = {id: 1, value: "Rollercoaster"}
+            //origRideType example = {rides_ride_types: 1, ride_types_id: 1, rides_id1}
+
+            rideTypeList.forEach( newRideType => { 
                 let addRideType = true;
                 origRideTypes.forEach( origRideType => {
                     if(newRideType.id === origRideType.ride_types_id) {
@@ -196,6 +199,17 @@ function RideAddUpdate( {
                 })
                 if(addRideType)
                     addRidesRideType({ride_types_id: newRideType.id, rides_id: rideInt})
+            })
+
+            origRideTypes.forEach( origRideType => {
+                let removeRideType = true;
+                rideTypeList.forEach( newRideType => {
+                    if(newRideType.id === origRideType.ride_types_id) {
+                        removeRideType = false;
+                    }
+                })
+                if(removeRideType)
+                    delRidesRideType(origRideType.rides_ride_types);
             })
 
         } else {
