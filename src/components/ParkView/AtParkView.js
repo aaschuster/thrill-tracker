@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 
+import {AiFillEdit} from "react-icons/ai";
+
 import ParkViewHeader from "./ParkViewHeader";
 import RideList from "./RideList";
 
@@ -88,8 +90,16 @@ function AtParkView( {parks, rides, history} ) {
             <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
                 <div className="dialog parkviewoptions">
                     <p>{dialog.rideName}</p>
-                    <button onClick={() => navigate(`/addupdate/record/${dialog.rideID}/add`)}>Add ride record</button>
-                    <button onClick={() => navigate(`/addupdate/ride/${dialog.rideID}`)}>View or edit ride info</button>
+                    <button
+                        onClick={() => navigate(`/addupdate/record/${dialog.rideID}/add`)}
+                        className={"addbutton"}
+                    >
+                        <span className="plus">+</span>
+                        Add ride record
+                    </button>
+                    <button onClick={() => navigate(`/addupdate/ride/${dialog.rideID}`)}>
+                        <AiFillEdit className="editicon"/> View or edit ride info
+                    </button>
                     <button onClick={() => setDialog({...dialog, open: false})}>Cancel</button>
                 </div>
             </Dialog>

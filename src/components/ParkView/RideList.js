@@ -95,10 +95,10 @@ function RideList( {
                                 </button>
 
                                 <button 
-                                    className={"quickadd"} 
+                                    className={"quickadd plus"} 
                                     onClick={() => quickAdd(ride.rides_id)}
                                 >
-                                    Add
+                                    <span className="plus">+</span>
                                 </button>
                             </div>
                         );

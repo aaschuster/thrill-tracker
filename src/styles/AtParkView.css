@@ -21,10 +21,26 @@
     padding-bottom: 10px;
 }
 
+.parkviewoptions .plus {
+    margin-right: 5px;
+}
+
+.parkviewoptions .editicon {
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.parkviewoptions .addbutton {
+    padding: 8px 20px;
+}
+
 .parkviewoptions button {
     margin: 8px;
     width: 100%;
-    max-width: 180px;
+    max-width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .atparkview .historyitemscontainer {
@@ -81,6 +97,10 @@
   
 .ridename, .quickadd {
     margin: 5px;
+}
+
+.quickadd {
+    padding: 5px 10px;
 }
 
 .viewbuttons {
