@@ -3,7 +3,7 @@ import {Routes, Route} from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 
-import { setUser } from "../actions/loginActions"
+import { setUser } from "../actions/userActions"
 import { getHistory, setProcessedHistory } from "../actions/historyActions";
 import { getParks } from "../actions/parksActions";
 import { getRides } from "../actions/ridesActions";
@@ -124,7 +124,7 @@ const App = props => {
 
 const mapStateToProps = state => {
   return {
-    user: state.login.user,
+    user: state.user.user,
     rides: state.rides.rides,
     history: state.history.history
   }

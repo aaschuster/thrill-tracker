@@ -184,9 +184,6 @@ function RideAddUpdate( {
                 rides_id: rideInt
             })
 
-            console.log(rideTypeList);
-            console.log(origRideTypes);
-
             //newRideType example = {id: 1, value: "Rollercoaster"}
             //origRideType example = {rides_ride_types: 1, ride_types_id: 1, rides_id1}
 

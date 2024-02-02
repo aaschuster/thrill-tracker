@@ -206,7 +206,7 @@ const mapStateToProps = state => {
     return {
         rides: state.rides.rides,
         history: state.history.history,
-        user: state.login.user
+        user: state.user.user
     }
 }
 

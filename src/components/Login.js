@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 
-import { setMessage, setUser } from "../actions/loginActions";
+import { setMessage, setUser } from "../actions/userActions";
 import { getHistory } from "../actions/historyActions";
 
 import "../styles/Login.css";
@@ -68,8 +68,8 @@ const Login = ( { message, user, setMessage, setUser, getHistory } ) => {
 
 function mapStateToProps(state) {
     return {
-        message: state.login.message,
-        user: state.login.user
+        message: state.user.message,
+        user: state.user.user
     }
 }
 

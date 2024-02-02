@@ -111,7 +111,7 @@ function RideList( {
 
 const mapStateToProps = state => {
     return {
-        user: state.login.user
+        user: state.user.user
     }
 }
 

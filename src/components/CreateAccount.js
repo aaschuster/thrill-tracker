@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 
-import { setMessage } from "../actions/loginActions";
+import { setMessage } from "../actions/userActions";
 
 import BackButton from "./BackButton";
 

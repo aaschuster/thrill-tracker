@@ -5,7 +5,7 @@ import {
     SET_USER_ERR,
     SET_FETCHING_TRUE,
     CLEAR_USER
-} from "../actions/loginActions";
+} from "../actions/userActions";
 
 const initState = {
     message: "",

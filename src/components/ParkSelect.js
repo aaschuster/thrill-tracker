@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { clearUser } from "../actions/loginActions";
+import { clearUser } from "../actions/userActions";
 
 import Park from "./Park";
 
@@ -53,7 +53,7 @@ const mapStateToProps = state => {
         parks: state.parks.parks,
         isFetching: state.parks.isFetching,
         error: state.parks.error,
-        user: state.login.user
+        user: state.user.user
     }
 }
 
