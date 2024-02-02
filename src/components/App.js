@@ -13,6 +13,7 @@ import { getStates } from "../actions/statesActions";
 import { getManufacturers } from "../actions/manufacturersActions";
 import { getRideTypes } from "../actions/rideTypesActions";
 import { getRidesRideTypes } from "../actions/ridesRideTypesActions";
+import { getRideFavorites } from "../actions/rideFavoritesActions";
 
 import '../styles/App.css';
 
@@ -41,7 +42,8 @@ const App = props => {
     getStates,
     getManufacturers,
     getRideTypes,
-    getRidesRideTypes
+    getRidesRideTypes,
+    getRideFavorites
   } = props;
 
   useEffect(() => {
@@ -55,6 +57,7 @@ const App = props => {
     getManufacturers();
     getRideTypes();
     getRidesRideTypes();
+    getRideFavorites();
   }, []);
 
   useEffect(() => {
@@ -142,5 +145,6 @@ export default connect(
     getStates,
     getManufacturers,
     getRideTypes,
-    getRidesRideTypes
+    getRidesRideTypes,
+    getRideFavorites
   })(App);

@@ -3,16 +3,19 @@ import { connect } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 
-import {AiFillEdit} from "react-icons/ai";
+import {AiFillEdit as EditIcon} from "react-icons/ai";
+import {FaRegHeart as UnfaveIcon, FaHeart as FaveIcon} from "react-icons/fa";
 
 import ParkViewHeader from "./ParkViewHeader";
 import RideList from "./RideList";
+
+import {addRideFavorite} from "../../actions/rideFavoritesActions";
 
 import { filterByToday } from "../../utils";
 
 import "../../styles/AtParkView.css";
 
-function AtParkView( {parks, rides, history} ) {
+function AtParkView( {parks, rides, history, user, addRideFavorite} ) {
 
     const { id: parkIdx } = useParams();
 
@@ -39,6 +42,10 @@ function AtParkView( {parks, rides, history} ) {
             )        
         }
     }, [parks, rides])
+
+    function favoriteRide() {
+        addRideFavorite({users_id: user.users_id, rides_id: dialog.rideID});
+    }
 
     function getCurrentHistory() {
 
@@ -97,8 +104,11 @@ function AtParkView( {parks, rides, history} ) {
                         <span className="plus">+</span>
                         Add ride record
                     </button>
+                    <button onClick={favoriteRide}>
+                        <FaveIcon className="faveicon"/>Favorite this ride
+                    </button>
                     <button onClick={() => navigate(`/addupdate/ride/${dialog.rideID}`)}>
-                        <AiFillEdit className="editicon"/> View or edit ride info
+                        <EditIcon className="editicon"/> View or edit ride info
                     </button>
                     <button onClick={() => setDialog({...dialog, open: false})}>Cancel</button>
                 </div>
@@ -125,8 +135,9 @@ const mapStateToProps = state => {
     return {
         parks: state.parks.parks,
         rides: state.rides.rides,
-        history: state.history.history
+        history: state.history.history,
+        user: state.user.user
     }
 }
 
-export default connect(mapStateToProps)(AtParkView);
+export default connect(mapStateToProps, { addRideFavorite } )(AtParkView);
