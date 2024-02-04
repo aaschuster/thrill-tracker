@@ -9,10 +9,10 @@ export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
 export const ADD_RIDE_FAVORITE = "ADD_RIDE_FAVORITE";
 export const DEL_RIDE_FAVORITE = "DEL_RIDE_FAVORITE";
 
-export const getRideFavorites = () => dispatch => {
+export const getRideFavorites = userID => dispatch => {
     dispatch(setFetchingTrue());
 
-    axios.get(`${serverURL}/userRideFavorites/`)
+    axios.get(`${serverURL}/userRideFavorites/${userID}`)
         .then( res => {
             dispatch(getRideFavoritesSuccess(res.data));
         })
@@ -35,8 +35,14 @@ const getRideFavoritesErr = err => {
 
 export const addRideFavorite = rideFavorite => dispatch => {
     axios.post(`${serverURL}/userRideFavorites/`, rideFavorite)
-        .then( () => dispatch(getRideFavorites()))
+        .then( () => dispatch(getRideFavorites(rideFavorite.users_id)))
         .catch( err => console.error(err));
 
     return {type: ADD_RIDE_FAVORITE};
+}
+
+export const delRideFavorite = rideFavorite => dispatch => {
+    axios.delete(`${serverURL}/userRideFavorites/${rideFavorite.user_ride_favorites_id}`)
+        .then( () => dispatch(getRideFavorites(rideFavorite.users_id)))
+        .catch( err => console.error(err));
 }

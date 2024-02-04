@@ -57,12 +57,12 @@ const App = props => {
     getManufacturers();
     getRideTypes();
     getRidesRideTypes();
-    getRideFavorites();
   }, []);
 
   useEffect(() => {
     if(user.username)
       getHistory();
+      getRideFavorites(user.users_id);
   }, [user])
 
   useEffect(() => {
