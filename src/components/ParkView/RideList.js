@@ -55,7 +55,7 @@ function RideList( {
         setCurrentFavorites(favoritesList);
         setCurrentNonfavorites(nonfavoritesList);
 
-    }, [rideFavorites])
+    }, [rideFavorites, currentRides])
 
     return (
         <div className={"addmode"}>
@@ -107,33 +107,37 @@ function RideList( {
                     View by totals</button>
                 <button onClick={() => navigate(`/history/${id}`)}>Edit mode</button>
             </div>
-
-            <div className="ridefavorites">
-            <h3>Favorites</h3>
+            
             {
-                currentFavorites.map( (ride, idx) => {
-                    return <RideListItem
-                        ride={ride}
-                        key={idx}
-                        setDialog={setDialog}
-                        quickAdd={quickAdd}
-                    />;
-                })
+                currentFavorites.length > 0 ?
+                    <div className="ridefavorites">
+                        <h3>Favorites</h3>
+                        {
+                            currentFavorites.map( (ride, idx) => {
+                                return <RideListItem
+                                    ride={ride}
+                                    key={idx}
+                                    setDialog={setDialog}
+                                    quickAdd={quickAdd}
+                                />;
+                            })
+                        }
+                        <hr/>
+                    </div>
+                : <></>
             }
-            </div>
 
             <div className="ridelist">
-                <hr/>
-            {
-                currentNonfavorites.map( (ride, idx) => {
-                        return <RideListItem 
-                            ride={ride}
-                            key={idx}
-                            setDialog={setDialog}
-                            quickAdd={quickAdd}
-                        />;
-                })
-            }
+                {
+                    currentNonfavorites.map( (ride, idx) => {
+                            return <RideListItem 
+                                ride={ride}
+                                key={idx}
+                                setDialog={setDialog}
+                                quickAdd={quickAdd}
+                            />;
+                    })
+                }
             </div>
         </div>  
     )

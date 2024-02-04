@@ -82,6 +82,15 @@
     margin: 2%;
 }
 
+.ridefavorites h3 {
+    margin-top: 20px;
+}
+
+.ridefavorites hr {
+    width: 90%;
+    margin: 10px auto;
+}
+
 .ridecontainer {
     width: 100%;
     display: flex;

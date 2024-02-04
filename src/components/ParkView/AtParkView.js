@@ -27,9 +27,9 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
     const [dialog, setDialog] = useState({
         open: false,
         rideID: null,
-        rideName: "",
-        rideFavorite: null
+        rideName: ""
     });
+    const [currentFavorite, setCurrentFavorite] = useState(null);
 
     const historyRef = useRef(null);
     const navigate = useNavigate();
@@ -52,7 +52,7 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
         const [currentFavoriteObj] = rideFavorites.filter( 
             rideFavorite => rideFavorite.rides_id === dialog.rideID
         );
-        setDialog({...dialog, rideFavorite: currentFavoriteObj})
+        setCurrentFavorite(currentFavoriteObj);
     }, [dialog.rideID, rideFavorites])
 
     function getCurrentHistory() {
@@ -111,8 +111,8 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
                         Add ride record
                     </button>
                     {
-                        dialog.rideFavorite ? 
-                            <button onClick={() => delRideFavorite(dialog.rideFavorite)}>
+                        currentFavorite ? 
+                            <button onClick={() => delRideFavorite(currentFavorite)}>
                                 <UnfaveIcon className="faveicon"/>Unfavorite this ride
                             </button>
                         : 
