@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
+import RideListItem from "./RideListItem";
+
 import { addRecord } from "../../actions/historyActions";
 
 function RideList( {
@@ -10,6 +12,7 @@ function RideList( {
     currentRides, 
     setDialog,
     user, 
+    rideFavorites,
     addRecord
 } ) {
 
@@ -81,27 +84,19 @@ function RideList( {
                 <button onClick={() => navigate(`/history/${id}`)}>Edit mode</button>
             </div>
 
+            <div className="ridefavorites">
+
+            </div>
+
             <div className="ridelist">
             {
                 currentRides.map( (ride, idx) => {
-                        return (
-                            <div key={idx} className={"ridecontainer"}>
-
-                                <button 
-                                    className={"ridename"} 
-                                    onClick={() => setDialog({open: true, rideID: ride.rides_id, rideName: ride.name})}
-                                >
-                                    {ride.name}
-                                </button>
-
-                                <button 
-                                    className={"quickadd plus"} 
-                                    onClick={() => quickAdd(ride.rides_id)}
-                                >
-                                    <span className="plus">+</span>
-                                </button>
-                            </div>
-                        );
+                        return <RideListItem 
+                            ride={ride}
+                            key={idx}
+                            setDialog={setDialog}
+                            quickAdd={quickAdd}
+                        />;
                 })
             }
             </div>
@@ -111,7 +106,8 @@ function RideList( {
 
 const mapStateToProps = state => {
     return {
-        user: state.user.user
+        user: state.user.user,
+        rideFavorites: state.rideFavorites.rideFavorites
     }
 }
 
