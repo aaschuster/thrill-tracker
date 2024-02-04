@@ -17,6 +17,8 @@ function RideList( {
 } ) {
 
     const [totalsView, setTotalsView] = useState(false);
+    const [currentFavorites, setCurrentFavorites] = useState([]);
+    const [currentNonfavorites, setCurrentNonfavorites] = useState([]);
 
     const navigate = useNavigate();
     const historyRef = useRef(null);
@@ -32,6 +34,28 @@ function RideList( {
     useEffect(() => {
         historyRef.current?.scrollBy(0, historyRef.current.scrollHeight); //scroll to bottom whenever new record added
     }, [currentHistory])
+
+    useEffect(() => {
+
+        const favoritesList = [];
+        const nonfavoritesList = [];
+
+        currentRides.forEach( ride => {
+            if(
+                rideFavorites.filter( 
+                    rideFavorite => rideFavorite.rides_id === ride.rides_id
+                ).length > 0
+            ) {
+                favoritesList.push(ride);
+            } else {
+                nonfavoritesList.push(ride);
+            }
+        })
+        
+        setCurrentFavorites(favoritesList);
+        setCurrentNonfavorites(nonfavoritesList);
+
+    }, [rideFavorites])
 
     return (
         <div className={"addmode"}>
@@ -85,12 +109,23 @@ function RideList( {
             </div>
 
             <div className="ridefavorites">
-
+            <h3>Favorites</h3>
+            {
+                currentFavorites.map( (ride, idx) => {
+                    return <RideListItem
+                        ride={ride}
+                        key={idx}
+                        setDialog={setDialog}
+                        quickAdd={quickAdd}
+                    />;
+                })
+            }
             </div>
 
             <div className="ridelist">
+                <hr/>
             {
-                currentRides.map( (ride, idx) => {
+                currentNonfavorites.map( (ride, idx) => {
                         return <RideListItem 
                             ride={ride}
                             key={idx}

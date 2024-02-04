@@ -49,7 +49,9 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
     }, [history, currentRides])
 
     useEffect(() => {
-        const [currentFavoriteObj] = rideFavorites.filter( rideFavorite => rideFavorite.rides_id === dialog.rideID);
+        const [currentFavoriteObj] = rideFavorites.filter( 
+            rideFavorite => rideFavorite.rides_id === dialog.rideID
+        );
         setDialog({...dialog, rideFavorite: currentFavoriteObj})
     }, [dialog.rideID, rideFavorites])
 
@@ -72,7 +74,9 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
                     if(totalsObj[currentRides[i].rides_id])
                         totalsObj[currentRides[i].rides_id].count++;
                     else 
-                        totalsObj[currentRides[i].rides_id] = {name: currentRides[i].name, count: 1};
+                        totalsObj[currentRides[i].rides_id] = {
+                            name: currentRides[i].name, count: 1
+                        };
                 }
                 i++;
             }
@@ -112,7 +116,10 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
                                 <UnfaveIcon className="faveicon"/>Unfavorite this ride
                             </button>
                         : 
-                            <button onClick={() => addRideFavorite({users_id: user.users_id, rides_id: dialog.rideID})}>
+                            <button onClick={() => addRideFavorite({
+                                users_id: user.users_id, 
+                                rides_id: dialog.rideID
+                            })}>
                                 <FaveIcon className="faveicon"/>Favorite this ride
                             </button>
                     }
