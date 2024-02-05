@@ -38,9 +38,8 @@ const ParkSelect = props => {
                 </div>
             </div>
             <h1>ThrillTracker.com</h1>
-            <input placeholder="Search..."/>
             {parks.map( (park, idx) => {
-                return <Park park={park} key={idx} onClick={() => onClick(idx)}/>;
+                return <Park park={park} key={idx} parkNameClick={() => onClick(idx)}/>;
             })} 
             <button onClick={() => navigate("/addupdate/park/add")}>Add Park</button>
         </div>

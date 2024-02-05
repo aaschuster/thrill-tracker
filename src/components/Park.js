@@ -1,10 +1,17 @@
 import React from "react";
 
-function Park( { park, onClick } ) {
+import {AiFillEdit as EditIcon} from "react-icons/ai";
+
+function Park( { park, parkNameClick } ) {
     return (
-        <button onClick={onClick}>
-            {park.name}
-        </button>
+        <div className="parklistitem">
+            <button className="parknamebutton" onClick={parkNameClick}>
+                {park.name}
+            </button>
+            <button className="parkeditbutton">
+                <EditIcon className="editicon"/>
+            </button>
+        </div>
     );
 }
 

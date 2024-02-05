@@ -26,8 +26,12 @@
 }
 
 .parkviewoptions .editicon, .parkviewoptions .faveicon {
-    font-size: 18px;
     margin-right: 5px;
+}
+
+.ridefavoritesheader .faveicon {
+    margin-right: 5px;
+    margin-top: 5px;
 }
 
 .parkviewoptions .addbutton {
@@ -84,6 +88,12 @@
 
 .ridefavorites h3 {
     margin-top: 20px;
+}
+
+.ridefavoritesheader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ridefavorites hr {

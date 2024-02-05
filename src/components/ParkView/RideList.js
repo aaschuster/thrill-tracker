@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
+import {FaHeart as FaveIcon} from "react-icons/fa";
+
 import RideListItem from "./RideListItem";
 
 import { addRecord } from "../../actions/historyActions";
@@ -111,7 +113,10 @@ function RideList( {
             {
                 currentFavorites.length > 0 ?
                     <div className="ridefavorites">
-                        <h3>Favorites</h3>
+                        <div className="ridefavoritesheader">
+                            <FaveIcon className="faveicon"/>
+                            <h3>Favorites</h3>
+                        </div>
                         {
                             currentFavorites.map( (ride, idx) => {
                                 return <RideListItem

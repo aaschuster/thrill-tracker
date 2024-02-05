@@ -31,11 +31,18 @@
 }
 
 .parkselect button {
-  margin: 10px auto;
-  width: 85%;
+  margin: 5px;
+  width: 100%;
   max-width: 350px;
 }
 
-.parkselect input {
-  margin: 25px 0;
+.parkselect .parklistitem {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.parkselect .parkeditbutton {
+  width: min-content;
+  padding: 5px 10px;
 }
