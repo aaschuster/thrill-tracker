@@ -27,5 +27,7 @@ export const reducer = (state = initState, action) => {
             return state;
         case DEL_PARK_FAVORITE:
             return state;
+        default:
+            return state;
     }
 }

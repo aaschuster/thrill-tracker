@@ -11,6 +11,7 @@ import {reducer as manufacturers} from "./manufacturersReducer";
 import {reducer as rideTypes} from "./rideTypesReducer";
 import {reducer as ridesRideTypes} from "./ridesRideTypesReducer";
 import {reducer as rideFavorites} from "./rideFavoritesReducer";
+import {reducer as parkFavorites} from "./parkFavoritesReducer";
 
 export const reducer = combineReducers({
     parks,
@@ -23,5 +24,6 @@ export const reducer = combineReducers({
     manufacturers,
     rideTypes,
     ridesRideTypes,
-    rideFavorites
+    rideFavorites,
+    parkFavorites
 })
