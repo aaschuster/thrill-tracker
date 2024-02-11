@@ -14,6 +14,8 @@ import { getManufacturers } from "../actions/manufacturersActions";
 import { getRideTypes } from "../actions/rideTypesActions";
 import { getRidesRideTypes } from "../actions/ridesRideTypesActions";
 import { getRideFavorites } from "../actions/rideFavoritesActions";
+import { getParkFavorites } from "../actions/parkFavoritesActions";
+import { getHomeParks } from "../actions/homeParksActions";
 
 import '../styles/App.css';
 
@@ -43,7 +45,9 @@ const App = props => {
     getManufacturers,
     getRideTypes,
     getRidesRideTypes,
-    getRideFavorites
+    getRideFavorites,
+    getParkFavorites,
+    getHomeParks
   } = props;
 
   useEffect(() => {
@@ -63,6 +67,8 @@ const App = props => {
     if(user.username)
       getHistory();
       getRideFavorites(user.users_id);
+      getParkFavorites(user.users_id);
+      getHomeParks(user.users_id);
   }, [user])
 
   useEffect(() => {
@@ -146,5 +152,7 @@ export default connect(
     getManufacturers,
     getRideTypes,
     getRidesRideTypes,
-    getRideFavorites
+    getRideFavorites,
+    getParkFavorites,
+    getHomeParks
   })(App);
