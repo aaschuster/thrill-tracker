@@ -13,18 +13,29 @@ import {
 import {FaHouse as HouseIcon} from "react-icons/fa6";
 
 import { clearUser } from "../actions/userActions";
+import { delParkFavorite, addParkFavorite } from "../actions/parkFavoritesActions";
 
 import Park from "./Park";
 
 import "../styles/ParkSelect.css";
 
-const ParkSelect = ({ parks, isFetching, error, user, parkFavorites, clearUser }) => {
+const ParkSelect = ({ 
+    parks, 
+    isFetching, 
+    error, 
+    user, 
+    parkFavorites, 
+    clearUser, 
+    delParkFavorite, 
+    addParkFavorite 
+}) => {
 
     const navigate = useNavigate();
 
     const [dialog, setDialog] = useState({
         open: false,
         parkID: null,
+        parkIdx: null,
         parkName: ""
     })
     const [currentFavorite, setCurrentFavorite] = useState(null);
@@ -50,7 +61,7 @@ const ParkSelect = ({ parks, isFetching, error, user, parkFavorites, clearUser }
             <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
                 <div className="dialog parkselectoptions">
                     <p>{dialog.parkName}</p>
-                    <button onClick={() => navigate(`/atparkview/${dialog.parkID}`)}>
+                    <button onClick={() => navigate(`/atparkview/${dialog.parkIdx}`)}>
                         <GoIcon className="icon goicon"/>
                         Go to park page
                     </button>
@@ -58,10 +69,21 @@ const ParkSelect = ({ parks, isFetching, error, user, parkFavorites, clearUser }
                         <HouseIcon className="icon homeicon"/>
                         Add as home park
                     </button>
-                    <button>
-                        <FaveIcon className="icon faveicon"/>
-                        Favorite this park
-                    </button>
+                    {
+                        currentFavorite ?
+                            <button onClick={() => delParkFavorite(currentFavorite)}>
+                                <UnfaveIcon className="icon faveicon"/>
+                                Unfavorite this park
+                            </button>
+                        :
+                        <button onClick={() => addParkFavorite({
+                            users_id: user.users_id,
+                            parks_id: dialog.parkID
+                        })}>
+                            <FaveIcon className="icon faveicon"/>
+                            Favorite this park
+                        </button>
+                    }
                     <button onClick={() => navigate(`/addupdate/park/${dialog.parkID}`)}>
                         <EditIcon className="icon faveicon"/>
                         View or edit park info
@@ -101,4 +123,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { clearUser })(ParkSelect);
+export default connect(
+    mapStateToProps, { 
+        clearUser, 
+        delParkFavorite, 
+        addParkFavorite 
+    }
+)(ParkSelect);

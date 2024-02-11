@@ -41,7 +41,7 @@ export const addParkFavorite = parkFavorite => dispatch => {
     return {type: ADD_PARK_FAVORITE};
 }
 
-export const delRideFavorite = parkFavorite => dispatch => {
+export const delParkFavorite = parkFavorite => dispatch => {
     axios.delete(`${serverURL}/userParkFavorites/${parkFavorite.user_park_favorites_id}`)
         .then( () => dispatch(getParkFavorites(parkFavorite.users_id)))
         .catch( err => console.error(err));

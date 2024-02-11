@@ -13,7 +13,8 @@ function Park( { park, parkIdx, setDialog } ) {
                 className="parknamebutton"
                 onClick={() => setDialog({
                     open: true, 
-                    parkID: parkIdx, 
+                    parkID: park.parks_id,
+                    parkIdx: parkIdx, 
                     parkName: park.name
                 })}
             >
