@@ -1,22 +1,29 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-import {AiFillEdit as EditIcon} from "react-icons/ai";
+import {FaArrowRight as GoIcon} from "react-icons/fa";
 
-function Park( { park, parkNameClick, setDialog } ) {
+function Park( { park, parkIdx, setDialog } ) {
+
+    const navigate = useNavigate();
+
     return (
         <div className="parklistitem">
-            <button className="parknamebutton" onClick={parkNameClick}>
-                {park.name}
-            </button>
             <button 
+                className="parknamebutton"
                 onClick={() => setDialog({
                     open: true, 
-                    parkID: park.parks_id, 
+                    parkID: parkIdx, 
                     parkName: park.name
                 })}
-                className="parkeditbutton"
             >
-                <EditIcon className="editicon"/>
+                {park.name}
+            </button>
+            <button
+                onClick={() => navigate(`/atparkview/${parkIdx}`)}
+                className="parkgobutton"
+            >
+                <GoIcon className="goicon icon"/>
             </button>
         </div>
     );

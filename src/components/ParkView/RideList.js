@@ -114,7 +114,7 @@ function RideList( {
                 currentFavorites.length > 0 ?
                     <div className="ridefavorites">
                         <div className="ridefavoritesheader">
-                            <FaveIcon className="faveicon"/>
+                            <FaveIcon className="faveicon icon"/>
                             <h3>Favorites</h3>
                         </div>
                         {

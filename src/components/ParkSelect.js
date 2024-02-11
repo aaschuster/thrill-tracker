@@ -4,12 +4,19 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Dialog from "@mui/material/Dialog";
 
+import {AiFillEdit as EditIcon} from "react-icons/ai";
+import {
+    FaRegHeart as UnfaveIcon,
+    FaHeart as FaveIcon,
+    FaArrowRight as GoIcon
+} from "react-icons/fa";
+import {FaHouse as HouseIcon} from "react-icons/fa6";
+
 import { clearUser } from "../actions/userActions";
 
 import Park from "./Park";
 
 import "../styles/ParkSelect.css";
-import { Button } from "@mui/material";
 
 const ParkSelect = ({ parks, isFetching, error, user, parkFavorites, clearUser }) => {
 
@@ -29,9 +36,6 @@ const ParkSelect = ({ parks, isFetching, error, user, parkFavorites, clearUser }
         setCurrentFavorite(currentFavoriteObj);
     }, [dialog.parkID, parkFavorites])
 
-    function parkNameClick(parkIdx) {
-        navigate(`/atparkview/${parkIdx}`);
-    }
     function logout() {
         axios.get(`${process.env.REACT_APP_SERVERURL}/users/logout`)
             .then( res => {
@@ -44,11 +48,24 @@ const ParkSelect = ({ parks, isFetching, error, user, parkFavorites, clearUser }
     return (
         <div className="parkselect">
             <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
-                <div className="dialog">
+                <div className="dialog parkselectoptions">
                     <p>{dialog.parkName}</p>
-                    <button>Add as home park</button>
-                    <button>Favorite this park</button>
-                    <button>View or edit park info</button>
+                    <button onClick={() => navigate(`/atparkview/${dialog.parkID}`)}>
+                        <GoIcon className="icon goicon"/>
+                        Go to park page
+                    </button>
+                    <button>
+                        <HouseIcon className="icon homeicon"/>
+                        Add as home park
+                    </button>
+                    <button>
+                        <FaveIcon className="icon faveicon"/>
+                        Favorite this park
+                    </button>
+                    <button onClick={() => navigate(`/addupdate/park/${dialog.parkID}`)}>
+                        <EditIcon className="icon faveicon"/>
+                        View or edit park info
+                    </button>
                     <button onClick={() => setDialog({...dialog, open: false})}>Cancel</button>
                 </div>
             </Dialog>
@@ -64,7 +81,7 @@ const ParkSelect = ({ parks, isFetching, error, user, parkFavorites, clearUser }
                 return <Park 
                     park={park}
                     key={idx}
-                    parkNameClick={() => parkNameClick(idx)}
+                    parkIdx={idx}
                     setDialog={setDialog}
                 />;
             })} 

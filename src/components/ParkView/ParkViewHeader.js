@@ -24,7 +24,6 @@ function ParkViewHeader( {name, parkID, setCurrentParkID} ) {
                 <h2>{name}</h2>
             </div>
             <div className={"parkviewheaderbuttons"}>
-                <button onClick={() => navigate(`/addupdate/park/${parkID}`)}>Edit Park Info</button>
                 <button onClick={addRide}>Add Ride</button>
             </div>
         </div>

@@ -113,18 +113,18 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
                     {
                         currentFavorite ? 
                             <button onClick={() => delRideFavorite(currentFavorite)}>
-                                <UnfaveIcon className="faveicon"/>Unfavorite this ride
+                                <UnfaveIcon className="faveicon icon"/>Unfavorite this ride
                             </button>
                         : 
                             <button onClick={() => addRideFavorite({
                                 users_id: user.users_id, 
                                 rides_id: dialog.rideID
                             })}>
-                                <FaveIcon className="faveicon"/>Favorite this ride
+                                <FaveIcon className="faveicon icon"/>Favorite this ride
                             </button>
                     }
                     <button onClick={() => navigate(`/addupdate/ride/${dialog.rideID}`)}>
-                        <EditIcon className="editicon"/> View or edit ride info
+                        <EditIcon className="editicon icon"/> View or edit ride info
                     </button>
                     <button onClick={() => setDialog({...dialog, open: false})}>Cancel</button>
                 </div>

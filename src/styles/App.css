@@ -73,7 +73,7 @@ hr {
   font-size: 25px;
 }
 
-.editicon, .faveicon {
+.icon {
   font-size: 18px;
   color: var(--white);
 }

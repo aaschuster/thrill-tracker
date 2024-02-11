@@ -42,7 +42,26 @@
   margin: 0 auto;
 }
 
-.parkselect .parkeditbutton {
+.parkselect .parkgobutton {
   width: min-content;
   padding: 5px 10px;
+}
+
+.parkselectoptions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.parkselectoptions button {
+  margin: 8px;
+  width: 100%;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.parkselectoptions .icon {
+  margin-right: 5px;
 }
