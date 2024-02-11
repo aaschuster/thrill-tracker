@@ -3,8 +3,8 @@ import {
     GET_HOME_PARKS_SUCCESS,
     GET_HOME_PARKS_ERR,
     SET_FETCHING_TRUE,
-    ADD_PARK_FAVORITE,
-    DEL_PARK_FAVORITE
+    ADD_HOME_PARK,
+    DEL_HOME_PARK
 } from "../actions/homeParksActions";
 
 const initState = {
@@ -23,9 +23,9 @@ export const reducer = (state = initState, action) => {
             return {...state, isFetching: false, homeParks: action.payload};
         case GET_HOME_PARKS_ERR:
             return {...state, isFetching: false, error: action.payload};
-        case ADD_PARK_FAVORITE:
+        case ADD_HOME_PARK:
             return state;
-        case DEL_PARK_FAVORITE:
+        case DEL_HOME_PARK:
             return state;
         default:
             return state;

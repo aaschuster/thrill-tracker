@@ -14,6 +14,7 @@ import {FaHouse as HouseIcon} from "react-icons/fa6";
 
 import { clearUser } from "../actions/userActions";
 import { delParkFavorite, addParkFavorite } from "../actions/parkFavoritesActions";
+import { delHomePark, addHomePark } from "../actions/homeParksActions";
 
 import Park from "./Park";
 
@@ -27,7 +28,10 @@ const ParkSelect = ({
     parkFavorites, 
     clearUser, 
     delParkFavorite, 
-    addParkFavorite 
+    addParkFavorite,
+    homeParks,
+    delHomePark,
+    addHomePark
 }) => {
 
     const navigate = useNavigate();
@@ -39,13 +43,34 @@ const ParkSelect = ({
         parkName: ""
     })
     const [currentFavorite, setCurrentFavorite] = useState(null);
+    const [currentHomePark, setCurrentHomePark] = useState(null);
 
     useEffect(() => {
+        getCurrentParkFavorite();
+        getCurrentHomePark();
+    }, [dialog.parkID])
+
+    useEffect(() => {
+        getCurrentParkFavorite();
+    }, [parkFavorites])
+
+    useEffect(() => {
+        getCurrentHomePark();
+    }, [homeParks])
+
+    function getCurrentParkFavorite() {
         const [currentFavoriteObj] = parkFavorites.filter(
             parkFavorite => parkFavorite.parks_id === dialog.parkID
         );
         setCurrentFavorite(currentFavoriteObj);
-    }, [dialog.parkID, parkFavorites])
+    }
+
+    function getCurrentHomePark() {
+        const [currentHomeParkObj] = homeParks.filter(
+            homePark => homePark.parks_id === dialog.parkID
+        );
+        setCurrentHomePark(currentHomeParkObj);
+    }
 
     function logout() {
         axios.get(`${process.env.REACT_APP_SERVERURL}/users/logout`)
@@ -58,17 +83,42 @@ const ParkSelect = ({
 
     return (
         <div className="parkselect">
-            <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
+            <Dialog 
+                onClose={() => setDialog({...dialog, open: true})} 
+                open={dialog.open}
+                sx={{
+                    "& .MuiDialog-container": {
+                      "& .MuiPaper-root": {
+                        width: "100%",
+                        maxWidth: "260px",
+                      },
+                    },
+                  }}
+            >
                 <div className="dialog parkselectoptions">
                     <p>{dialog.parkName}</p>
                     <button onClick={() => navigate(`/atparkview/${dialog.parkIdx}`)}>
                         <GoIcon className="icon goicon"/>
                         Go to park page
                     </button>
-                    <button>
-                        <HouseIcon className="icon homeicon"/>
-                        Add as home park
-                    </button>
+                    {
+                        currentHomePark ?
+                            <button onClick={() => delHomePark(currentHomePark)}>
+                                <HouseIcon className="icon homeicon"/>
+                                {
+                                    homeParks.length === 1 ?
+                                    "Remove as home park" : "Remove from home parks"
+                                }                                
+                            </button>
+                        :
+                            <button onClick={() => addHomePark({
+                                users_id: user.users_id,
+                                parks_id: dialog.parkID
+                            })}>
+                                <HouseIcon className="icon homeicon"/>
+                                Add as home park
+                            </button>
+                    }
                     {
                         currentFavorite ?
                             <button onClick={() => delParkFavorite(currentFavorite)}>
@@ -119,7 +169,8 @@ const mapStateToProps = state => {
         isFetching: state.parks.isFetching,
         error: state.parks.error,
         user: state.user.user,
-        parkFavorites: state.parkFavorites.parkFavorites
+        parkFavorites: state.parkFavorites.parkFavorites,
+        homeParks: state.homeParks.homeParks
     }
 }
 
@@ -127,6 +178,8 @@ export default connect(
     mapStateToProps, { 
         clearUser, 
         delParkFavorite, 
-        addParkFavorite 
+        addParkFavorite,
+        delHomePark,
+        addHomePark
     }
 )(ParkSelect);
