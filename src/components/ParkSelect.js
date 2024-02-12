@@ -18,6 +18,8 @@ import { delHomePark, addHomePark } from "../actions/homeParksActions";
 
 import Park from "./Park";
 
+import { objFromID } from "../utils";
+
 import "../styles/ParkSelect.css";
 
 const ParkSelect = ({ 
@@ -38,9 +40,7 @@ const ParkSelect = ({
 
     const [dialog, setDialog] = useState({
         open: false,
-        parkID: null,
-        parkIdx: null,
-        parkName: ""
+        park: {}
     })
     const [currentFavorite, setCurrentFavorite] = useState(null);
     const [currentHomePark, setCurrentHomePark] = useState(null);
@@ -48,7 +48,7 @@ const ParkSelect = ({
     useEffect(() => {
         getCurrentParkFavorite();
         getCurrentHomePark();
-    }, [dialog.parkID])
+    }, [dialog.park.parks_id])
 
     useEffect(() => {
         getCurrentParkFavorite();
@@ -60,14 +60,14 @@ const ParkSelect = ({
 
     function getCurrentParkFavorite() {
         const [currentFavoriteObj] = parkFavorites.filter(
-            parkFavorite => parkFavorite.parks_id === dialog.parkID
+            parkFavorite => parkFavorite.parks_id === dialog.park.parks_id
         );
         setCurrentFavorite(currentFavoriteObj);
     }
 
     function getCurrentHomePark() {
         const [currentHomeParkObj] = homeParks.filter(
-            homePark => homePark.parks_id === dialog.parkID
+            homePark => homePark.parks_id === dialog.park.parks_id
         );
         setCurrentHomePark(currentHomeParkObj);
     }
@@ -96,8 +96,8 @@ const ParkSelect = ({
                   }}
             >
                 <div className="dialog parkselectoptions">
-                    <p>{dialog.parkName}</p>
-                    <button onClick={() => navigate(`/atparkview/${dialog.parkIdx}`)}>
+                    <p>{dialog.park.name}</p>
+                    <button onClick={() => navigate(`/atparkview/${dialog.park.parks_id}`)}>
                         <GoIcon className="icon goicon"/>
                         Go to park page
                     </button>
@@ -113,7 +113,7 @@ const ParkSelect = ({
                         :
                             <button onClick={() => addHomePark({
                                 users_id: user.users_id,
-                                parks_id: dialog.parkID
+                                parks_id: dialog.park.parks_id
                             })}>
                                 <HouseIcon className="icon homeicon"/>
                                 Add as home park
@@ -128,13 +128,13 @@ const ParkSelect = ({
                         :
                         <button onClick={() => addParkFavorite({
                             users_id: user.users_id,
-                            parks_id: dialog.parkID
+                            parks_id: dialog.park.parks_id
                         })}>
                             <FaveIcon className="icon faveicon"/>
                             Favorite this park
                         </button>
                     }
-                    <button onClick={() => navigate(`/addupdate/park/${dialog.parkID}`)}>
+                    <button onClick={() => navigate(`/addupdate/park/${dialog.park.parks_id}`)}>
                         <EditIcon className="icon faveicon"/>
                         View or edit park info
                     </button>
@@ -149,11 +149,29 @@ const ParkSelect = ({
                 </div>
             </div>
             <h1>ThrillTracker.com</h1>
+            {
+                homeParks.length > 0 ?
+                    <div className="homeparks">
+                        <div className="homeparksheader">
+                            <HouseIcon className="icon homeicon"/>
+                            <h3>Home Park{homeParks.length === 1 ? "" : "s"}</h3>
+                        </div>
+                        {
+                            homeParks.map( (homePark, idx) => {
+                                return <Park 
+                                    park={objFromID(homePark.parks_id, parks, "parks_id")}
+                                    key={idx}
+                                    setDialog={setDialog}
+                                />;
+                            })
+                        }
+                    </div>
+                : <></>
+            }
             {parks.map( (park, idx) => {
                 return <Park 
                     park={park}
                     key={idx}
-                    parkIdx={idx}
                     setDialog={setDialog}
                 />;
             })} 

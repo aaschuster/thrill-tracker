@@ -11,16 +11,15 @@ import RideList from "./RideList";
 
 import {addRideFavorite, delRideFavorite} from "../../actions/rideFavoritesActions";
 
-import { filterByToday } from "../../utils";
+import { filterByToday, objFromID } from "../../utils";
 
 import "../../styles/AtParkView.css";
 
 function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorite, delRideFavorite} ) {
 
-    const { id: parkIdx } = useParams();
-
-    const park = parks[parkIdx];
-
+    const { id } = useParams();
+    
+    const [park, setPark] = useState({});
     const [currentRides, setCurrentRides] = useState([]);
     const [currentHistory, setCurrentHistory] = useState([]);
     const [currentTotals, setCurrentTotals] = useState({});
@@ -35,14 +34,15 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
     const navigate = useNavigate();
 
     useEffect(() => {  
-        if(rides && parks[parkIdx]) {
+        setPark(objFromID(parseInt(id), parks, "parks_id"))
+        if(rides && park) {
             setCurrentRides( 
                 rides.filter( 
-                (ride) => ride.parks_id === parks[parkIdx].parks_id 
+                (ride) => ride.parks_id === park.parks_id
                 )
             )        
         }
-    }, [parks, rides])
+    }, [park, parks, rides])
 
     useEffect(() => {
         getCurrentHistory();

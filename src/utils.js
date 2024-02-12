@@ -10,4 +10,9 @@ function filterByToday(records) {
     })
 }
 
-export {filterByToday};
+function objFromID(id, array, key) {
+    const [res] = array.filter( obj => obj[key] === id);
+    return res;
+}
+
+export {filterByToday, objFromID};

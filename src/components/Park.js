@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import {FaArrowRight as GoIcon} from "react-icons/fa";
 
-function Park( { park, parkIdx, setDialog } ) {
+function Park( { park, setDialog } ) {
 
     const navigate = useNavigate();
 
@@ -13,15 +13,13 @@ function Park( { park, parkIdx, setDialog } ) {
                 className="parknamebutton"
                 onClick={() => setDialog({
                     open: true, 
-                    parkID: park.parks_id,
-                    parkIdx: parkIdx, 
-                    parkName: park.name
+                    park: park
                 })}
             >
                 {park.name}
             </button>
             <button
-                onClick={() => navigate(`/atparkview/${parkIdx}`)}
+                onClick={() => navigate(`/atparkview/${park.parks_id}`)}
                 className="parkgobutton"
             >
                 <GoIcon className="goicon icon"/>
