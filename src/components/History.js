@@ -7,7 +7,7 @@ import { delRecord } from "../actions/historyActions";
 import {MdDeleteForever} from "react-icons/md";
 import {AiFillEdit} from "react-icons/ai";
 
-import BackButton from "./BackButton";
+import BackButton from "./Buttons/BackButton";
 
 import { filterByToday, objFromID } from "../utils";
 

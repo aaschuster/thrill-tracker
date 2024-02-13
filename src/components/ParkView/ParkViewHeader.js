@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import {setCurrentParkID} from "../../actions/parksActions";
 
-import BackButton from "../BackButton";
+import BackButton from "../Buttons/BackButton";
 
 import "../../styles/ParkViewHeader.css";
 

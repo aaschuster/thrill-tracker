@@ -19,6 +19,9 @@ import { delHomePark, addHomePark } from "../actions/homeParksActions";
 
 import Park from "./Park";
 
+import AddParkButton from "./Buttons/AddParkButton";
+import ViewChainsButton from "./Buttons/ViewChainsButton";
+
 import { objFromID } from "../utils";
 
 import "../styles/ParkSelect.css";
@@ -191,26 +194,15 @@ const ParkSelect = ({
             }
             <div className="buttonlist">
                 <button 
-                    onClick={() => navigate("/addupdate/park/add")} 
                     className="searchbutton"
+                    onClick={() => navigate("/search")}    
                 >
                     <SearchIcon className="icon searchicon"/>
                     Search by park name
                 </button>
-                <button>
-                    View parks by chain
-                </button>
-                <button className="addparkbutton">
-                    <span className="plus">+</span>Add park
-                </button>
+                <ViewChainsButton/>
+                <AddParkButton/>
             </div>
-            {/* {parks.map( (park, idx) => {
-                return <Park 
-                    park={park}
-                    key={idx}
-                    setDialog={setDialog}
-                />;
-            })}  */}
         </div>
     )    
    

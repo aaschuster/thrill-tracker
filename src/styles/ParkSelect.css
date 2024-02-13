@@ -92,15 +92,11 @@
   margin: 15px auto;
 }
 
-.parkselect .searchbutton, .parkselect .addparkbutton {
+.parkselect .searchbutton {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 46px;
-}
-
-.parkselect .addparkbutton .plus {
-  margin-right: 5px;
 }
 
 .parkselect .buttonlist {

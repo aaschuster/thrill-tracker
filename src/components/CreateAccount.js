@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { setMessage } from "../actions/userActions";
 
-import BackButton from "./BackButton";
+import BackButton from "./Buttons/BackButton";
 
 import "../styles/CreateAccount.css";
 

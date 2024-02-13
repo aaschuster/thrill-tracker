@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import Dialog from "@mui/material/Dialog";
 
-import BackButton from "../../BackButton";
+import BackButton from "../../Buttons/BackButton";
 
 import SeatMap from "./SeatMap";
 

@@ -1,0 +1,85 @@
+@import "styles.css";
+
+.search {
+    width: 90%;
+    max-width: 550px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.searchheader {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.searchheader h2 {
+    width: calc(100% - 92px);
+}
+
+.search input {
+    width: 70%;
+    font-size: 1.5rem;
+    margin: 20px auto;
+}
+
+.search button {
+    margin: 5px;
+    width: 100%;
+}
+
+.search .results {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.search .parklistitem {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+.search .parkgobutton {
+    width: min-content;
+    padding: 5px 10px;
+}
+
+.emptyinput {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search .homebutton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 46px;
+}
+
+.emptyinput button {
+    width: 100%;
+    max-width: 300px;
+}
+
+.search .homeicon {
+    margin-right: 5px;
+}
+
+.search .noresults h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
+.search .cantfindtext {
+    margin: 10px;
+}
+
+.search .addparkbutton {
+    max-width: 250px;
+}

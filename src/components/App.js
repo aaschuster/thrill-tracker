@@ -27,6 +27,7 @@ import AtParkView from "./ParkView/AtParkView";
 import RecordAddUpdate from "./AddUpdate/RecordAddUpdate/RecordAddUpdate";
 import ParkAddUpdate from "./AddUpdate/ParkAddUpdate";
 import RideAddUpdate from "./AddUpdate/RideAddUpdate";
+import Search from "./Search";
 
 const App = props => {
 
@@ -104,6 +105,10 @@ const App = props => {
           <Route
             path="/createaccount"
             element={<CreateAccount/>}
+          />
+          <Route
+            path="/search"
+            element={<Search/>}
           />
           <Route
             path="/history/:id"

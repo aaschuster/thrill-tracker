@@ -1,0 +1,12 @@
+@import "styles.css";
+
+.addparkbutton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+}
+
+.addparkbutton .plus {
+    margin-right: 5px;
+}
