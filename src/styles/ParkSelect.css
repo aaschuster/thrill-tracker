@@ -64,3 +64,22 @@
 .parkselectoptions .icon {
   margin-right: 5px;
 }
+
+.parkselect .homeparks, .parkselect .favoriteparks {
+  margin: 2%;
+}
+
+.parkselect .homeparks h3, .parkselect .favoriteparks h3 {
+  margin-top: 20px;
+}
+
+.parkselect .homeparksheader, .parkselect .favoriteparksheader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.parkselect .favoriteparks hr, .parkselect .homeparks hr {
+  width: 90%;
+  margin: 10px auto;
+}

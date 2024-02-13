@@ -165,6 +165,27 @@ const ParkSelect = ({
                                 />;
                             })
                         }
+                        <hr/>
+                    </div>
+                : <></>
+            }
+            {
+                parkFavorites.length > 0 ?
+                    <div className="favoriteparks">
+                        <div className="favoriteparksheader">
+                            <FaveIcon className="icon faveicon"/>
+                            <h3>Favorites</h3>
+                        </div>
+                        {
+                            parkFavorites.map( (favoritePark, idx) => {
+                                return <Park
+                                    park={objFromID(favoritePark.parks_id, parks, "parks_id")}
+                                    key={idx}
+                                    setDialog={setDialog}
+                                />;
+                            })
+                        }
+                        <hr/>
                     </div>
                 : <></>
             }

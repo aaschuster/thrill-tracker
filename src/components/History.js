@@ -9,7 +9,7 @@ import {AiFillEdit} from "react-icons/ai";
 
 import BackButton from "./BackButton";
 
-import { filterByToday } from "../utils";
+import { filterByToday, objFromID } from "../utils";
 
 import "../styles/History.css";
 
@@ -28,13 +28,13 @@ function History( {processedHistory, parks, rides, delRecord} ) {
         track_length: null
     }
 
-    const { id: parkIdx } = useParams();
-    const park = parkIdx==="all" ? null : parks[parkIdx];
+    const { id } = useParams();
 
     const view = "todayHistory";
 
     const navigate = useNavigate();
 
+    const [park, setPark] = useState(null);
     const [currentHistory, setCurrentHistory] = useState(processedHistory);
     const [todayHistory, setTodayHistory] = useState([]);
     const [todayView, setTodayView] = useState(false);
@@ -48,6 +48,16 @@ function History( {processedHistory, parks, rides, delRecord} ) {
     }
 
     useEffect(() => {
+
+        setPark( id === "all" ? 
+            null : 
+            objFromID(
+                parseInt(id),
+                parks,
+                "parks_id"
+            )
+        )
+
         let newHistory = processedHistory;
         if(park) {
             setTodayView(true);
