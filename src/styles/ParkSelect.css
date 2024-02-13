@@ -3,9 +3,11 @@
 .parkselect {
   width: 95%;
   max-width: 450px;
-  display: flex;
-  flex-direction: column;
   margin: 0 auto;
+}
+
+.parkselect h1 {
+  margin-bottom: 5px;
 }
 
 .parkselect .accountcontainer {
@@ -33,13 +35,17 @@
 .parkselect button {
   margin: 5px;
   width: 100%;
-  max-width: 350px;
+}
+
+.parkselect .homeicon, .parkselect .faveicon, .parkselect .searchicon {
+  margin-right: 5px;
 }
 
 .parkselect .parklistitem {
   display: flex;
   width: 90%;
   margin: 0 auto;
+  max-width: 400px;
 }
 
 .parkselect .parkgobutton {
@@ -56,6 +62,7 @@
 .parkselectoptions button {
   margin: 8px;
   width: 100%;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,11 +73,12 @@
 }
 
 .parkselect .homeparks, .parkselect .favoriteparks {
-  margin: 2%;
+  margin-top: 7px;
 }
 
 .parkselect .homeparks h3, .parkselect .favoriteparks h3 {
-  margin-top: 20px;
+  margin-top: 13px;
+  margin-bottom: 13px;
 }
 
 .parkselect .homeparksheader, .parkselect .favoriteparksheader {
@@ -81,5 +89,28 @@
 
 .parkselect .favoriteparks hr, .parkselect .homeparks hr {
   width: 90%;
-  margin: 10px auto;
+  margin: 15px auto;
+}
+
+.parkselect .searchbutton, .parkselect .addparkbutton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+}
+
+.parkselect .addparkbutton .plus {
+  margin-right: 5px;
+}
+
+.parkselect .buttonlist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.parkselect .buttonlist button  {
+  width: 75%;
+  max-width: 300px;
 }

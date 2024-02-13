@@ -8,7 +8,8 @@ import {AiFillEdit as EditIcon} from "react-icons/ai";
 import {
     FaRegHeart as UnfaveIcon,
     FaHeart as FaveIcon,
-    FaArrowRight as GoIcon
+    FaArrowRight as GoIcon,
+    FaSearch as SearchIcon
 } from "react-icons/fa";
 import {FaHouse as HouseIcon} from "react-icons/fa6";
 
@@ -154,7 +155,7 @@ const ParkSelect = ({
                     <div className="homeparks">
                         <div className="homeparksheader">
                             <HouseIcon className="icon homeicon"/>
-                            <h3>Home Park{homeParks.length === 1 ? "" : "s"}</h3>
+                            <h3>Home park{homeParks.length === 1 ? "" : "s"}</h3>
                         </div>
                         {
                             homeParks.map( (homePark, idx) => {
@@ -165,7 +166,6 @@ const ParkSelect = ({
                                 />;
                             })
                         }
-                        <hr/>
                     </div>
                 : <></>
             }
@@ -189,14 +189,28 @@ const ParkSelect = ({
                     </div>
                 : <></>
             }
-            {parks.map( (park, idx) => {
+            <div className="buttonlist">
+                <button 
+                    onClick={() => navigate("/addupdate/park/add")} 
+                    className="searchbutton"
+                >
+                    <SearchIcon className="icon searchicon"/>
+                    Search by park name
+                </button>
+                <button>
+                    View parks by chain
+                </button>
+                <button className="addparkbutton">
+                    <span className="plus">+</span>Add park
+                </button>
+            </div>
+            {/* {parks.map( (park, idx) => {
                 return <Park 
                     park={park}
                     key={idx}
                     setDialog={setDialog}
                 />;
-            })} 
-            <button onClick={() => navigate("/addupdate/park/add")}>Add Park</button>
+            })}  */}
         </div>
     )    
    
