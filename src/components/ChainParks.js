@@ -9,6 +9,8 @@ import HomeButton from "./Buttons/HomeButton";
 
 import { objFromID } from "../utils";
 
+import "../styles/ChainParks.css";
+
 function ChainParks( { parks, chains } ) {
 
     const navigate = useNavigate();

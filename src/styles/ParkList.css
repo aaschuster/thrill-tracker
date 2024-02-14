@@ -1,0 +1,20 @@
+.parklist {
+    width: 100%;
+}
+
+.parklistitem {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+.parklistitem button {
+    margin: 5px;
+    width: 100%;
+}
+
+.parklistitem .parkgobutton {
+    width: min-content;
+    padding: 5px 10px;
+}

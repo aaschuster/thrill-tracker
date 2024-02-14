@@ -18,6 +18,8 @@ import { delHomePark, addHomePark } from "../actions/homeParksActions";
 
 import { objFromID } from "../utils";
 
+import "../styles/ParkList.css";
+
 const ParkList = ( { 
     parks, 
     parklist,

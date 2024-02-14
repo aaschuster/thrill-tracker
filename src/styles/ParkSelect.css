@@ -32,25 +32,8 @@
   font-size: 0.8rem;
 }
 
-.parkselect button {
-  margin: 5px;
-  width: 100%;
-}
-
 .parkselect .homeicon, .parkselect .faveicon, .parkselect .searchicon {
   margin-right: 7px;
-}
-
-.parkselect .parklistitem {
-  display: flex;
-  width: 90%;
-  margin: 0 auto;
-  max-width: 400px;
-}
-
-.parkselect .parkgobutton {
-  width: min-content;
-  padding: 5px 10px;
 }
 
 .parkselectoptions {
@@ -108,6 +91,7 @@
 }
 
 .parkselect .buttonlist button  {
+  margin: 5px;
   width: 75%;
   max-width: 300px;
 }
