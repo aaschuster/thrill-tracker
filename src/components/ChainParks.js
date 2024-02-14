@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import BackButton from "./Buttons/BackButton";
 
 import { objFromID } from "../utils";
 
 function ChainParks( { parks, chains } ) {
-    let { id } = useParams();
+
+    const navigate = useNavigate();
+
+    const { id } = useParams();
     
     const [chain, setChain] = useState({});
+    const [currentParks, setCurrentParks] = useState([]);
 
     useEffect(() => {
         setChain(objFromID(parseInt(id), chains, "chains_id"));
     }, [id])
+    
+    useEffect(() => {
+        setCurrentParks( parks.filter( park => (
+            park.chains_id === chain.chains_id
+        )))
+    }, [chain])
 
     return (
         <div className="chainparks">
@@ -21,6 +31,19 @@ function ChainParks( { parks, chains } ) {
                 <BackButton/>
                 <h2>{chain.name}</h2>
             </div>
+            {
+                currentParks.map( (park, idx) => {
+                    return (
+                        <button 
+                            key={idx}
+                            onClick={() => 
+                                navigate(`/atparkview/${park.parks_id}`)}
+                        >
+                            {park.name}
+                        </button>
+                    )
+                })
+            }
         </div>
     )
 }
