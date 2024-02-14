@@ -15,11 +15,7 @@
     align-items: center;
     margin: 20px 0;
     width: 100%;
-}
-
-.history .historyheader h2 {
-    margin: 0;
-    width: calc(100% - 92px);
+    justify-content: space-between;
 }
 
 .history .datebuttons {

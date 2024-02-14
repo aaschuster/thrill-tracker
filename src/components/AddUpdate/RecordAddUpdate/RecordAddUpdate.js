@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Dialog from "@mui/material/Dialog";
 
 import BackButton from "../../Buttons/BackButton";
+import HomeButton from "../../Buttons/HomeButton";
 
 import SeatMap from "./SeatMap";
 
@@ -150,7 +151,8 @@ function RecordAddUpdate( { rides, history, user, addRecord, updateRecord } ) {
                 </Dialog>
                 <div className="recordaddupdateupdateheader">
                     <BackButton/>
-                    <h2>{ride.name}</h2>       
+                    <h2>{ride.name}</h2>    
+                    <HomeButton/>   
                 </div>
                 <form onSubmit={onSubmit}>
                     

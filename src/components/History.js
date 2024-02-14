@@ -8,6 +8,7 @@ import {MdDeleteForever} from "react-icons/md";
 import {AiFillEdit} from "react-icons/ai";
 
 import BackButton from "./Buttons/BackButton";
+import HomeButton from "./Buttons/HomeButton";
 
 import { filterByToday, objFromID } from "../utils";
 
@@ -88,6 +89,7 @@ function History( {processedHistory, parks, rides, delRecord} ) {
             <div className="historyheader">
                 <BackButton/>
                 <h2>History</h2>
+                <HomeButton/>
             </div>
             <h3>{park ? park.name : ""}</h3>
             <div className="datebuttons">

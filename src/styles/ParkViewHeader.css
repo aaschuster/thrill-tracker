@@ -7,11 +7,7 @@
 .parkviewheadertop {
     display: flex;
     align-items: center;
-}
-
-.parkviewheader h2 {
-    margin: 0;
-    width: calc(100% - 92px);
+    justify-content:space-between;
 }
 
 .parkviewheaderbuttons {

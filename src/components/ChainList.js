@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 import BackButton from "./Buttons/BackButton";
+import HomeButton from "./Buttons/HomeButton";
 
 // import "../styles/ChainList.css";
 
@@ -15,6 +16,7 @@ function ChainList( {chains} ) {
             <div className="chainlistheader">
                 <BackButton/>
                 <h2>Park chains</h2>
+                <HomeButton/>
             </div>
             {
                 chains.map( (chain, idx) => (

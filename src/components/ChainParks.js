@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
 import BackButton from "./Buttons/BackButton";
+import HomeButton from "./Buttons/HomeButton";
 
 import { objFromID } from "../utils";
 
@@ -30,6 +31,7 @@ function ChainParks( { parks, chains } ) {
             <div className="chainparksheader">
                 <BackButton/>
                 <h2>{chain.name}</h2>
+                <HomeButton/>
             </div>
             {
                 currentParks.map( (park, idx) => {

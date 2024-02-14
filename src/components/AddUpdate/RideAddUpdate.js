@@ -8,6 +8,7 @@ import DatalistInput from "react-datalist-input";
 import { MdDeleteForever } from "react-icons/md";
 
 import BackButton from "../Buttons/BackButton";
+import HomeButton from "../Buttons/HomeButton";
 
 import "../../styles/RideAddUpdate.css";
 
@@ -277,6 +278,7 @@ function RideAddUpdate( {
             <div className="rideaddupdateheader">
                 <BackButton/>
                 <h2>{editMode ? "Update" : "Add"} Ride</h2>
+                <HomeButton/>
             </div>
             <form className="addupdateform" onSubmit={onSubmit}>
 

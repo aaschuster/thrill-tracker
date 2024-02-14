@@ -17,10 +17,7 @@
     display: flex;
     align-items: center;
     margin: 20px 0;
-}
-
-.parkaddupdateheader h2 {
-    width: calc(100% - 92px);
+    justify-content: space-between;
 }
 
 .parkaddupdate .inputlabel {

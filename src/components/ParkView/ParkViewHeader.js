@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import {setCurrentParkID} from "../../actions/parksActions";
 
 import BackButton from "../Buttons/BackButton";
+import HomeButton from "../Buttons/HomeButton";
 
 import "../../styles/ParkViewHeader.css";
 
@@ -22,6 +23,7 @@ function ParkViewHeader( {name, parkID, setCurrentParkID} ) {
             <div className={"parkviewheadertop"}>
                 <BackButton/>
                 <h2>{name}</h2>
+                <HomeButton/>
             </div>
             <div className={"parkviewheaderbuttons"}>
                 <button onClick={addRide}>Add Ride</button>

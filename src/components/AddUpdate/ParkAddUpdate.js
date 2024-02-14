@@ -6,6 +6,7 @@ import Dialog from "@mui/material/Dialog"
 import DatalistInput from 'react-datalist-input';
 
 import BackButton from "../Buttons/BackButton";
+import HomeButton from "../Buttons/HomeButton";
 
 import "../../styles/ParkAddUpdate.css";
 
@@ -228,6 +229,7 @@ function ParkAddUpdate({
             <div className="parkaddupdateheader">
                 <BackButton/>
                 <h2>{editMode ? "Update" : "Add"} Park</h2>
+                <HomeButton/>
             </div>
             <form className="addupdateform" onSubmit={onSubmit}>
                 <div className="formitem">
