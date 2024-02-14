@@ -5,29 +5,31 @@ import { connect } from "react-redux";
 import BackButton from "./Buttons/BackButton";
 import HomeButton from "./Buttons/HomeButton";
 
-// import "../styles/ChainList.css";
+import "../styles/ChainList.css";
 
 function ChainList( {chains} ) {
 
     const navigate = useNavigate();
 
     return (
-        <div className="chainlist">
+        <div className="chainlistcontainer">
             <div className="chainlistheader">
                 <BackButton/>
                 <h2>Park chains</h2>
                 <HomeButton/>
             </div>
-            {
-                chains.map( (chain, idx) => (
-                    <button
-                        key={idx}
-                        onClick={() => navigate(`/chains/${chain.chains_id}`)}
-                    >
-                        {chain.name}
-                    </button>
-                ))
-            }
+            <div className="chainlist">
+                {
+                    chains.map( (chain, idx) => (
+                        <button
+                            key={idx}
+                            onClick={() => navigate(`/chains/${chain.chains_id}`)}
+                        >
+                            {chain.name}
+                        </button>
+                    ))
+                }
+            </div>
         </div>
     )
 }

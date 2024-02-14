@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
+import ParkList from "./ParkList";
+
 import BackButton from "./Buttons/BackButton";
 import HomeButton from "./Buttons/HomeButton";
 
@@ -33,19 +35,7 @@ function ChainParks( { parks, chains } ) {
                 <h2>{chain.name}</h2>
                 <HomeButton/>
             </div>
-            {
-                currentParks.map( (park, idx) => {
-                    return (
-                        <button 
-                            key={idx}
-                            onClick={() => 
-                                navigate(`/atparkview/${park.parks_id}`)}
-                        >
-                            {park.name}
-                        </button>
-                    )
-                })
-            }
+            <ParkList parklist={currentParks}/>
         </div>
     )
 }

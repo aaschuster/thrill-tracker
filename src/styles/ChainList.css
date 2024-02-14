@@ -1,0 +1,31 @@
+@import "styles.css";
+
+.chainlistcontainer {
+    width: 90%;
+    max-width: 550px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chainlistheader {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.chainlist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.chainlist button {
+    margin: 5px auto;
+    width: 95%;
+    max-width: 350px;
+}
