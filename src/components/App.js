@@ -28,6 +28,8 @@ import RecordAddUpdate from "./AddUpdate/RecordAddUpdate/RecordAddUpdate";
 import ParkAddUpdate from "./AddUpdate/ParkAddUpdate";
 import RideAddUpdate from "./AddUpdate/RideAddUpdate";
 import Search from "./Search";
+import ChainList from "./ChainList";
+import ChainParks from "./ChainParks";
 
 const App = props => {
 
@@ -109,6 +111,14 @@ const App = props => {
           <Route
             path="/search"
             element={<Search/>}
+          />
+          <Route
+            path="/chains"
+            element={<ChainList/>}
+          />  
+          <Route
+            path="/chains/:id"
+            element={<ChainParks/>}
           />
           <Route
             path="/history/:id"

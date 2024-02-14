@@ -38,7 +38,7 @@
 }
 
 .parkselect .homeicon, .parkselect .faveicon, .parkselect .searchicon {
-  margin-right: 5px;
+  margin-right: 7px;
 }
 
 .parkselect .parklistitem {
@@ -89,7 +89,7 @@
 
 .parkselect .favoriteparks hr, .parkselect .homeparks hr {
   width: 90%;
-  margin: 15px auto;
+  margin: 15px auto 0 auto;
 }
 
 .parkselect .searchbutton {
@@ -104,6 +104,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  margin-top: 15px;
 }
 
 .parkselect .buttonlist button  {

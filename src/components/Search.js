@@ -4,9 +4,7 @@ import { connect } from "react-redux";
 
 import {FaHouse as HouseIcon} from "react-icons/fa6";
 
-import Dialog from "@mui/material/Dialog";
-
-import Park from "./Park";
+import ParkList from "./ParkList";
 import BackButton from "./Buttons/BackButton";
 import AddParkButton from "./Buttons/AddParkButton";
 import ViewChainsButton from "./Buttons/ViewChainsButton";
@@ -54,11 +52,7 @@ const Search = ( { parks } ) => {
 
         setCurrentParks(parksFromSearch);
         
-    }, [inputVal])
-
-    useEffect(() => {
-        console.log(currentParks);
-    }, [currentParks])
+}, [inputVal])
 
     return (
         <div className="search">
@@ -68,7 +62,7 @@ const Search = ( { parks } ) => {
             </div>
             <input 
                 value={inputVal}
-                placeholder="Start typing park name..."
+                placeholder="Park name..."
                 onChange={onChange}
                 autoFocus
             />
@@ -84,7 +78,6 @@ const Search = ( { parks } ) => {
                 : <></>
             }
             {
-
                 currentParks.length === 0 ?
                     <div className="noresults">
                         <h2>No results</h2>
@@ -94,14 +87,7 @@ const Search = ( { parks } ) => {
             {
                 inputVal && currentParks.length > 0 ?
                     <div className="results">
-                    {
-                        currentParks.map( (park, idx) => {
-                            return <Park
-                                park={park}
-                                key={idx}
-                            />;
-                        })
-                    }
+                        <ParkList parklist={currentParks}/>
                     </div>
                 : <></>
             }            

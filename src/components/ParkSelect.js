@@ -14,15 +14,11 @@ import {
 import {FaHouse as HouseIcon} from "react-icons/fa6";
 
 import { clearUser } from "../actions/userActions";
-import { delParkFavorite, addParkFavorite } from "../actions/parkFavoritesActions";
-import { delHomePark, addHomePark } from "../actions/homeParksActions";
 
-import Park from "./Park";
+import ParkList from "./ParkList";
 
 import AddParkButton from "./Buttons/AddParkButton";
 import ViewChainsButton from "./Buttons/ViewChainsButton";
-
-import { objFromID } from "../utils";
 
 import "../styles/ParkSelect.css";
 
@@ -33,48 +29,10 @@ const ParkSelect = ({
     user, 
     parkFavorites, 
     clearUser, 
-    delParkFavorite, 
-    addParkFavorite,
     homeParks,
-    delHomePark,
-    addHomePark
 }) => {
 
     const navigate = useNavigate();
-
-    const [dialog, setDialog] = useState({
-        open: false,
-        park: {}
-    })
-    const [currentFavorite, setCurrentFavorite] = useState(null);
-    const [currentHomePark, setCurrentHomePark] = useState(null);
-
-    useEffect(() => {
-        getCurrentParkFavorite();
-        getCurrentHomePark();
-    }, [dialog.park.parks_id])
-
-    useEffect(() => {
-        getCurrentParkFavorite();
-    }, [parkFavorites])
-
-    useEffect(() => {
-        getCurrentHomePark();
-    }, [homeParks])
-
-    function getCurrentParkFavorite() {
-        const [currentFavoriteObj] = parkFavorites.filter(
-            parkFavorite => parkFavorite.parks_id === dialog.park.parks_id
-        );
-        setCurrentFavorite(currentFavoriteObj);
-    }
-
-    function getCurrentHomePark() {
-        const [currentHomeParkObj] = homeParks.filter(
-            homePark => homePark.parks_id === dialog.park.parks_id
-        );
-        setCurrentHomePark(currentHomeParkObj);
-    }
 
     function logout() {
         axios.get(`${process.env.REACT_APP_SERVERURL}/users/logout`)
@@ -87,64 +45,6 @@ const ParkSelect = ({
 
     return (
         <div className="parkselect">
-            <Dialog 
-                onClose={() => setDialog({...dialog, open: true})} 
-                open={dialog.open}
-                sx={{
-                    "& .MuiDialog-container": {
-                      "& .MuiPaper-root": {
-                        width: "100%",
-                        maxWidth: "260px",
-                      },
-                    },
-                  }}
-            >
-                <div className="dialog parkselectoptions">
-                    <p>{dialog.park.name}</p>
-                    <button onClick={() => navigate(`/atparkview/${dialog.park.parks_id}`)}>
-                        <GoIcon className="icon goicon"/>
-                        Go to park page
-                    </button>
-                    {
-                        currentHomePark ?
-                            <button onClick={() => delHomePark(currentHomePark)}>
-                                <HouseIcon className="icon homeicon"/>
-                                {
-                                    homeParks.length === 1 ?
-                                    "Remove as home park" : "Remove from home parks"
-                                }                                
-                            </button>
-                        :
-                            <button onClick={() => addHomePark({
-                                users_id: user.users_id,
-                                parks_id: dialog.park.parks_id
-                            })}>
-                                <HouseIcon className="icon homeicon"/>
-                                Add as home park
-                            </button>
-                    }
-                    {
-                        currentFavorite ?
-                            <button onClick={() => delParkFavorite(currentFavorite)}>
-                                <UnfaveIcon className="icon faveicon"/>
-                                Unfavorite this park
-                            </button>
-                        :
-                        <button onClick={() => addParkFavorite({
-                            users_id: user.users_id,
-                            parks_id: dialog.park.parks_id
-                        })}>
-                            <FaveIcon className="icon faveicon"/>
-                            Favorite this park
-                        </button>
-                    }
-                    <button onClick={() => navigate(`/addupdate/park/${dialog.park.parks_id}`)}>
-                        <EditIcon className="icon faveicon"/>
-                        View or edit park info
-                    </button>
-                    <button onClick={() => setDialog({...dialog, open: false})}>Cancel</button>
-                </div>
-            </Dialog>
             <div className="accountcontainer">
                 <p>Logged in as {user.username}</p> 
                 <div className="accountbuttons">
@@ -160,15 +60,7 @@ const ParkSelect = ({
                             <HouseIcon className="icon homeicon"/>
                             <h3>Home park{homeParks.length === 1 ? "" : "s"}</h3>
                         </div>
-                        {
-                            homeParks.map( (homePark, idx) => {
-                                return <Park 
-                                    park={objFromID(homePark.parks_id, parks, "parks_id")}
-                                    key={idx}
-                                    setDialog={setDialog}
-                                />;
-                            })
-                        }
+                        <ParkList parklist={homeParks}/>
                     </div>
                 : <></>
             }
@@ -179,15 +71,7 @@ const ParkSelect = ({
                             <FaveIcon className="icon faveicon"/>
                             <h3>Favorites</h3>
                         </div>
-                        {
-                            parkFavorites.map( (favoritePark, idx) => {
-                                return <Park
-                                    park={objFromID(favoritePark.parks_id, parks, "parks_id")}
-                                    key={idx}
-                                    setDialog={setDialog}
-                                />;
-                            })
-                        }
+                        <ParkList parklist={parkFavorites}/>
                         <hr/>
                     </div>
                 : <></>
@@ -221,10 +105,6 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps, { 
-        clearUser, 
-        delParkFavorite, 
-        addParkFavorite,
-        delHomePark,
-        addHomePark
+        clearUser,
     }
 )(ParkSelect);

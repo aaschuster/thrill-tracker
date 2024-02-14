@@ -7,7 +7,7 @@ function ViewChainsButton() {
     const navigate = useNavigate();
 
     return (
-        <button>
+        <button onClick={() => navigate("/chains")}>
             View parks by chain
         </button>
     )
