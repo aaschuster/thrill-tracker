@@ -10,12 +10,21 @@ export const ADD_PARK = "ADD_PARK";
 export const UPDATE_PARK = "UPDATE_PARK";
 export const SET_CURRENT_PARK_ID = "SET_CURRENT_PARK_ID";
 
-export const getParks = () => dispatch => {
+export const getParks = userID => dispatch => {
     dispatch(setFetchingTrue());
 
     axios.get(`${serverURL}/parks`)
         .then( ({data}) => {
-            dispatch(getParksSuccess(data));
+            const userParks = data.filter( park => park.users_id === userID);
+            const updatedParkIDs = [];
+            userParks.forEach( park => {
+                if(park.update_of_parks_id)
+                updatedParkIDs.push(park.update_of_parks_id);
+            })
+            
+            const mainDBparks = data.filter( park => park.maindb === 1 && !updatedParkIDs.includes(park.parks_id))
+
+            dispatch(getParksSuccess(mainDBparks.concat(userParks)));
         })
         .catch( err => dispatch(getParksErr(err)));
 
@@ -35,16 +44,17 @@ const getParksErr = err => {
 }
 
 export const addPark = park => dispatch => {
-    axios.post(`${serverURL}/parks`, park) 
-        .then( () => dispatch(getParks()))
+    return axios.post(`${serverURL}/parks`, park) 
+        .then( ({data}) => {
+            dispatch(getParks(park.users_id))
+            return (data[0]);
+        })
         .catch( err => console.error(err));
-
-    return {type: ADD_PARK};
 }
 
 export const updatePark = park => dispatch => {
     axios.put(`${serverURL}/parks/${park.parks_id}`, park)
-        .then( () => dispatch(getParks()))
+        .then( () => dispatch(getParks(park.users_id)))
         .catch( err => console.error(err));
 
     return {type: UPDATE_PARK}

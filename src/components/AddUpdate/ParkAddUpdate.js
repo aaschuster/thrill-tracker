@@ -13,6 +13,8 @@ import "../../styles/ParkAddUpdate.css";
 import {addPark, updatePark} from "../../actions/parksActions";
 import {addChain} from "../../actions/chainsActions";
 import {addCountry} from "../../actions/countriesActions";
+import { addParkFavorite, delParkFavorite } from "../../actions/parkFavoritesActions";
+import { addHomePark, delHomePark } from "../../actions/homeParksActions";
 
 function ParkAddUpdate({
     chains, 
@@ -20,10 +22,17 @@ function ParkAddUpdate({
     countries, 
     parks, 
     user,
+    parkFavorites,
+    homeParks,
     addPark, 
     updatePark, 
+    getParks,
     addCountry, 
-    addChain
+    addChain,
+    addParkFavorite,
+    delParkFavorite,
+    addHomePark,
+    delHomePark
 }) {
 
     const { parkId } = useParams();
@@ -67,11 +76,11 @@ function ParkAddUpdate({
     const [submitFired, setSubmitFired] = useState(false);
     const [currentPark, setCurrentPark] = useState(null);
 
-    function submitPark() {
+    async function submitPark() {
 
         if(editMode) {
             if(currentPark.maindb === 1) {
-                addPark({
+                const newParkID = await addPark({
                     name: form.name,
                     city: form.city,
                     opened: form.openingyear || null,
@@ -81,6 +90,17 @@ function ParkAddUpdate({
                     users_id: user.users_id,
                     update_of_parks_id: currentPark.parks_id
                 })
+                const [parkFavorite] = parkFavorites.filter( park => park.parks_id === currentPark.parks_id);
+                const [homePark] = homeParks.filter( park => park.parks_id === currentPark.parks_id);
+                if(parkFavorite) {
+                    delParkFavorite(parkFavorite);
+                    addParkFavorite({users_id: user.users_id, parks_id: newParkID});
+                }
+                if(homePark) {
+                    delHomePark(homePark);
+                    addHomePark({users_id: user.users_id, parks_id: newParkID});
+                }
+
             } else {
                 updatePark({
                     parks_id: currentPark.parks_id,
@@ -341,8 +361,21 @@ function mapStateToProps(state) {
         states: state.states.states,
         countries: state.countries.countries,
         parks: state.parks.parks,
-        user: state.user.user
+        user: state.user.user,
+        parkFavorites: state.parkFavorites.parkFavorites,
+        homeParks: state.homeParks.homeParks
     }
 }
 
-export default connect(mapStateToProps, {addPark, updatePark, addCountry, addChain})(ParkAddUpdate);
+export default connect(
+    mapStateToProps, {
+        addPark,
+        updatePark,
+        addCountry,
+        addChain,
+        addParkFavorite,
+        delParkFavorite,
+        addHomePark,
+        delHomePark
+    }
+)(ParkAddUpdate);
