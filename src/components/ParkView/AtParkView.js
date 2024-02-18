@@ -19,7 +19,8 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
 
     const { id } = useParams();
     
-    const [park, setPark] = useState({});
+    const [parkName, setParkName] = useState("");
+    const [parkID, setParkID] = useState(null);
     const [currentRides, setCurrentRides] = useState([]);
     const [currentHistory, setCurrentHistory] = useState([]);
     const [currentTotals, setCurrentTotals] = useState({});
@@ -33,16 +34,19 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
     const historyRef = useRef(null);
     const navigate = useNavigate();
 
-    useEffect(() => {  
-        setPark(objFromID(parseInt(id), parks, "parks_id"))
-        if(rides && park) {
+    useEffect(() => { 
+        const currentPark = objFromID(parseInt(id), parks, "parks_id");
+        setParkName(currentPark.name);
+        setParkID(currentPark.update_of_parks_id ? currentPark.update_of_parks_id : currentPark.parks_id);
+
+        if(rides && parkID) {
             setCurrentRides( 
                 rides.filter( 
-                (ride) => ride.parks_id === park.parks_id
+                (ride) => ride.parks_id === parkID
                 )
             )        
         }
-    }, [park, parks, rides])
+    }, [parkID, parks, rides])
 
     useEffect(() => {
         getCurrentHistory();
@@ -98,6 +102,19 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
         setCurrentTotals(totalsArr);
     }
 
+    function favoriteClick() {
+        addRideFavorite({
+            users_id: user.users_id, 
+            rides_id: dialog.rideID
+        })
+        setDialog({...dialog, open: false});
+    }
+
+    function unFavoriteClick() {
+        delRideFavorite(currentFavorite)
+        setDialog({...dialog, open: false});
+    }
+
     return (
         <div className={"atparkview"}>
             <Dialog onClose={() => setDialog({...dialog, open: true})} open={dialog.open}>
@@ -112,14 +129,11 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
                     </button>
                     {
                         currentFavorite ? 
-                            <button onClick={() => delRideFavorite(currentFavorite)}>
+                            <button onClick={unFavoriteClick}>
                                 <UnfaveIcon className="faveicon icon"/>Unfavorite this ride
                             </button>
                         : 
-                            <button onClick={() => addRideFavorite({
-                                users_id: user.users_id, 
-                                rides_id: dialog.rideID
-                            })}>
+                            <button onClick={favoriteClick}>
                                 <FaveIcon className="faveicon icon"/>Favorite this ride
                             </button>
                     }
@@ -129,8 +143,8 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
                     <button onClick={() => setDialog({...dialog, open: false})}>Cancel</button>
                 </div>
             </Dialog>
-            {park ? <>
-                    <ParkViewHeader name={park.name} parkID={park.parks_id}/>
+            {parkID ? <>
+                    <ParkViewHeader name={parkName} parkID={parkID}/>
                     <RideList
                         currentHistory = {currentHistory}
                         currentTotals = {currentTotals}

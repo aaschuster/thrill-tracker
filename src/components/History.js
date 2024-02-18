@@ -35,7 +35,8 @@ function History( {processedHistory, parks, rides, delRecord} ) {
 
     const navigate = useNavigate();
 
-    const [park, setPark] = useState(null);
+    const [parkName, setParkName] = useState("");
+    const [parkID, setParkID] = useState(null);
     const [currentHistory, setCurrentHistory] = useState(processedHistory);
     const [todayHistory, setTodayHistory] = useState([]);
     const [todayView, setTodayView] = useState(false);
@@ -50,22 +51,19 @@ function History( {processedHistory, parks, rides, delRecord} ) {
 
     useEffect(() => {
 
-        setPark( id === "all" ? 
-            null : 
-            objFromID(
-                parseInt(id),
-                parks,
-                "parks_id"
-            )
-        )
+        if(id !== "all") {
+            const currentPark = objFromID(parseInt(id), parks, "parks_id");
+            setParkName(currentPark.name);
+            setParkID(currentPark.update_of_parks_id ? currentPark.update_of_parks_id : currentPark.parks_id);
+        }
 
         let newHistory = processedHistory;
-        if(park) {
+        if(parkID) {
             setTodayView(true);
             const currentRides = [];
 
             rides.forEach( ride => {
-                if(ride.parks_id === park.parks_id)
+                if(ride.parks_id === parkID)
                     currentRides.push(ride);
             })
 
@@ -82,7 +80,7 @@ function History( {processedHistory, parks, rides, delRecord} ) {
         
         setTodayHistory(filterByToday(newHistory));
 
-    }, [park, processedHistory])
+    }, [parkID, processedHistory])
    
     return (
         <div className={"history"}>
@@ -91,7 +89,7 @@ function History( {processedHistory, parks, rides, delRecord} ) {
                 <h2>History</h2>
                 <HomeButton/>
             </div>
-            <h3>{park ? park.name : ""}</h3>
+            <h3>{parkName}</h3>
             <div className="datebuttons">
                 <button disabled={!todayView} onClick={() => setTodayView(!todayView)}>All time</button>
                 <button disabled={todayView} onClick={() => setTodayView(!todayView)}>Today</button>
