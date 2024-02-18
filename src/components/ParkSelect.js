@@ -72,7 +72,6 @@ const ParkSelect = ({
                             <h3>Favorites</h3>
                         </div>
                         <ParkList parklist={parkFavorites}/>
-                        <hr/>
                     </div>
                 : <></>
             }

@@ -68,6 +68,32 @@ const ParkList = ( {
         setCurrentHomePark(currentHomeParkObj);
     }
 
+    function removeHomeParkClick() {
+        delHomePark(currentHomePark)
+        setDialog({...dialog, open: false});
+    }
+
+    function addHomeParkClick() {
+        addHomePark({
+            users_id: user.users_id,
+            parks_id: dialog.park.parks_id
+        })
+        setDialog({...dialog, open: false});
+    }
+
+    function favoriteClick() {
+        addParkFavorite({
+            users_id: user.users_id,
+            parks_id: dialog.park.parks_id
+        })
+        setDialog({...dialog, open: false});
+    }
+
+    function unFavoriteClick() {
+        delParkFavorite(currentFavorite)
+        setDialog({...dialog, open: false});
+    }
+
     return (
         <div className="parklist">
             <Dialog 
@@ -90,7 +116,7 @@ const ParkList = ( {
                     </button>
                     {
                         currentHomePark ?
-                            <button onClick={() => delHomePark(currentHomePark)}>
+                            <button onClick={removeHomeParkClick}>
                                 <HouseIcon className="icon homeicon"/>
                                 {
                                     homeParks.length === 1 ?
@@ -98,25 +124,19 @@ const ParkList = ( {
                                 }                                
                             </button>
                         :
-                            <button onClick={() => addHomePark({
-                                users_id: user.users_id,
-                                parks_id: dialog.park.parks_id
-                            })}>
+                            <button onClick={addHomeParkClick}>
                                 <HouseIcon className="icon homeicon"/>
                                 Add as home park
                             </button>
                     }
                     {
                         currentFavorite ?
-                            <button onClick={() => delParkFavorite(currentFavorite)}>
+                            <button onClick={unFavoriteClick}>
                                 <UnfaveIcon className="icon faveicon"/>
                                 Unfavorite this park
                             </button>
                         :
-                        <button onClick={() => addParkFavorite({
-                            users_id: user.users_id,
-                            parks_id: dialog.park.parks_id
-                        })}>
+                        <button onClick={favoriteClick}>
                             <FaveIcon className="icon faveicon"/>
                             Favorite this park
                         </button>
