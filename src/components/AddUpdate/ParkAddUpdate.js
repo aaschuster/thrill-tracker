@@ -19,6 +19,7 @@ function ParkAddUpdate({
     states, 
     countries, 
     parks, 
+    user,
     addPark, 
     updatePark, 
     addCountry, 
@@ -69,15 +70,28 @@ function ParkAddUpdate({
     function submitPark() {
 
         if(editMode) {
-            updatePark({
-                parks_id: currentPark.parks_id,
-                name: form.name,
-                city: form.city,
-                opened: form.openingyear || null,
-                chains_id: filtered.chain.length === 1 ? filtered.chain[0].chains_id : null,
-                states_id: filtered.state.length === 1 ? filtered.state[0].states_id : null,
-                countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null
-            })
+            if(currentPark.maindb === 1) {
+                addPark({
+                    name: form.name,
+                    city: form.city,
+                    opened: form.openingyear || null,
+                    chains_id: filtered.chain.length === 1 ? filtered.chain[0].chains_id : null,
+                    states_id: filtered.state.length === 1 ? filtered.state[0].states_id : null,
+                    countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null,
+                    users_id: user.users_id,
+                    update_of_parks_id: currentPark.parks_id
+                })
+            } else {
+                updatePark({
+                    parks_id: currentPark.parks_id,
+                    name: form.name,
+                    city: form.city,
+                    opened: form.openingyear || null,
+                    chains_id: filtered.chain.length === 1 ? filtered.chain[0].chains_id : null,
+                    states_id: filtered.state.length === 1 ? filtered.state[0].states_id : null,
+                    countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null
+                })
+            }
         } else 
             addPark({
                 name: form.name,
@@ -85,7 +99,8 @@ function ParkAddUpdate({
                 opened: form.openingyear || null,
                 chains_id: filtered.chain.length === 1 ? filtered.chain[0].chains_id : null,
                 states_id: filtered.state.length === 1 ? filtered.state[0].states_id : null,
-                countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null
+                countries_id: filtered.country.length === 1 ? filtered.country[0].countries_id: null,
+                users_id: user.users_id
             });
 
         navigate("/parkselect");
@@ -126,6 +141,7 @@ function ParkAddUpdate({
     function onSubmit(e) {
         e.preventDefault();
 
+        
         if(form.name && form.city && form.country) {
             setSubmitFired(true);
             filterData(); 
@@ -184,7 +200,7 @@ function ParkAddUpdate({
 
         if(submitFired) {
 
-            if(filtered.chain.length === 1 && filtered.country.length === 1)
+            if((filtered.chain.length === 1 || form.chain === "") && filtered.country.length === 1)
                 submitPark();
             else if(filtered.chain.length === 0 && form.chain && filtered.country.length === 0 && form.country) 
                 setDialog({
@@ -324,7 +340,8 @@ function mapStateToProps(state) {
         chains: state.chains.chains,
         states: state.states.states,
         countries: state.countries.countries,
-        parks: state.parks.parks
+        parks: state.parks.parks,
+        user: state.user.user
     }
 }
 

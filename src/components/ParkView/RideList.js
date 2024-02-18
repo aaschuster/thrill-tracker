@@ -6,6 +6,8 @@ import {FaHeart as FaveIcon} from "react-icons/fa";
 
 import RideListItem from "./RideListItem";
 
+import {objFromID} from "../../utils";
+
 import { addRecord } from "../../actions/historyActions";
 
 function RideList( {
@@ -42,14 +44,18 @@ function RideList( {
         const favoritesList = [];
         const nonfavoritesList = [];
 
+        rideFavorites.forEach( ride => {
+            const favoriteRide = objFromID(ride.rides_id, currentRides, "rides_id");
+            if(favoriteRide) //check to see favorite ride is in currentRides list
+                favoritesList.push(objFromID(ride.rides_id, currentRides, "rides_id"))
+        })
+
         currentRides.forEach( ride => {
             if(
                 rideFavorites.filter( 
                     rideFavorite => rideFavorite.rides_id === ride.rides_id
-                ).length > 0
+                ).length === 0
             ) {
-                favoritesList.push(ride);
-            } else {
                 nonfavoritesList.push(ride);
             }
         })
