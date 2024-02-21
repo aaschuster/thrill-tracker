@@ -19,10 +19,14 @@ export const getParks = userID => dispatch => {
             const updatedParkIDs = [];
             userParks.forEach( park => {
                 if(park.update_of_parks_id)
-                updatedParkIDs.push(park.update_of_parks_id);
+                    updatedParkIDs.push(park.update_of_parks_id);
             })
             
-            const mainDBparks = data.filter( park => park.maindb === 1 && !updatedParkIDs.includes(park.parks_id))
+            const mainDBparks = data.filter(
+                park => 
+                    park.maindb === 1 && 
+                    !updatedParkIDs.includes(park.parks_id)
+                )
 
             dispatch(getParksSuccess(mainDBparks.concat(userParks)));
         })

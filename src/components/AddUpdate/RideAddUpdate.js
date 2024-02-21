@@ -23,6 +23,7 @@ function RideAddUpdate( {
     ridesRideTypes, 
     currentParkID, 
     manufacturers, 
+    user,
     addRide, 
     updateRide, 
     addManufacturer,
@@ -221,7 +222,8 @@ function RideAddUpdate( {
                 ride_height: form.ride_height,
                 drop_height: form.drop_height,
                 rows: form.rows,
-                seats: form.seats
+                seats: form.seats,
+                users_id: user.users_id
             });
         }
 
@@ -411,7 +413,8 @@ function mapStateToProps(state) {
         rideTypes: state.rideTypes.rideTypes,
         ridesRideTypes: state.ridesRideTypes.ridesRideTypes,
         currentParkID: state.parks.currentParkID,
-        manufacturers: state.manufacturers.manufacturers
+        manufacturers: state.manufacturers.manufacturers,
+        user: state.user.user
     }
 }
 

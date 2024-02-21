@@ -9,12 +9,25 @@ export const SET_FETCHING_TRUE = "SET_FETCHING_TRUE";
 export const ADD_RIDE = "ADD_RIDE";
 export const UPDATE_RIDE = "UPDATE_RIDE";
 
-export const getRides = () => dispatch => {
+export const getRides = userID => dispatch => {
     dispatch(setFetchingTrue());
 
     axios.get(`${serverURL}/rides`)
         .then( ({data}) => {
-            dispatch(getRidesSuccess(data));
+            const userRides = data.filter( ride => ride.users_id === userID)
+            const updatedRideIDs = [];
+            userRides.forEach( ride => {
+                if(ride.update_of_rides_id)
+                    updatedRideIDs.push(ride.update_of_rides_id);
+            })
+
+            const mainDBrides = data.filter(
+                ride =>
+                    ride.maindb === 1 &&
+                    !updatedRideIDs.includes(ride.rides_id)
+            )
+
+            dispatch(getRidesSuccess(mainDBrides.concat(userRides)));
         })
         .catch( err => dispatch(getRidesErr(err)));
 
@@ -35,7 +48,10 @@ const getRidesErr = err => {
 
 export const addRide = ride => dispatch => {
     axios.post(`${serverURL}/rides`, ride)
-        .then( () => dispatch(getRides()))
+        .then( ({data}) => {
+            dispatch(getRides(ride.users_id));
+            return data[0];
+        })
         .catch( err => console.error(err))
 
     return {type: ADD_RIDE};
@@ -44,7 +60,7 @@ export const addRide = ride => dispatch => {
 
 export const updateRide = ride => dispatch => {
     axios.put(`${serverURL}/rides/${ride.rides_id}`, ride)
-        .then( () => dispatch(getRides()))
+        .then( () => dispatch(getRides(ride.users_id)))
         .catch( err => console.error(err));
 
     return {type: UPDATE_RIDE};

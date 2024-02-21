@@ -56,7 +56,6 @@ const App = props => {
   useEffect(() => {
     axios.defaults.withCredentials = true;
     setUser();
-    getRides();
     getChains();
     getCountries();
     getStates();
@@ -68,6 +67,7 @@ const App = props => {
   useEffect(() => {
     if(user.username)
       getParks(user.users_id);
+      getRides(user.users_id);
       getHistory();
       getRideFavorites(user.users_id);
       getParkFavorites(user.users_id);
