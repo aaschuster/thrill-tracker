@@ -47,15 +47,12 @@ const getRidesErr = err => {
 }
 
 export const addRide = ride => dispatch => {
-    axios.post(`${serverURL}/rides`, ride)
+    return axios.post(`${serverURL}/rides`, ride)
         .then( ({data}) => {
             dispatch(getRides(ride.users_id));
-            return data[0];
+            return (data[0]);
         })
         .catch( err => console.error(err))
-
-    return {type: ADD_RIDE};
-
 }
 
 export const updateRide = ride => dispatch => {

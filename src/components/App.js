@@ -65,13 +65,14 @@ const App = props => {
   }, []);
 
   useEffect(() => {
-    if(user.username)
+    if(user.username) {
       getParks(user.users_id);
       getRides(user.users_id);
       getHistory();
       getRideFavorites(user.users_id);
       getParkFavorites(user.users_id);
       getHomeParks(user.users_id);
+    }
   }, [user])
 
   useEffect(() => {

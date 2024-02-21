@@ -15,6 +15,9 @@ import "../../styles/RideAddUpdate.css";
 import { addRide, updateRide } from "../../actions/ridesActions";
 import { addManufacturer } from "../../actions/manufacturersActions";
 import { addRidesRideType, delRidesRideType } from "../../actions/ridesRideTypesActions";
+import { addRideFavorite, delRideFavorite } from "../../actions/rideFavoritesActions";
+
+import { objFromID } from "../../utils";
 
 function RideAddUpdate( {
     rides, 
@@ -24,11 +27,14 @@ function RideAddUpdate( {
     currentParkID, 
     manufacturers, 
     user,
+    rideFavorites,
     addRide, 
     updateRide, 
     addManufacturer,
     addRidesRideType,
-    delRidesRideType
+    delRidesRideType,
+    addRideFavorite,
+    delRideFavorite
 } ) {
 
     const { rideId } = useParams();
@@ -99,8 +105,10 @@ function RideAddUpdate( {
         if(submitFired) {
             setSubmitFired(false);
 
-            if(filtered.park.length === 1 && (filtered.manufacturer.length === 1 || !form.manufacturer))
-                return submitRide();
+            if(filtered.park.length === 1 && (filtered.manufacturer.length === 1 || !form.manufacturer)) {
+                submitRide();
+                return;
+            }
 
             if(filtered.park.length === 0)
                 setErr("Please select a valid park.");
@@ -127,7 +135,10 @@ function RideAddUpdate( {
 
             const currentRideData = {
                 park: parks.filter( park => park.parks_id === filteredRide.parks_id),
-                manufacturer: manufacturers.filter( manufacturer => manufacturer.manufacturers_id === filteredRide.manufacturers_id)
+                manufacturer: manufacturers.filter( 
+                    manufacturer => 
+                        manufacturer.manufacturers_id === filteredRide.manufacturers_id
+                )
             }
 
             const filteredRideTypes = [];
@@ -136,8 +147,13 @@ function RideAddUpdate( {
             ridesRideTypes.forEach( ridesRideType => {
                 if(ridesRideType.rides_id === filteredRide.rides_id) {
                     ridesRideTypesToStore.push(ridesRideType);
-                    const [rideTypeToAdd] = rideTypes.filter( rideType => rideType.ride_types_id === ridesRideType.ride_types_id);
-                    filteredRideTypes.push({id: rideTypeToAdd.ride_types_id, value: rideTypeToAdd.ride_type});
+                    const [rideTypeToAdd] = 
+                        rideTypes.filter( rideType => 
+                            rideType.ride_types_id === ridesRideType.ride_types_id);
+                    filteredRideTypes.push({
+                        id: rideTypeToAdd.ride_types_id, 
+                        value: rideTypeToAdd.ride_type
+                    });
                 }
             })
 
@@ -147,10 +163,16 @@ function RideAddUpdate( {
             setForm({
                 name: filteredRide.name,
                 park: currentRideData.park[0].name,
-                manufacturer: currentRideData.manufacturer[0] ? currentRideData.manufacturer[0].name : "",
+                manufacturer: currentRideData.manufacturer[0] ? 
+                    currentRideData.manufacturer[0].name : 
+                    "",
                 duration: filteredRide.duration || "",
                 track_length: filteredRide.track_length || "",
-                inversions: filteredRide.inversions === null || filteredRide.inversions === undefined ? "" : filteredRide.inversions,
+                inversions: 
+                    filteredRide.inversions === null || 
+                    filteredRide.inversions === undefined ? 
+                        "" : 
+                        filteredRide.inversions,
                 ride_height: filteredRide.ride_height || "",
                 drop_height: filteredRide.drop_height || "",
                 rows: filteredRide.rows || "",
@@ -168,48 +190,82 @@ function RideAddUpdate( {
         } else setErr("Please fill out required fields.");
     }
 
-    function submitRide() {
+    async function submitRide() {
 
         if(editMode) {
 
-            updateRide({
-                name: form.name,
-                parks_id: filtered.park[0].parks_id,
-                manufacturers_id: filtered.manufacturer.length === 1 ? filtered.manufacturer[0].manufacturers_id : null,
-                duration: form.duration,
-                track_length: form.track_length,
-                inversions: form.inversions,
-                ride_height: form.ride_height,
-                drop_height: form.drop_height,
-                rows: form.rows,
-                seats: form.seats,
-                rides_id: rideInt
-            })
+            if(objFromID(rideInt, rides, "rides_id").maindb === 1) {
+                const newRideID = await addRide({
+                    name: form.name,
+                    parks_id: filtered.park[0].parks_id,
+                    manufacturers_id: filtered.manufacturer.length === 1 ? filtered.manufacturer[0].manufacturers_id : null,
+                    duration: form.duration,
+                    track_length: form.track_length,
+                    inversions: form.inversions,
+                    ride_height: form.ride_height,
+                    drop_height: form.drop_height,
+                    rows: form.rows,
+                    seats: form.seats,
+                    users_id: user.users_id,
+                    update_of_rides_id: rideInt
+                })
 
-            //newRideType example = {id: 1, value: "Rollercoaster"}
-            //origRideType example = {rides_ride_types: 1, ride_types_id: 1, rides_id1}
+                const [rideFavorite] = rideFavorites.filter( ride => ride.rides_id === rideInt);
+                if(rideFavorite) {
+                    delRideFavorite(rideFavorite);
+                    addRideFavorite({users_id: user.users_id, rides_id: newRideID});
+                }
 
-            rideTypeList.forEach( newRideType => { 
-                let addRideType = true;
+                rideTypeList.forEach( rideType => {
+                    addRidesRideType({ride_types_id: rideType.id, rides_id: newRideID});
+                })
+
+            } else {
+
+                updateRide({
+                    name: form.name,
+                    parks_id: filtered.park[0].parks_id,
+                    manufacturers_id: 
+                        filtered.manufacturer.length === 1 ? 
+                            filtered.manufacturer[0].manufacturers_id : 
+                            null,
+                    duration: form.duration,
+                    track_length: form.track_length,
+                    inversions: form.inversions,
+                    ride_height: form.ride_height,
+                    drop_height: form.drop_height,
+                    rows: form.rows,
+                    seats: form.seats,
+                    rides_id: rideInt,
+                    users_id: user.users_id
+                })
+    
+                //newRideType example = {id: 1, value: "Rollercoaster"}
+                //origRideType example = {rides_ride_types: 1, ride_types_id: 1, rides_id1}
+    
+                rideTypeList.forEach( newRideType => { 
+                    let addRideType = true;
+                    origRideTypes.forEach( origRideType => {
+                        if(newRideType.id === origRideType.ride_types_id) {
+                            addRideType = false;
+                        }
+                    })
+                    if(addRideType)
+                        addRidesRideType({ride_types_id: newRideType.id, rides_id: rideInt})
+                })
+    
                 origRideTypes.forEach( origRideType => {
-                    if(newRideType.id === origRideType.ride_types_id) {
-                        addRideType = false;
-                    }
+                    let removeRideType = true;
+                    rideTypeList.forEach( newRideType => {
+                        if(newRideType.id === origRideType.ride_types_id) {
+                            removeRideType = false;
+                        }
+                    })
+                    if(removeRideType)
+                        delRidesRideType(origRideType.rides_ride_types);
                 })
-                if(addRideType)
-                    addRidesRideType({ride_types_id: newRideType.id, rides_id: rideInt})
-            })
 
-            origRideTypes.forEach( origRideType => {
-                let removeRideType = true;
-                rideTypeList.forEach( newRideType => {
-                    if(newRideType.id === origRideType.ride_types_id) {
-                        removeRideType = false;
-                    }
-                })
-                if(removeRideType)
-                    delRidesRideType(origRideType.rides_ride_types);
-            })
+            }
 
         } else {
             addRide({
@@ -414,7 +470,8 @@ function mapStateToProps(state) {
         ridesRideTypes: state.ridesRideTypes.ridesRideTypes,
         currentParkID: state.parks.currentParkID,
         manufacturers: state.manufacturers.manufacturers,
-        user: state.user.user
+        user: state.user.user,
+        rideFavorites: state.rideFavorites.rideFavorites
     }
 }
 
@@ -424,6 +481,8 @@ export default connect(
         updateRide, 
         addManufacturer,
         addRidesRideType,
-        delRidesRideType
+        delRidesRideType,
+        addRideFavorite,
+        delRideFavorite
     }
 )(RideAddUpdate);

@@ -4,13 +4,12 @@ import { connect } from "react-redux";
 import axios from "axios";
 
 import { setMessage, setUser } from "../actions/userActions";
-import { getHistory } from "../actions/historyActions";
 
 import "../styles/Login.css";
 
 const serverURL = process.env.REACT_APP_SERVERURL;
 
-const Login = ( { message, user, setMessage, setUser, getHistory } ) => {
+const Login = ( { message, user, setMessage, setUser } ) => {
 
     const navigate = useNavigate();
 
@@ -73,4 +72,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { setMessage, setUser, getHistory })(Login);
+export default connect(mapStateToProps, { setMessage, setUser })(Login);
