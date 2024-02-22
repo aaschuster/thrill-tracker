@@ -9,8 +9,8 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    max-width: 550px;
-    width: 95%;
+    max-width: var(--px-max-width);
+    width: var(--percent-width);
     margin: 0 auto;
 }
 

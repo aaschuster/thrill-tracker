@@ -3,8 +3,8 @@
 .login {
     display: flex;
     flex-direction: column;
-    width: 95%;
-    max-width: 450px;
+    max-width: var(--px-max-width);
+    width: var(--percent-width);
     margin: 0 auto;
 }
 
