@@ -21,24 +21,27 @@ function ChainParks( { parks, chains } ) {
     const [currentParks, setCurrentParks] = useState([]);
 
     useEffect(() => {
-        setChain(objFromID(parseInt(id), chains, "chains_id"));
-    }, [id])
+        if(chains.length > 0)
+            setChain(objFromID(parseInt(id), chains, "chains_id"));
+    }, [id, chains])
     
     useEffect(() => {
         setCurrentParks( parks.filter( park => (
             park.chains_id === chain.chains_id
         )))
-    }, [chain])
+    }, [chain, parks])
 
     return (
-        <div className="chainparks">
-            <div className="chainparksheader">
-                <BackButton/>
-                <h2>{chain.name}</h2>
-                <HomeButton/>
-            </div>
-            <ParkList parklist={currentParks}/>
-        </div>
+                chain ? 
+                <div className="chainparks">
+                    <div className="chainparksheader">
+                        <BackButton/>
+                        <h2>{chain.name}</h2>
+                        <HomeButton/>
+                    </div>
+                    <ParkList parklist={currentParks}/>
+                </div> :
+                <p>Please wait...</p>
     )
 }
 

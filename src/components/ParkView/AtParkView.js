@@ -35,9 +35,11 @@ function AtParkView( {parks, rides, history, user, rideFavorites, addRideFavorit
     const navigate = useNavigate();
 
     useEffect(() => { 
-        const currentPark = objFromID(parseInt(id), parks, "parks_id");
-        setParkName(currentPark.name);
-        setParkID(currentPark.update_of_parks_id ? currentPark.update_of_parks_id : currentPark.parks_id);
+        if(parks.length > 0) {
+            const currentPark = objFromID(parseInt(id), parks, "parks_id");
+            setParkName(currentPark.name);
+            setParkID(currentPark.update_of_parks_id ? currentPark.update_of_parks_id : currentPark.parks_id);
+        }
 
         if(rides && parkID) {
             setCurrentRides( 
