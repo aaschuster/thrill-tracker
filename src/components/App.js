@@ -65,7 +65,7 @@ const App = props => {
   }, []);
 
   useEffect(() => {
-    if(user.username) {
+    if(user && user.username) {
       getParks(user.users_id);
       getRides(user.users_id);
       getHistory();
