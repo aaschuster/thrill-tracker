@@ -16,7 +16,7 @@ export const setMessage = message => {
 export const setUser = userID => dispatch => {
     dispatch(setFetchingTrue());
 
-    axios.get(`${serverURL}/users/current`)
+    axios.get(`${serverURL}/users/current`, {headers: {credentials: "include"}})
         .then( res => {
             dispatch(setUserSuccess(res.data.user));
         })
